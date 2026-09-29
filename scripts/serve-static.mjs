@@ -5,6 +5,8 @@ import { extname, join, normalize } from "node:path";
 
 const root = join(process.cwd(), "out");
 const port = Number(process.env.PORT ?? 4173);
+// Mirror a GitHub Pages project site: with BASE_PATH=/kelma, the site is served under /kelma/.
+const basePath = process.env.BASE_PATH ?? "";
 const types = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml",
   ".png": "image/png", ".mp4": "video/mp4", ".woff2": "font/woff2", ".json": "application/json", ".txt": "text/plain",
@@ -20,7 +22,14 @@ async function tryFile(p) {
 }
 
 createServer(async (req, res) => {
-  const url = decodeURIComponent(new URL(req.url, "http://x").pathname);
+  let url = decodeURIComponent(new URL(req.url, "http://x").pathname);
+  if (basePath) {
+    if (url !== basePath && !url.startsWith(basePath + "/")) {
+      res.writeHead(404);
+      return res.end();
+    }
+    url = url.slice(basePath.length) || "/";
+  }
   const base = normalize(join(root, url));
   if (!base.startsWith(root)) return res.writeHead(403).end();
   const file = (await tryFile(base)) ?? (await tryFile(base + ".html")) ?? (await tryFile(join(base, "index.html")));

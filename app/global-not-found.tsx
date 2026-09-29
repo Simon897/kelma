@@ -4,10 +4,11 @@ import Link from "next/link";
 import { CatLogo } from "@/components/CatLogo";
 import { archivo, plex } from "@/lib/fonts";
 import { t } from "@/lib/i18n";
+import { asset } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "404 · Kelma",
-  icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
+  icons: { icon: asset("/favicon.svg"), apple: asset("/apple-touch-icon.png") },
 };
 
 // One 404 for both languages (there is no single root layout), so it speaks both.

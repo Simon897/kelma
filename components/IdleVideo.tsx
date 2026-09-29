@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { asset } from "@/lib/site";
 
 const MOBILE_QUERY = "(max-width: 767px)";
 /** Bump when the media files are replaced, so cached copies aren't reused. */
@@ -61,8 +62,8 @@ export function IdleVideo() {
     else v.pause();
   }, [visible, mobile, near]);
 
-  const src = mobile ? `/media/kelma-idle-mobile.mp4${MEDIA_VERSION}` : `/media/kelma-idle-desktop.mp4${MEDIA_VERSION}`;
-  const poster = mobile ? `/media/kelma-idle-mobile.png${MEDIA_VERSION}` : `/media/kelma-idle-desktop.png${MEDIA_VERSION}`;
+  const src = mobile ? asset(`/media/kelma-idle-mobile.mp4${MEDIA_VERSION}`) : asset(`/media/kelma-idle-desktop.mp4${MEDIA_VERSION}`);
+  const poster = mobile ? asset(`/media/kelma-idle-mobile.png${MEDIA_VERSION}`) : asset(`/media/kelma-idle-desktop.png${MEDIA_VERSION}`);
   const playVideo = !reduced && near && pageReady && mobile !== null;
 
   return (
@@ -72,9 +73,9 @@ export function IdleVideo() {
       className="relative aspect-square w-full overflow-hidden md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_16%)]"
     >
       <picture>
-        <source media={MOBILE_QUERY} srcSet={`/media/kelma-idle-mobile.png${MEDIA_VERSION}`} />
+        <source media={MOBILE_QUERY} srcSet={asset(`/media/kelma-idle-mobile.png${MEDIA_VERSION}`)} />
         <img
-          src={`/media/kelma-idle-desktop.png${MEDIA_VERSION}`}
+          src={asset(`/media/kelma-idle-desktop.png${MEDIA_VERSION}`)}
           alt=""
           loading="lazy"
           decoding="async"

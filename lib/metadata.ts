@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { t, type Lang } from "./i18n";
 import { alternates, type PageKey } from "./routes";
-import { SITE_URL } from "./site";
+import { SITE_URL, asset } from "./site";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -16,7 +16,7 @@ export function pageMetadata(page: PageKey, lang: Lang, title?: string): Metadat
     title: title ? `${title} · Kelma` : "Kelma",
     description: d.siteDescription,
     alternates: alternates(page, lang),
-    icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
+    icons: { icon: asset("/favicon.svg"), apple: asset("/apple-touch-icon.png") },
     openGraph: { title: title ? `Kelma · ${title}` : "Kelma", description: d.siteDescription, locale: lang === "mt" ? "mt_MT" : "en_GB" },
   };
 }

@@ -24,13 +24,16 @@ jobs:
         with:
           node-version: 24
           cache: npm
+      - id: pages
+        uses: actions/configure-pages@v5
       - run: npm ci
       - run: npm test
       # prebuild runs the data check; a broken word list fails the deploy here.
       - run: npm run build
         env:
-          # Set this under Settings > Secrets and variables > Actions > Variables, e.g. https://kelma.mt
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+          # Filled in by configure-pages: "/kelma" + github.io URL now, "" + your domain once one is attached.
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
