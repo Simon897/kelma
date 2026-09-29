@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/*
+ * Kelma design tokens. Every colour traces back to something Maltese:
+ * globigerina limestone, the Blue Grotto, festa gold, luzzu paint.
+ * Use these tokens only — no ad-hoc hex values in components.
+ */
+@theme {
+  /* Page background: the light-beige wall at the idle video's side edge, measured from the decoded
+     frame in the browser (#edd2a4; the PNG reads #ead1a5 — H.264 shifts colour). The top edge is
+     peach sky, so the video fades in through a mask instead of matching hex. */
+  --color-bg: #edd2a4;
+
+  --color-limestone-50: #f8f2e2;
+  --color-limestone-100: #efe6ce;
+  --color-limestone-200: #e4d6b4;
+  --color-limestone-300: #d3c092;
+  --color-limestone-400: #b9a274;
+
+  --color-ink: #2e2618;
+  /* Darkened from #6d5f45 so it still reaches 4.5:1 on the sampled bg (4.3:1 before). */
+  --color-ink-soft: #5e5139;
+
+  --color-sea: #0e6b8c;
+  --color-sea-deep: #0a4f68;
+  --color-ochre: #c9921e;
+
+  --color-tile-correct: #427a35;
+  --color-tile-present: #d9a527;
+  --color-tile-absent: #746954;
+  /* Text on each tile fill; each pair measured at >= 4.5:1 (keys are small text). */
+  --color-tile-correct-fg: #f8f2e2;
+  --color-tile-present-fg: #2e2618;
+  --color-tile-absent-fg: #f8f2e2;
+
+  --radius-tile: 2px;
+  --shadow-block: 4px 4px 0 0 rgb(46 38 24 / 0.18);
+  --shadow-block-sm: 2px 2px 0 0 rgb(46 38 24 / 0.18);
+  --shadow-block-lift: 4px 6px 0 0 rgb(46 38 24 / 0.2);
+
+  --font-display: var(--font-archivo), "Arial Black", sans-serif;
+  --font-sans: var(--font-plex), system-ui, sans-serif;
+
+  --ease-flip: cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+/* High-contrast / colourblind mode: orange and blue, like Wordle. */
+html[data-contrast] {
+  --color-tile-correct: #f5793a;
+  --color-tile-present: #85c0f9;
+  --color-tile-correct-fg: #2e2618;
+  --color-tile-present-fg: #2e2618;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-bg);
+    font-family: var(--font-sans);
+    min-height: 100svh;
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-sea);
+    outline-offset: 2px;
+  }
+  button {
+    cursor: pointer;
+  }
+  dialog::backdrop {
+    background: rgb(46 38 24 / 0.45);
+  }
+}
+
+@layer components {
+  .display-caps {
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-variation-settings: "wdth" 125;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  /* Dotted grain so flat limestone panels don't read as plain vector fills. */
+  .stone {
+    background-image: radial-gradient(rgb(46 38 24 / 0.07) 0.8px, transparent 1.1px);
+    background-size: 5px 5px;
+  }
+
+  /* Stone-block button: lifts on hover/focus, presses into its shadow. Mechanical, no bounce. */
+  .btn-block {
+    box-shadow: var(--shadow-block);
+    transition:
+      transform 140ms linear,
+      box-shadow 140ms linear,
+      background-color 140ms linear,
+      color 140ms linear;
+  }
+  .btn-block:hover,
+  .btn-block:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-block-lift);
+  }
+  .btn-block:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+}
+
+/*
+ * Reduced motion: colour changes only. iteration-count: 1 matters — without it a
+ * looping animation restarts endlessly at 0.01ms instead of stopping.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-property: color, background-color, border-color !important;
+    scroll-behavior: auto !important;
+  }
+  .btn-block:hover,
+  .btn-block:focus-visible,
+  .btn-block:active {
+    transform: none;
+  }
+}
