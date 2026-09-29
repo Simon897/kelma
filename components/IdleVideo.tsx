@@ -70,7 +70,7 @@ export function IdleVideo() {
     <div
       ref={wrap}
       aria-hidden="true"
-      className="relative aspect-square w-full overflow-hidden md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_16%)]"
+      className="relative aspect-square w-full overflow-hidden md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_9%)]"
     >
       <picture>
         <source media={MOBILE_QUERY} srcSet={asset(`/media/kelma-idle-mobile.png${MEDIA_VERSION}`)} />

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { dayIndex } from "@/lib/day-index";
 import { t, type Lang } from "@/lib/i18n";
 import { allAnswerWords } from "@/lib/modes";
-import { GABRA_URL } from "@/lib/site";
 import { pickWordOfDay, type WordOfDay as Entry } from "@/lib/word-of-day";
 
 /**
@@ -32,18 +31,13 @@ export function WordOfDay({ lang }: { lang: Lang }) {
         {d.wordOfDayTitle}
       </h2>
       {/* Space is reserved so nothing jumps when the word arrives. */}
-      <div className="min-h-[4.5rem]" aria-live="polite">
+      <div className="min-h-[3.75rem]" aria-live="polite">
         {entry && (
           <>
             <p lang="mt" className="mt-1.5 text-[1.75rem] font-bold leading-tight">
               {entry.word}
             </p>
             <p className="mt-1 text-balance text-base leading-snug">{entry.gloss}</p>
-            <p className="mt-1.5 text-xs text-ink-soft">
-              <a href={GABRA_URL} target="_blank" rel="noopener" className="underline underline-offset-2">
-                Ġabra
-              </a>
-            </p>
           </>
         )}
       </div>
