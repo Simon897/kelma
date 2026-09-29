@@ -17,6 +17,7 @@ export function pageMetadata(page: PageKey, lang: Lang, title?: string): Metadat
     description: d.siteDescription,
     alternates: alternates(page, lang),
     icons: { icon: asset("/favicon.svg"), apple: asset("/apple-touch-icon.png") },
+    other: { google: "notranslate" },
     openGraph: { title: title ? `Kelma · ${title}` : "Kelma", description: d.siteDescription, locale: lang === "mt" ? "mt_MT" : "en_GB" },
   };
 }

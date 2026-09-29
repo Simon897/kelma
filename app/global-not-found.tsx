@@ -9,6 +9,7 @@ import { asset } from "@/lib/site";
 export const metadata: Metadata = {
   title: "404 · Kelma",
   icons: { icon: asset("/favicon.svg"), apple: asset("/apple-touch-icon.png") },
+  other: { google: "notranslate" },
 };
 
 // One 404 for both languages (there is no single root layout), so it speaks both.
@@ -16,7 +17,7 @@ export default function GlobalNotFound() {
   const mt = t("mt");
   const en = t("en");
   return (
-    <html lang="mt" className={`${archivo.variable} ${plex.variable}`}>
+    <html lang="mt" translate="no" className={`notranslate ${archivo.variable} ${plex.variable}`}>
       <body className="antialiased">
         <main className="flex min-h-svh flex-col items-center justify-center px-4 text-center">
           <CatLogo className="size-24" />

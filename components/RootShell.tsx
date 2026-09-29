@@ -8,7 +8,13 @@ const SETTINGS_SCRIPT = `try{var s=JSON.parse(localStorage.getItem("kelma:settin
 
 export function RootShell({ lang, children }: { lang: Lang; children: ReactNode }) {
   return (
-    <html lang={lang} className={`${archivo.variable} ${plex.variable}`} suppressHydrationWarning>
+    // translate="no" + .notranslate: machine translation mangles Maltese, and there's an English version.
+    <html
+      lang={lang}
+      translate="no"
+      className={`notranslate ${archivo.variable} ${plex.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: SETTINGS_SCRIPT }} />
       </head>
