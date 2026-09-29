@@ -60,3 +60,20 @@ export function validateData(
   }
   return errors;
 }
+
+/** Checks for data/kelma/word-of-day.json. */
+export function validateWordOfDay(list: unknown): string[] {
+  const errors: string[] = [];
+  if (!Array.isArray(list) || list.length === 0) return ["word-of-day: must be a non-empty array"];
+  const seen = new Set<string>();
+  list.forEach((e, i) => {
+    const where = `word-of-day[${i}]`;
+    if (!e || typeof e.word !== "string" || !e.word.trim()) errors.push(`${where}: word is required`);
+    if (!e || typeof e.gloss !== "string" || !e.gloss.trim()) errors.push(`${where}: gloss is required`);
+    if (e && typeof e.word === "string") {
+      if (seen.has(e.word)) errors.push(`${where}: "${e.word}" repeats`);
+      seen.add(e.word);
+    }
+  });
+  return errors;
+}

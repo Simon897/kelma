@@ -28,6 +28,16 @@ Each answer entry is `{ day, word, gloss, root?, note? }`. `word` is exactly 5 U
 
 Words and meanings come from Ġabra (University of Malta, MLRS), CC BY 4.0. Ġabra's site (`mlrs.research.um.edu.mt`) has redirected to `um.edu.mt` since at least 29 Sep 2026, so the credit links to the MLRS GitHub (`GABRA_URL` in `lib/site.ts`). Keep a safe copy of the lexicon dump: the pipeline can no longer re-download it.
 
+## Kelma ta' kuljum (word of the day)
+
+The home page shows one rare word a day from `data/kelma/word-of-day.json`: Ġabra final tier 5, with a meaning, no flags, any length. To rebuild it from an updated sheet:
+
+```bash
+node scripts/import-word-of-day.mjs path/to/gabra-word-tiers-general.xlsx
+```
+
+The import shuffles the list in a fixed order. Day N shows entry N mod length, and the list wraps around after about four years. A word that's also a Kelma answer (in either mode, on any day) is skipped, so the word of the day never gives a puzzle away. Re-importing changes the schedule from that day on.
+
 ## Permanent things (don't change after launch)
 
 - `EPOCH` in `lib/day-index.ts` (day 0). Changing it shifts every saved game and streak.

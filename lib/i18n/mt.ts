@@ -22,6 +22,7 @@ export const mt = {
   modeTqila: "Tqila", // REVIEW
   howLink: "Kif taħdem?", // REVIEW
   doneToday: "lesta llum", // REVIEW
+  wordOfDayTitle: "Kelma ta' kuljum", // REVIEW
 
   // --- game ---
   notEnough: "Ittri mhux biżżejjed", // REVIEW

@@ -23,3 +23,8 @@ export function otherMode(mode: Mode): Mode {
 
 /** Name used in the share title and the header: always the Maltese mode name. */
 export const MODE_NAME: Record<Mode, string> = { normali: "Normali", tqila: "Tqila" };
+
+/** Every answer word in both modes, across all days. */
+export function allAnswerWords(): Set<string> {
+  return new Set(MODES.flatMap((m) => ANSWERS[m].map((e) => e.word)));
+}

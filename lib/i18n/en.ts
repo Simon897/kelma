@@ -18,6 +18,7 @@ export const en: Dict = {
   modeTqila: "Hard",
   howLink: "How it works",
   doneToday: "done today",
+  wordOfDayTitle: "Word of the day",
 
   notEnough: "Not enough letters",
   notInList: "Not in word list",
