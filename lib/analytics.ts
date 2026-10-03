@@ -4,7 +4,9 @@
  * game: the caller only fires it when stats.recordGame() actually records.
  */
 export type AnalyticsEvent = {
-  game_end: { mode: "normali" | "tqila"; day: number; word: string; won: boolean; guesses: number };
+  game_end:
+    | { mode: "normali" | "tqila"; day: number; word: string; won: boolean; guesses: number }
+    | { game: "sellum"; day: number; won: boolean; livesLeft: number; steps: number };
 };
 
 export function track<E extends keyof AnalyticsEvent>(event: E, props: AnalyticsEvent[E]): void {

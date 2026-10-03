@@ -111,6 +111,54 @@ export const mt = {
   howSourceLink: "Ġabra fuq GitHub", // REVIEW
   howLicenceLink: "Il-liċenzja CC BY 4.0", // REVIEW
 
+  // --- Sellum (word ladder) ---
+  sellumTagline: "Inżel is-sellum: ittra waħda kull darba", // REVIEW
+  sellumPlay: "Ilgħab", // REVIEW
+  sellumNumber: (n: number) => `Sellum #${n}`, // REVIEW
+  changeOne: "Biddel ittra waħda biss", // REVIEW
+  alreadyUsed: "Din diġà użajtha", // REVIEW
+  deadEnd: "Kelma tajba, imma ma twasslekx", // REVIEW
+  livesLeft: (n: number) => (n === 0 ? "Ma fadallek l-ebda ħajja" : n === 1 ? "Ħajja waħda fadal" : `${n} ħajjiet fadal`), // REVIEW
+  lifeLost: (n: number) => (n === 0 ? "Tlift l-aħħar ħajja." : n === 1 ? "Tlift ħajja. Ħajja waħda fadal." : `Tlift ħajja. ${n} ħajjiet fadal.`), // REVIEW
+  floorOf: (n: number, total: number) => `Ringiela ${n} minn ${total}`, // REVIEW
+  galleryLocked: (i: number, letter: string) => `Ittra ${i}: ${letter}`, // REVIEW
+  galleryClosed: "vojta", // REVIEW
+  inPlace: "f'postha", // REVIEW
+  wordAccepted: (w: string, row: number) => `${w}, tajba. Ringiela ${row}.`, // REVIEW
+  sellumWon: "Wasalt!", // REVIEW
+  sellumLost: "Ir-rotta kienet…", // REVIEW
+  yourLadder: "Is-sellum tiegħek", // REVIEW
+  routesCount: (n: number) => `Kien hemm ${n} rotot`, // REVIEW
+  otherRoute: "Rotta li ma ħadtx", // REVIEW
+  formOf: (x: string) => `forma ta' ${x}`, // REVIEW
+  playKelma: "Ilgħab Kelma", // REVIEW
+  livesDist: "Ħajjiet fadal meta rbaħt", // REVIEW
+  livesLost: "Tlift", // REVIEW
+  sellumHelpIntro: "Mill-kelma ta' fuq sal-kelma t'isfel f'4 tarġiet. F'kull tarġa biddel ittra waħda, u kull kelma trid tkun Maltija.", // REVIEW
+  sellumHelpEdit: "Ikteb il-kelma sħiħa, li tibdel ittra waħda biss mill-kelma ta' fuqha, u agħfas DAĦĦAL.", // REVIEW
+  sellumHelpLives: "Għandek 3 ħajjiet. Kelma li mhix fil-lista, jew kelma tajba li ma twasslekx, tieħdok ħajja.", // REVIEW
+  sellumHelpGreen: "Ittra ħadra tfisser li diġà qiegħda f'postha fil-kelma t'isfel.", // REVIEW
+  sellumHowTitle: "Kif taħdem Sellum", // REVIEW
+  sellumHowIntro: "Kuljum ikollok kelma fuq nett u kelma isfel nett. Mur minn waħda għall-oħra f'4 tarġiet eżatt, u f'kull tarġa biddel ittra waħda biss. Kull kelma li tuża trid tkun kelma Maltija.", // REVIEW
+  sellumHowExample: "Eżempju: kull ringiela tibdel ittra waħda minn ta' fuqha.", // REVIEW
+  sellumHowEditTitle: "Kif tikteb kelma", // REVIEW
+  sellumHowEdit: "Kull ringiela tibda vojta. Ikteb il-kelma sħiħa, bl-istess ittri tal-kelma ta' fuqha ħlief waħda, u agħfas DAĦĦAL. ⌫ tħassar l-aħħar ittra. Jekk tbiddel l-ebda ittra jew aktar minn waħda, il-ringiela titħawwad u ma titlifx ħajja.", // REVIEW
+  sellumHowLivesTitle: "Il-ħajjiet", // REVIEW
+  sellumHowLivesSlip: "Tbiddel l-ebda ittra, jew aktar minn waħda, jew terġa' tuża kelma: ma titlifx ħajja, erġa' pprova.", // REVIEW
+  sellumHowLivesWord: "Kelma li mhix fil-lista: titlef ħajja.", // REVIEW
+  sellumHowLivesDead: "Kelma tajba imma li minnha ma tistax tasal fit-tarġiet li fadal: titlef ħajja.", // REVIEW
+  sellumHowLivesEnd: "Jekk titlef it-3 ħajjiet, il-logħba tispiċċa u naraw rotta sħiħa.", // REVIEW
+  sellumHowRoutesTitle: "Aktar minn triq waħda", // REVIEW
+  sellumHowRoutes: "Ma hemmx tweġiba waħda. Kull puzzle għandu mill-inqas 3 rotot, u kull rotta li taħdem tgħodd. Fl-aħħar naraw kemm kien hemm rotot.", // REVIEW
+  sellumHowGreen: "Wara kull kelma, l-ittri li diġà qegħdin f'posthom fil-kelma t'isfel isiru ħodor, b'linja taħthom.", // REVIEW
+
+  // --- home carousel ---
+  carouselLabel: "Il-logħob", // REVIEW
+  gameOf: (i: number, n: number, name: string) => `Logħba ${i} minn ${n}: ${name}`, // REVIEW
+  prevGame: "Il-logħba ta' qabel", // REVIEW
+  nextGame: "Il-logħba li jmiss", // REVIEW
+  newBadge: "Ġdid!", // REVIEW
+
   // --- 404 ---
   notFoundTitle: "Din il-paġna ma teżistix", // REVIEW
   notFoundHome: "Lura d-dar", // REVIEW

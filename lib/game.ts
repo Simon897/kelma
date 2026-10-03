@@ -61,19 +61,19 @@ const MALTESE_EXTRA = new Set(["Ġ", "Ħ", "Ż", "Ċ"]);
 
 /**
  * Normalise a typed character to a Maltese tile letter, or null to reject it.
- * Maltese has no plain C, so C becomes Ċ.
+ * Maltese has no plain C (so C becomes Ċ) and no Y (rejected).
  */
 export function normaliseKey(key: string): string | null {
   if (Array.from(key).length !== 1) return null;
   const upper = key.toLocaleUpperCase("mt");
   if (upper === "C") return "Ċ";
-  if (/^[A-BD-Z]$/.test(upper)) return upper;
+  if (/^[A-BD-XZ]$/.test(upper)) return upper;
   if (MALTESE_EXTRA.has(upper)) return upper;
   return null;
 }
 
 export const KEYBOARD_ROWS: string[][] = [
-  ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+  ["Q", "W", "E", "R", "T", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "Ġ", "H", "Ħ", "J", "K", "L"],
   ["ENTER", "Z", "Ż", "X", "Ċ", "V", "B", "N", "M", "BACKSPACE"],
 ];

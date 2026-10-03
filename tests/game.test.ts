@@ -63,13 +63,15 @@ describe("normaliseKey", () => {
     expect(normaliseKey("z")).toBe("Z");
   });
   it("rejects everything else", () => {
-    for (const k of ["1", " ", "Enter", "é", "ß", "-", "Shift", "à", "'"]) expect(normaliseKey(k)).toBeNull();
+    for (const k of ["1", " ", "Enter", "é", "ß", "-", "Shift", "à", "'", "y", "Y"]) expect(normaliseKey(k)).toBeNull();
   });
 });
 
 describe("keyboard layout and timing", () => {
-  it("has 31 keys with the Maltese letters beside their base letters", () => {
-    expect(KEYBOARD_ROWS.flat()).toHaveLength(31);
+  it("has 30 keys with the Maltese letters beside their base letters, and no C or Y", () => {
+    expect(KEYBOARD_ROWS.flat()).toHaveLength(30);
+    expect(KEYBOARD_ROWS[0].join(" ")).toBe("Q W E R T U I O P");
+    expect(KEYBOARD_ROWS.flat()).not.toContain("Y");
     expect(KEYBOARD_ROWS[1].join(" ")).toBe("A S D F G Ġ H Ħ J K L");
     expect(KEYBOARD_ROWS[2].join(" ")).toBe("ENTER Z Ż X Ċ V B N M BACKSPACE");
     expect(KEYBOARD_ROWS.flat()).not.toContain("C");

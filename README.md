@@ -38,6 +38,27 @@ node scripts/import-word-of-day.mjs path/to/gabra-word-tiers-general.xlsx
 
 The import shuffles the list in a fixed order. Day N shows entry N mod length, and the list wraps around after about four years. A word that's also a Kelma answer (in either mode, on any day) is skipped, so the word of the day never gives a puzzle away. Re-importing changes the schedule from that day on.
 
+## Sellum (word ladder)
+
+A daily ladder from a start word to a target in exactly 4 one-letter steps, with 3 lives. Any shortest route is accepted: the browser runs one breadth-first search back from the target over the shared guess list, and a word is accepted only if it's still exactly the right number of steps away.
+
+```
+data/sellum/puzzles.json        one entry per day: { day, start, target, routes, example }
+data/sellum/glosses.json        word -> gloss, or { lemma, gloss } for inflected forms (loaded at game end)
+data/source/answer-candidates.json   generator input: [{ word, tier, gloss, flags }]
+```
+
+Regenerate the schedule (365 days) and the glosses:
+
+```bash
+node scripts/build-sellum.ts
+node scripts/build-sellum-glosses.mjs path/to/Kelma-word-tiers.xlsx
+```
+
+A pair qualifies when start and target are tier 1–3 with no flags, they're exactly 4 steps apart, there are at least 3 shortest routes in total, and at least 2 of those use only dictionary words (tier 1–5, no flags). The bar of 3 dictionary routes gave only 115 days. Start and target words rest for 60 days, pairs never repeat, and consecutive days don't share a start or target first letter. The build checks every puzzle (words in the list, distance exactly 4, a legal example, the route count, and no gaps in the days).
+
+Sellum has its own epoch, `SELLUM_EPOCH` in `lib/day-index.ts` (provisional), and its own storage keys: `kelma:sellum:state` and `kelma:sellum:stats`.
+
 ## Permanent things (don't change after launch)
 
 - `EPOCH` in `lib/day-index.ts` (day 0). Changing it shifts every saved game and streak.
@@ -45,7 +66,7 @@ The import shuffles the list in a fixed order. Day N shows entry N mod length, a
 
 ## Open items before launch
 
-- **Epoch:** currently a provisional `2026-09-29`; set the real launch date.
+- **Epochs:** `EPOCH` (Kelma, provisional `2026-09-29`) and `SELLUM_EPOCH` (provisional `2026-09-30`); set the real launch dates.
 - **Maltese copy:** every string in `lib/i18n/mt.ts` is marked `// REVIEW` for a native speaker, as are the day and month names in `lib/day-index.ts`.
 - **Real content:** the placeholder answers (7 days per mode) get replaced by the monthly pipeline, which writes the same files. The `SBULA` note is a placeholder.
 - **Analytics:** `lib/analytics.ts` `track()` is a no-op stub. Pick a cookieless provider.

@@ -64,11 +64,27 @@ function dayNumber({ year, month, day }: DateParts): number {
   return Date.UTC(year, month - 1, day) / MS_PER_DAY;
 }
 
+/**
+ * Sellum's own day 0 (Sellum #1). Same freezing rule as EPOCH.
+ * TODO(launch): provisional — set to Sellum's real launch date.
+ */
+export const SELLUM_EPOCH = "2026-09-30";
+
 const EPOCH_DAY = dayNumber(parseIsoDate(EPOCH));
+
+/** Days since an ISO date, in Malta time. Negative before it. */
+export function daysSince(epoch: string, instant: Date = new Date()): number {
+  return dayNumber(maltaDateParts(instant)) - dayNumber(parseIsoDate(epoch));
+}
 
 /** Days since EPOCH in Malta time. Negative before launch. */
 export function dayIndex(instant: Date = new Date()): number {
   return dayNumber(maltaDateParts(instant)) - EPOCH_DAY;
+}
+
+/** Sellum's day index (Sellum #N = index + 1). */
+export function sellumDayIndex(instant: Date = new Date()): number {
+  return daysSince(SELLUM_EPOCH, instant);
 }
 
 /** Offset of Malta from UTC at an instant, in minutes (60 or 120). */

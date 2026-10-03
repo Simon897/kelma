@@ -9,6 +9,9 @@ export const KEYS = {
   lang: "kelma:lang",
   settings: "kelma:settings",
   seenHelp: "kelma:seen-help",
+  sellumState: "kelma:sellum:state",
+  sellumStats: "kelma:sellum:stats",
+  seenCarousel: "kelma:seen-carousel",
 } as const;
 
 export function readJSON<T>(key: string): T | null {

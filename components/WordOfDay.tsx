@@ -27,7 +27,7 @@ export function WordOfDay({ lang }: { lang: Lang }) {
 
   return (
     <section aria-labelledby="wotd-title" className="mx-auto w-full max-w-[26rem] text-center">
-      <h2 id="wotd-title" className="text-xs font-bold uppercase tracking-[0.14em] text-ink-soft">
+      <h2 id="wotd-title" className="text-sm font-bold text-ink-soft">
         {d.wordOfDayTitle}
       </h2>
       {/* Space is reserved so nothing jumps when the word arrives. */}

@@ -14,8 +14,10 @@ export function CatLogo({ className, title }: { className?: string; title?: stri
       focusable="false"
     >
       {/* tail, dark at the tip */}
-      <path d="M45 58c9 0 14-5 13-12-.6-4-4-5-5.5-3" fill="none" stroke="#6e6556" strokeWidth="4.5" strokeLinecap="round" />
-      <path d="M58 46c-.6-4-4-5-5.5-3" fill="none" stroke="#2b2621" strokeWidth="4.5" strokeLinecap="round" />
+      <g>
+        <path d="M45 58c9 0 14-5 13-12-.6-4-4-5-5.5-3" fill="none" stroke="#6e6556" strokeWidth="4.5" strokeLinecap="round" />
+        <path d="M58 46c-.6-4-4-5-5.5-3" fill="none" stroke="#2b2621" strokeWidth="4.5" strokeLinecap="round" />
+      </g>
       {/* body: tabby back showing at the sides, stripes on the flanks */}
       <path d="M16 60c-2.5-12 2-24 16-25.5C46 36 50.5 48 48 60Z" fill="#6e6556" />
       <path d="M17.6 45c1.8.4 3.1 1.3 3.9 2.8M16.9 51.5c1.8.3 3 1 3.8 2.3M46.4 45c-1.8.4-3.1 1.3-3.9 2.8M47.1 51.5c-1.8.3-3 1-3.8 2.3" fill="none" stroke="#2b2621" strokeWidth="1.9" strokeLinecap="round" />

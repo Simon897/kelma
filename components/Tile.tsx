@@ -7,7 +7,7 @@ import { t, type Dict, type Lang } from "@/lib/i18n";
 
 export type TileState = LetterState | "empty" | "tbd";
 
-const FILL: Record<TileState, string> = {
+export const FILL: Record<TileState, string> = {
   empty: "bg-limestone-50 border-limestone-300 text-ink",
   tbd: "bg-limestone-50 border-ink-soft text-ink",
   correct: "bg-tile-correct border-tile-correct text-tile-correct-fg",

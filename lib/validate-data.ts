@@ -8,7 +8,7 @@ export interface AnswerEntry {
   note?: string;
 }
 
-const TILE = /^[A-BD-ZĠĦŻĊ]$/u;
+const TILE = /^[A-BD-XZĠĦŻĊ]$/u; // Maltese: no C (it's Ċ) and no Y
 
 function checkWord(word: unknown, where: string, errors: string[]) {
   if (typeof word !== "string") {

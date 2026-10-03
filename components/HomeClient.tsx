@@ -11,9 +11,9 @@ import { href } from "@/lib/routes";
 import { KEYS, readJSON } from "@/lib/storage";
 import { TickIcon } from "./Icons";
 
-const primary =
-  "btn-block inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink bg-sea px-4 text-limestone-50 hover:bg-sea-deep";
-const secondary =
+export const primary =
+  "btn-block inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink bg-sea px-2 text-limestone-50 hover:bg-sea-deep sm:px-4";
+export const secondary =
   "btn-block inline-flex min-h-12 items-center justify-center rounded-tile border-2 border-ink bg-limestone-50 px-3 font-bold text-ink hover:bg-limestone-200";
 
 /**
@@ -31,7 +31,7 @@ export function HomeButtons({ lang }: { lang: Lang }) {
 
   const modeButton = (mode: Mode, label: string, area: string) => (
     <Link href={href(mode, lang)} className={`${primary} ${area}`}>
-      <span className="display-caps text-lg leading-none">{label}</span>
+      <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{label}</span>
       {done[mode] && (
         <>
           <TickIcon className="size-5 shrink-0" />

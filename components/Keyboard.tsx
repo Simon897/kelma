@@ -13,7 +13,7 @@ const KEY_FILL: Record<LetterState | "unused", string> = {
 };
 
 /**
- * Eleven units per row: row 1 has 10 letters with half-unit insets, row 2 has 11,
+ * Eleven units per row: row 1 has 9 letters (no Y in Maltese) with one-unit insets, row 2 has 11,
  * row 3 has ENTER and ⌫ at 1.5 units each. Letter keys are 28–42px wide, 50px tall.
  */
 export function Keyboard({
@@ -36,7 +36,7 @@ export function Keyboard({
     >
       {KEYBOARD_ROWS.map((row, r) => (
         <div key={r} className="grid grid-cols-[repeat(22,minmax(0,1fr))] gap-x-[4px]">
-          {r === 0 && <span className="col-span-1" aria-hidden />}
+          {r === 0 && <span className="col-span-2" aria-hidden />}
           {row.map((key) => {
             const wide = key === "ENTER" || key === "BACKSPACE";
             const st = states[key];
@@ -59,7 +59,7 @@ export function Keyboard({
               </button>
             );
           })}
-          {r === 0 && <span className="col-span-1" aria-hidden />}
+          {r === 0 && <span className="col-span-2" aria-hidden />}
         </div>
       ))}
     </div>
