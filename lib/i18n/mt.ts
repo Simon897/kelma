@@ -19,15 +19,15 @@ export const mt = {
   // --- home ---
   tagline: "6 tentattivi biex taqta' kelma b'ħames ittri", // REVIEW
   modeNormali: "Normali", // REVIEW
-  modeTqila: "Tqila", // REVIEW
+  modeTqila: "Diffiċli", // REVIEW
   howLink: "Kif taħdem?", // REVIEW
   doneToday: "lesta llum", // REVIEW
-  wordOfDayTitle: "Kelma ta' kuljum", // REVIEW
+  wordOfDayTitle: "Kelma tal-llum", // REVIEW (spelling as requested; standard would be "tal-lum")
 
   // --- game ---
   notEnough: "Ittri mhux biżżejjed", // REVIEW
   notInList: "Mhux fil-lista", // REVIEW
-  winToasts: ["Ġenju!", "Brillanti!", "Prosit!", "Tajjeb ħafna!", "Tajjeb!", "Uff, għal ftit!"], // REVIEW
+  winToasts: ["Prosit!", "Prosit!", "Prosit!", "Prosit!", "Prosit!", "Prosit!"], // REVIEW
   lostToast: "Għal darb'oħra", // REVIEW
   enterKey: "DAĦĦAL", // REVIEW
   enterAria: "Daħħal it-tentattiv", // REVIEW
@@ -55,12 +55,12 @@ export const mt = {
   nextWordIn: "Kelma ġdida fi", // REVIEW
   newWordReady: "Il-kelma l-ġdida lesta", // REVIEW
   playNew: "Ilgħab", // REVIEW
-  tryOther: { normali: "Ipprova t-Tqila", tqila: "Ipprova n-Normali" }, // REVIEW
+  tryOther: { normali: "Ipprova d-Diffiċli", tqila: "Ipprova n-Normali" }, // REVIEW
   share: "Aqsam", // REVIEW
   copied: "Ikkupjat. Waħħlu fejn trid.", // REVIEW
   copiedShort: "Ikkupjat", // REVIEW
   copyFailed: "Ma setax jiġi kkupjat", // REVIEW
-  resultTitleWon: "Rbaħt!", // REVIEW
+  resultTitleWon: "Prosit!", // REVIEW
   seeResult: "Ir-riżultat", // REVIEW
 
   // --- stats ---
@@ -69,7 +69,7 @@ export const mt = {
   winPct: "% rebħ", // REVIEW
   streak: "Sekwenza", // REVIEW
   maxStreak: "L-aqwa sekwenza", // REVIEW
-  distribution: "Kemm-il tentattiv", // REVIEW
+  distribution: "Riżultati", // REVIEW
   emptyStats: "Ilgħab l-ewwel logħba tiegħek", // REVIEW
   emptyStatsBody: "Hawn tara kemm rbaħt, is-sekwenza tiegħek u kemm-il tentattiv ħadt.", // REVIEW
 
@@ -125,14 +125,14 @@ export const mt = {
   galleryClosed: "vojta", // REVIEW
   inPlace: "f'postha", // REVIEW
   wordAccepted: (w: string, row: number) => `${w}, tajba. Ringiela ${row}.`, // REVIEW
-  sellumWon: "Wasalt!", // REVIEW
+  sellumWon: "Prosit!", // REVIEW
   sellumLost: "Ir-rotta kienet…", // REVIEW
   yourLadder: "Is-sellum tiegħek", // REVIEW
   routesCount: (n: number) => `Kien hemm ${n} rotot`, // REVIEW
   otherRoute: "Rotta li ma ħadtx", // REVIEW
   formOf: (x: string) => `forma ta' ${x}`, // REVIEW
   playKelma: "Ilgħab Kelma", // REVIEW
-  livesDist: "Ħajjiet fadal meta rbaħt", // REVIEW
+  livesDist: "Riżultati", // REVIEW
   livesLost: "Tlift", // REVIEW
   sellumHelpIntro: "Mill-kelma ta' fuq sal-kelma t'isfel f'4 tarġiet. F'kull tarġa biddel ittra waħda, u kull kelma trid tkun Maltija.", // REVIEW
   sellumHelpEdit: "Ikteb il-kelma sħiħa, li tibdel ittra waħda biss mill-kelma ta' fuqha, u agħfas DAĦĦAL.", // REVIEW
@@ -152,12 +152,73 @@ export const mt = {
   sellumHowRoutes: "Ma hemmx tweġiba waħda. Kull puzzle għandu mill-inqas 3 rotot, u kull rotta li taħdem tgħodd. Fl-aħħar naraw kemm kien hemm rotot.", // REVIEW
   sellumHowGreen: "Wara kull kelma, l-ittri li diġà qegħdin f'posthom fil-kelma t'isfel isiru ħodor, b'linja taħthom.", // REVIEW
 
+  // --- Għerq (root words) ---
+  gherqTagline: "Sib il-kliem kollu li jikber mill-għerq", // REVIEW
+  gherqTypePrompt: "Ikteb kelma…", // REVIEW
+  startedToday: "bdejt illum", // REVIEW
+  gherqNumber: (n: number) => `Għerq #${n}`, // REVIEW
+  gherqTodayRoot: (root: string) => `Illum: ${root}`, // REVIEW
+  alreadyFound: "Diġà sibtha", // REVIEW
+  notFromRoot: "Mhux minn dan l-għerq", // REVIEW
+  notCounted: "Din ma tgħoddx illum", // REVIEW
+  checkingWord: "Qed niċċekkja…", // REVIEW
+  pointsOf: (e: number, t: number) => `${e} / ${t} punti`, // REVIEW
+  bonusPointsOf: (b: number) => `+${b} bonus`, // REVIEW
+  bonusCount: (n: number) => `+${n} bonus`, // REVIEW
+  bonusCountAria: (n: number) => (n === 1 ? "u kelma bonus waħda, mhux meħtieġa għall-istilel" : `u ${n} kliem bonus, mhux meħtieġa għall-istilel`), // REVIEW
+  bonusFound: "Kelma bonus!", // REVIEW
+  bonusTitle: "Kliem bonus", // REVIEW
+  nextStar: (n: number) => (n === 1 ? "Stilla oħra b'punt wieħed" : `Stilla oħra fi ${n} punti`), // REVIEW
+  firstStar: "Sib kelma għall-ewwel stilla", // REVIEW
+  allStars: "Sibt il-kliem kollu!", // REVIEW
+  starsOf: (n: number) => (n === 1 ? "Stilla waħda minn 5" : `${n} stilel minn 5`), // REVIEW
+  cluesTitle: (found: number, total: number) => `Tifsiriet: ${found} / ${total} misjuba`, // REVIEW
+  clueAria: (len: number, hint: { position: number; letter: string } | null) => (hint ? `Kelma ta' ${len} ittri; l-ittra numru ${hint.position} hija ${hint.letter}` : `Kelma ta' ${len} ittri`), // REVIEW
+  hint: "Ħjiel", // REVIEW
+  hintNone: "M'hemmx aktar ħjiliet", // REVIEW
+  hintAnnounce: (gloss: string, position: number, letter: string) => `Ħjiel: f'"${gloss}", l-ittra numru ${position} hija ${letter}`, // REVIEW
+  giveUp: "Ċedi", // REVIEW
+  giveUpConfirm: "Żgur? Tara l-kliem kollu u l-logħba tal-lum tieqaf hawn. L-istilel li ksibt jibqgħu.", // REVIEW
+  giveUpYes: "Iva, uri kollox", // REVIEW
+  cancel: "Le, nibqa' nilgħab", // REVIEW
+  wordFound: (w: string, gloss: string, p: number) => `${w}: ${gloss}. ${p === 1 ? "Punt wieħed" : `${p} punti`}.`, // REVIEW
+  pointsAria: (p: number) => (p === 1 ? "punt wieħed" : `${p} punti`), // REVIEW
+  missed: "ma sibtiex", // REVIEW
+  posVerb: "Verbi", // REVIEW
+  posNoun: "Nomi", // REVIEW
+  posAdj: "Aġġettivi", // REVIEW
+  gherqDone: "Prosit!", // REVIEW
+  gherqRevealed: "Il-familja tal-għerq", // REVIEW
+  starsDist: "Riżultati", // REVIEW
+  avgStars: "Medja ta' stilel", // REVIEW
+  playSellum: "Ilgħab Sellum", // REVIEW
+  nextRootIn: "Għerq ġdid fi", // REVIEW
+  gherqHelpIntro: "Kuljum ikollok għerq, bħal K-T-B. Sib il-kliem li jikber minnu: KITEB, KTIEB, KITBA… It-tifsira ta' kull kelma tidher mill-bidu, b'kaxxa għal kull ittra.", // REVIEW
+  gherqHelpCounts: "Kliem tad-dizzjunarju biss: nomi, aġġettivi u verbi kif jidhru fid-dizzjunarju (KITEB, mhux JIKTEB).", // REVIEW
+  gherqHelpPoints: "Kliem rari jiswa aktar punti. L-istilel jimtlew hekk kif tiġbor il-punti. Kliem rari ħafna huwa bonus: jgħodd jekk tafu, imma m'għandekx bżonnu għall-ħames stilel.", // REVIEW
+  gherqHelpFree: "Tweġibiet ħżiena ma jiswewx xejn, u tista' terġa' tiġi aktar tard illum.", // REVIEW
+  gherqHowTitle: "Kif taħdem Għerq", // REVIEW
+  gherqHowRootTitle: "X'inhu għerq?", // REVIEW
+  gherqHowRoot: "Ħafna kliem Malti jikber minn għerq, normalment ta' tliet konsonanti. Mill-għerq K-T-B jiġu KITEB, KTIEB, KITBA u KITTIEB. Kuljum ikollok għerq wieħed, u trid issib kemm tista' kliem li jikber minnu.", // REVIEW
+  gherqHowExample: "Il-familja ta' K-T-B: kull kelma b'tifsirtha u l-punti tagħha.", // REVIEW
+  gherqHowCountsTitle: "X'jgħodd", // REVIEW
+  gherqHowCounts: "Kliem kif jidher fid-dizzjunarju biss: nomi, aġġettivi u verbi. KITEB jgħodd; KTIBT u JIKTEB ma jgħoddux, għax huma forom oħra tal-verb. Spelling alternattiv jgħodd bħala l-istess kelma.", // REVIEW
+  gherqHowPointsTitle: "Punti u stilel", // REVIEW
+  gherqHowPoints1: "Kliem komuni: punt wieħed", // REVIEW
+  gherqHowPoints2: "Kliem inqas komuni: 2 punti", // REVIEW
+  gherqHowPoints3: "Kliem rari: 3 punti bonus. M'għandekx bżonnu għall-istilel.", // REVIEW
+  gherqHowStars: "L-ewwel kelma tagħtik stilla. Imbagħad tieħu stilla oħra meta tilħaq 25%, 50% u 75% tal-punti, u l-ħames stilla meta ssib il-kliem kollu li mhuwiex bonus.", // REVIEW
+  gherqHowHintsTitle: "Ħjiliet", // REVIEW
+  gherqHowHints: "It-tifsira ta' kull kelma tidher mill-bidu, b'kaxxa għal kull ittra. Il-buttuna Ħjiel timla ittra waħda ta' kelma: l-ewwel waħda li mhix ittra tal-għerq, għax dawk diġà tarahom. Il-ħjiliet jibdew mill-kelma l-aktar faċli u qasira. Tista' tużahom kemm trid; jingħaddu fir-riżultat.", // REVIEW
+  gherqHowGiveUpTitle: "Ċedi", // REVIEW
+  gherqHowGiveUp: "Ċedi juri l-familja kollha, bil-kliem li ma sibtx immarkat. L-istilel li ksibt jibqgħu. Jekk ma ċċedix, tista' tieqaf u terġa' tiġi aktar tard illum.", // REVIEW
+  gherqHowFree: "Tweġibiet ħżiena ma jiswewx xejn: m'hemmx ħajjiet u lanqas limitu ta' ħin.", // REVIEW
+
   // --- home carousel ---
   carouselLabel: "Il-logħob", // REVIEW
   gameOf: (i: number, n: number, name: string) => `Logħba ${i} minn ${n}: ${name}`, // REVIEW
   prevGame: "Il-logħba ta' qabel", // REVIEW
   nextGame: "Il-logħba li jmiss", // REVIEW
-  newBadge: "Ġdid!", // REVIEW
 
   // --- 404 ---
   notFoundTitle: "Din il-paġna ma teżistix", // REVIEW

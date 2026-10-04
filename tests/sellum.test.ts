@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as analytics from "../lib/analytics";
-import { defaultSlide, isNewGame } from "../lib/carousel";
+import { GAMES, defaultSlide } from "../lib/carousel";
 import { daysSince, sellumDayIndex, SELLUM_EPOCH } from "../lib/day-index";
 import { COSTS_LIFE, ladderWords, newState, submitWord, type LadderContext, type SellumState } from "../lib/sellum/game";
 import { buildGraph, countShortestRoutes, diffCount, distancesFrom, shortestRoutes } from "../lib/sellum/graph";
@@ -193,17 +193,15 @@ describe("stats and storage", () => {
 });
 
 describe("home carousel", () => {
-  it("lands on the first game not finished today", () => {
-    expect(defaultSlide([false, false])).toBe(0);
-    expect(defaultSlide([true, false])).toBe(1);
-    expect(defaultSlide([false, true])).toBe(0);
-    expect(defaultSlide([true, true])).toBe(0);
+  it("has three games with Kelma in the middle", () => {
+    expect(GAMES).toEqual(["gherq", "kelma", "sellum"]);
   });
-  it("shows the Ġdid badge for exactly the first 14 days", () => {
-    expect(isNewGame(-1)).toBe(false);
-    expect(isNewGame(0)).toBe(true);
-    expect(isNewGame(13)).toBe(true);
-    expect(isNewGame(14)).toBe(false);
+  it("opens on Kelma unless it's finished, then the first unfinished game", () => {
+    expect(defaultSlide([false, false, false])).toBe(1);
+    expect(defaultSlide([true, false, false])).toBe(1);
+    expect(defaultSlide([false, true, false])).toBe(0);
+    expect(defaultSlide([true, true, false])).toBe(2);
+    expect(defaultSlide([true, true, true])).toBe(1);
   });
   it("counts Sellum's days from its own epoch", () => {
     expect(sellumDayIndex(new Date(`${SELLUM_EPOCH}T12:00:00+02:00`))).toBe(0);

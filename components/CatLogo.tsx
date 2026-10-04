@@ -3,7 +3,19 @@
  * white muzzle, belly and paws, pale green-yellow eyes, dark-tipped tail, purple collar.
  * Same drawing as public/favicon.svg.
  */
-export function CatLogo({ className, title }: { className?: string; title?: string }) {
+export function CatLogo({
+  className,
+  title,
+  sleeping = false,
+  tailClassName,
+}: {
+  className?: string;
+  title?: string;
+  /** Eyes closed (Għerq's cat naps in the tree's shade). */
+  sleeping?: boolean;
+  /** Class on the tail group, so it can be animated on its own. */
+  tailClassName?: string;
+}) {
   return (
     <svg
       viewBox="0 0 64 64"
@@ -14,7 +26,7 @@ export function CatLogo({ className, title }: { className?: string; title?: stri
       focusable="false"
     >
       {/* tail, dark at the tip */}
-      <g>
+      <g className={tailClassName}>
         <path d="M45 58c9 0 14-5 13-12-.6-4-4-5-5.5-3" fill="none" stroke="#6e6556" strokeWidth="4.5" strokeLinecap="round" />
         <path d="M58 46c-.6-4-4-5-5.5-3" fill="none" stroke="#2b2621" strokeWidth="4.5" strokeLinecap="round" />
       </g>
@@ -31,10 +43,16 @@ export function CatLogo({ className, title }: { className?: string; title?: stri
       <path d="M29 15.8v4.2M32 15.2v5.3M35 15.8v4.2M19.3 26.5h3.6M19.8 30.2l3.3-.8M44.7 26.5h-3.6M44.2 30.2l-3.3-.8" fill="none" stroke="#2b2621" strokeWidth="1.7" strokeLinecap="round" />
       <path d="M26 31.5c0-2.6 2.7-3.6 6-3.6s6 1 6 3.6c0 3.8-2.7 6.5-6 6.5s-6-2.7-6-6.5Z" fill="#f8f2e2" />
       {/* eyes */}
-      <ellipse cx="26" cy="24.5" rx="3.4" ry="3.6" fill="#dfe29a" />
-      <ellipse cx="38" cy="24.5" rx="3.4" ry="3.6" fill="#dfe29a" />
-      <ellipse cx="26" cy="24.5" rx="1" ry="2.8" fill="#1d1813" />
-      <ellipse cx="38" cy="24.5" rx="1" ry="2.8" fill="#1d1813" />
+      {sleeping ? (
+        <path d="M22.8 25.2c1.9 1.6 4.5 1.6 6.4 0M34.8 25.2c1.9 1.6 4.5 1.6 6.4 0" fill="none" stroke="#1d1813" strokeWidth="1.6" strokeLinecap="round" />
+      ) : (
+        <>
+          <ellipse cx="26" cy="24.5" rx="3.4" ry="3.6" fill="#dfe29a" />
+          <ellipse cx="38" cy="24.5" rx="3.4" ry="3.6" fill="#dfe29a" />
+          <ellipse cx="26" cy="24.5" rx="1" ry="2.8" fill="#1d1813" />
+          <ellipse cx="38" cy="24.5" rx="1" ry="2.8" fill="#1d1813" />
+        </>
+      )}
       <path d="M30.6 30h2.8L32 31.8Z" fill="#c98a8a" />
       {/* purple collar */}
       <path d="M22 37.2c6 3.3 14 3.3 20 0" fill="none" stroke="#8a6cc2" strokeWidth="2.2" strokeLinecap="round" />

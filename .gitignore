@@ -6,3 +6,7 @@ next-env.d.ts
 .claude
 .impeccable
 .tmp
+
+# Working copy of the Għerq root review (answers are saved to data/source/root-review.json)
+/gherq-root-review.xlsx
+/gherq-puzzles.xlsx

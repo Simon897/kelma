@@ -33,6 +33,11 @@
   --color-tile-present-fg: #2e2618;
   --color-tile-absent-fg: #f8f2e2;
 
+  /* Għerq: the soil from the carob-tree design (root tiles sit on it). */
+  --color-soil: #7b5a3b;
+  /* Earned stars: a deep festa gold that holds 3:1 against the page as a graphic. */
+  --color-star: #8c6210;
+
   --radius-tile: 2px;
   --shadow-block: 4px 4px 0 0 rgb(46 38 24 / 0.18);
   --shadow-block-sm: 2px 2px 0 0 rgb(46 38 24 / 0.18);
@@ -133,3 +138,14 @@ html[data-contrast] {
   }
 }
 
+
+/* Għerq: the napping cat's "z"s drift up and fade (durations and delays are set per letter). */
+@keyframes gq-z {
+  0% { transform: translate(0, 0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate(14px, -44px); opacity: 0; }
+}
+.gq-z {
+  opacity: 0;
+  animation: gq-z 3.6s ease-out infinite;
+}

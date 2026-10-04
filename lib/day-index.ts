@@ -70,6 +70,12 @@ function dayNumber({ year, month, day }: DateParts): number {
  */
 export const SELLUM_EPOCH = "2026-09-30";
 
+/**
+ * Għerq's own day 0 (Għerq #1). Same freezing rule as EPOCH.
+ * TODO(launch): provisional — set to Għerq's real launch date.
+ */
+export const GHERQ_EPOCH = "2026-09-29";
+
 const EPOCH_DAY = dayNumber(parseIsoDate(EPOCH));
 
 /** Days since an ISO date, in Malta time. Negative before it. */
@@ -85,6 +91,11 @@ export function dayIndex(instant: Date = new Date()): number {
 /** Sellum's day index (Sellum #N = index + 1). */
 export function sellumDayIndex(instant: Date = new Date()): number {
   return daysSince(SELLUM_EPOCH, instant);
+}
+
+/** Għerq's day index (Għerq #N = index + 1). */
+export function gherqDayIndex(instant: Date = new Date()): number {
+  return daysSince(GHERQ_EPOCH, instant);
 }
 
 /** Offset of Malta from UTC at an instant, in minutes (60 or 120). */

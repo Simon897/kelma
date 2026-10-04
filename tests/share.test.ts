@@ -4,7 +4,7 @@ import { shareText } from "../lib/share";
 describe("shareText", () => {
   it("puts the mode and puzzle number in the title", () => {
     const lines = shareText({ mode: "tqila", day: 11, guesses: ["TIBNA", "SAĦTA"], solution: "SAĦTA", won: true, highContrast: false }).split("\n");
-    expect(lines[0]).toBe("Kelma Tqila #12 2/6");
+    expect(lines[0]).toBe("Kelma Diffiċli #12 2/6");
     expect(lines[1]).toBe("🟨⬜⬜⬜🟩");
     expect(lines[2]).toBe("🟩🟩🟩🟩🟩");
   });

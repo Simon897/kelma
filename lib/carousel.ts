@@ -1,16 +1,16 @@
 /** Home-page carousel rules, kept pure so they can be tested. */
 
-export type GameKey = "kelma" | "sellum";
-export const GAMES: GameKey[] = ["kelma", "sellum"];
+export type GameKey = "gherq" | "kelma" | "sellum";
+/** Għerq · Kelma · Sellum, so Kelma sits in the middle. */
+export const GAMES: GameKey[] = ["gherq", "kelma", "sellum"];
+export const HOME_SLIDE = GAMES.indexOf("kelma");
 
-/** Land on the first game not finished today; if all are finished, the first slide. */
-export function defaultSlide(doneToday: boolean[]): number {
+/**
+ * Where the carousel opens: on Kelma (the middle) unless it's finished today; then the first
+ * game not finished today; if everything is finished, back on Kelma.
+ */
+export function defaultSlide(doneToday: boolean[], home = HOME_SLIDE): number {
+  if (!doneToday[home]) return home;
   const i = doneToday.findIndex((done) => !done);
-  return i < 0 ? 0 : i;
-}
-
-/** "Ġdid!" shows for the first 14 days of a game (day 0..13 from its epoch), then goes by itself. */
-export const NEW_BADGE_DAYS = 14;
-export function isNewGame(daysSinceLaunch: number): boolean {
-  return daysSinceLaunch >= 0 && daysSinceLaunch < NEW_BADGE_DAYS;
+  return i < 0 ? home : i;
 }

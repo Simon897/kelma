@@ -6,7 +6,8 @@
 export type AnalyticsEvent = {
   game_end:
     | { mode: "normali" | "tqila"; day: number; word: string; won: boolean; guesses: number }
-    | { game: "sellum"; day: number; won: boolean; livesLeft: number; steps: number };
+    | { game: "sellum"; day: number; won: boolean; livesLeft: number; steps: number }
+    | { game: "gherq"; day: number; stars: number; found: number; total: number; hints: number; revealed: boolean };
 };
 
 export function track<E extends keyof AnalyticsEvent>(event: E, props: AnalyticsEvent[E]): void {

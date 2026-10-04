@@ -13,13 +13,8 @@ import { TickIcon } from "./Icons";
 
 export const primary =
   "btn-block inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink bg-sea px-2 text-limestone-50 hover:bg-sea-deep sm:px-4";
-export const secondary =
-  "btn-block inline-flex min-h-12 items-center justify-center rounded-tile border-2 border-ink bg-limestone-50 px-3 font-bold text-ink hover:bg-limestone-200";
 
-/**
- * The three buttons. Normali and Tqila are primary; Kif taħdem? is secondary.
- * One row when they fit (measured: ~31rem including done ticks); otherwise Normali + Tqila on top, Kif taħdem? below.
- */
+/** Kelma's two modes, side by side. How-to-play lives in each game's help, not on the home page. */
 export function HomeButtons({ lang }: { lang: Lang }) {
   const d = t(lang);
   const [done, setDone] = useState<Record<Mode, boolean>>({ normali: false, tqila: false });
@@ -42,13 +37,10 @@ export function HomeButtons({ lang }: { lang: Lang }) {
   );
 
   return (
-    <nav className="@container w-full max-w-[34rem]">
-      <div className="grid grid-cols-2 gap-3 [grid-template-areas:'n_t'_'h_h'] @[31rem]:grid-cols-[1fr_auto_1fr] @[31rem]:[grid-template-areas:'n_h_t']">
-        {modeButton("normali", d.modeNormali, "[grid-area:n]")}
-        <Link href={href("how", lang)} className={`${secondary} [grid-area:h]`}>
-          {d.howLink}
-        </Link>
-        {modeButton("tqila", d.modeTqila, "[grid-area:t]")}
+    <nav className="w-full">
+      <div className="grid grid-cols-2 gap-3">
+        {modeButton("normali", d.modeNormali, "")}
+        {modeButton("tqila", d.modeTqila, "")}
       </div>
     </nav>
   );

@@ -12,6 +12,12 @@ export const KEYS = {
   sellumState: "kelma:sellum:state",
   sellumStats: "kelma:sellum:stats",
   seenCarousel: "kelma:seen-carousel",
+  gherqState: "kelma:gherq:state",
+  gherqStats: "kelma:gherq:stats",
+  /** Day whose game_end analytics event has been sent (once per day). */
+  gherqTracked: "kelma:gherq:tracked",
+  /** Set on the first visit to Għerq: the home slide then previews today's root. */
+  gherqVisited: "kelma:gherq:visited",
 } as const;
 
 export function readJSON<T>(key: string): T | null {
