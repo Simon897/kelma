@@ -15,6 +15,7 @@ import {
   coreFound,
   coreWords,
   earnedPoints,
+  firstSense,
   hintLetter,
   isBonus,
   emptyGherqStats,
@@ -41,7 +42,7 @@ import { KEYS, readJSON, writeJSON } from "@/lib/storage";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { CatLogo } from "../CatLogo";
 import { Countdown } from "../Countdown";
-import { ArrowIcon, HelpIcon, ShareIcon, StatsIcon, TickIcon } from "../Icons";
+import { ArrowIcon, CloseIcon, HelpIcon, ShareIcon, StatsIcon, TickIcon } from "../Icons";
 import { Keyboard } from "../Keyboard";
 import { LangToggle } from "../LangToggle";
 import { Modal } from "../Modal";
@@ -72,7 +73,23 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const [stats, setStats] = useState<GherqStats>(emptyGherqStats);
   const [lexicon, setLexicon] = useState<Lexicon | null>(null);
   const [entry, setEntry] = useState<string[]>([]);
-  const [flying, setFlying] = useState<{ letters: string[]; key: number } | null>(null);
+  const [flying, setFlying] = useState<{ letters: string[]; key: number; dy: number } | null>(null);
+  const sceneBox = useRef<HTMLDivElement>(null);
+  const entryBox = useRef<HTMLDivElement>(null);
+  /** How far the found word's tiles fly to reach the tree's canopy (layouts differ by screen). */
+  const flightTo = () => {
+    const s = sceneBox.current?.getBoundingClientRect();
+    const e = entryBox.current?.getBoundingClientRect();
+    return s && e ? s.top + s.height * 0.4 - (e.top + e.height / 2) : -160;
+  };
+  /** Brings a clue card into view in whichever list is showing (the phone list scrolls). */
+  const showCard = useCallback(
+    (word: string) => {
+      const card = [...document.querySelectorAll<HTMLElement>(`[data-clue="${word}"]`)].find((el) => el.offsetParent !== null);
+      card?.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+    },
+    [reduce],
+  );
   const [fresh, setFresh] = useState<string | null>(null);
   const [shakeKey, setShakeKey] = useState(0);
   const [panel, setPanel] = useState<Panel>("none");
@@ -81,6 +98,12 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const [starsAnnounce, setStarsAnnounce] = useState("");
   const [copied, setCopied] = useState(false);
   const [newDay, setNewDay] = useState(false);
+  const [intro, setIntro] = useState(false);
+  /** The first-visit note has done its job (first word found, dismissed, or help opened): never again. */
+  const endIntro = useCallback(() => {
+    setIntro(false);
+    writeJSON(SEEN_HELP, true);
+  }, []);
   const timers = useRef<number[]>([]);
   const cat = useRef<CatHandle>(null);
   const [debugPose, setDebugPose] = useState<CatPose | null>(null);
@@ -111,10 +134,8 @@ export function GherqGame({ lang }: { lang: Lang }) {
     setStats(loadGherqStats());
     if (!p) return;
     setState(loadGherqState(today));
-    if (!readJSON<boolean>(SEEN_HELP)) {
-      writeJSON(SEEN_HELP, true);
-      setPanel("help");
-    }
+    // First visit: a two-line note above the clues instead of a pop-up over the game.
+    if (!readJSON<boolean>(SEEN_HELP)) setIntro(true);
     const id = window.setTimeout(() => void loadLexicon().then(setLexicon), 0);
     return () => window.clearTimeout(id);
   }, []);
@@ -125,6 +146,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const bonus = puzzle ? bonusPoints(puzzle, found) : 0;
   const coreCount = puzzle ? coreWords(puzzle).length : 0;
   const bonusCount = puzzle ? bonusWords(puzzle).length : 0;
+  const bonusFound = puzzle ? bonusWords(puzzle).filter((w) => found.has(w.word)).length : 0;
   const stars = starsFor(earned, total, found.size);
   const finished = state.revealed || stars === 5;
   const toNext = nextStarIn(earned, total, found.size);
@@ -164,7 +186,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
         case "not-word":
           cat.current?.react("wrong");
           setShakeKey((k) => k + 1);
-          showToast(d.notInList);
+          showToast(d.gherqNotAWord);
           setEntry([]);
           return;
         case "wrong-root":
@@ -173,7 +195,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
           setEntry([]);
           return;
         case "excluded":
-          showToast(d.notCounted);
+          showToast(d.gherqNotToday);
           setEntry([]);
           return;
         case "repeat":
@@ -185,9 +207,11 @@ export function GherqGame({ lang }: { lang: Lang }) {
       const w = puzzle.words.find((x) => x.word === r.word)!;
       const next: GherqState = { ...state, found: [...state.found, w.word] };
       commit(next);
-      setFlying({ letters: tiles(word), key: Date.now() });
+      setFlying({ letters: tiles(word), key: Date.now(), dy: flightTo() });
+      later(() => showCard(w.word), 450);
       setEntry([]);
       setFresh(w.word);
+      if (intro) endIntro();
       setAnnounce(d.wordFound(w.word, w.gloss, w.points));
       if (isBonus(w)) showToast(d.bonusFound, d.wordFound(w.word, w.gloss, w.points));
       const nextFound = new Set(next.found);
@@ -214,7 +238,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
         later(() => setPanel("stats"), RESULT_DELAY_MS);
       }
     },
-    [commit, coreCount, d, day, found, finished, later, lexicon, puzzle, showToast, stars, state, total],
+    [commit, coreCount, d, day, endIntro, found, finished, intro, later, lexicon, puzzle, showCard, showToast, stars, state, total],
   );
 
   const onKey = useCallback(
@@ -264,9 +288,10 @@ export function GherqGame({ lang }: { lang: Lang }) {
     commit({ ...state, hints: state.hints + 1, hinted: [...state.hinted, w.word] });
     cat.current?.react("hint");
     const h = hintLetter(w.word, puzzle.root);
-    const msg = d.hintAnnounce(w.gloss, h.index + 1, h.letter);
+    const msg = d.hintAnnounce(firstSense(w.gloss), h.index + 1, h.letter);
     showToast(msg, msg, 3200);
-  }, [commit, d, finished, found, puzzle, showToast, state]);
+    showCard(w.word);
+  }, [commit, d, finished, found, puzzle, showCard, showToast, state]);
 
   const giveUp = useCallback(() => {
     if (!puzzle) return;
@@ -297,6 +322,24 @@ export function GherqGame({ lang }: { lang: Lang }) {
   }, [coreCount, d, day, found, lang, later, puzzle, showToast, stars, state.hints]);
 
   const clues = useMemo(() => (puzzle ? clueOrder(puzzle) : []), [puzzle]);
+  const hintLeft = !!puzzle && !!nextHint(puzzle, found, state.hinted);
+
+  // Phones: the clue list fades at the bottom while more clues are below it.
+  const phoneList = useRef<HTMLDivElement>(null);
+  const [moreBelow, setMoreBelow] = useState(false);
+  const checkMore = useCallback(() => {
+    const el = phoneList.current;
+    if (el) setMoreBelow(el.scrollHeight - el.scrollTop - el.clientHeight > 4);
+  }, []);
+  useEffect(() => {
+    const el = phoneList.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    checkMore();
+    const ro = new ResizeObserver(checkMore);
+    ro.observe(el);
+    if (el.firstElementChild) ro.observe(el.firstElementChild);
+    return () => ro.disconnect();
+  }, [checkMore, puzzle]);
   // Bonus words aren't listed as clues; once found they join the list underneath.
   const foundBonus = useMemo(
     () => (puzzle ? bonusWords(puzzle).filter((w) => found.has(w.word)).sort((a, b) => byLengthThenAlpha(a.word, b.word)) : []),
@@ -310,15 +353,48 @@ export function GherqGame({ lang }: { lang: Lang }) {
 
   const list = puzzle && (
     <div className="space-y-2">
-      <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs">
+      {intro && !finished && (
+        <div className="stone flex items-start gap-1 rounded-tile border-2 border-ink bg-limestone-50 py-2 pl-3 pr-1 text-sm shadow-block-sm">
+          <p className="min-w-0 flex-1 leading-snug">
+            <strong className="block">{d.gherqIntroTitle(rootLabel(puzzle.root))}</strong>
+            {d.gherqIntroBody}{" "}
+            <button
+              type="button"
+              onClick={() => {
+                endIntro();
+                setPanel("help");
+              }}
+              className="font-bold text-sea-deep underline underline-offset-2"
+            >
+              {d.helpTitle}
+            </button>
+          </p>
+          <button type="button" onClick={endIntro} aria-label={d.gherqIntroDismiss} className="-my-1 inline-flex size-11 shrink-0 items-center justify-center rounded-tile text-ink hover:bg-limestone-200">
+            <CloseIcon className="size-5" />
+          </button>
+        </div>
+      )}
+      <div className="flex items-center gap-2 px-1 text-xs">
         <span className="font-bold">{d.cluesTitle(coreFound(puzzle, found), coreCount)}</span>
         {bonusCount > 0 && (
-          <span aria-label={d.bonusCountAria(bonusCount)} className="rounded-tile border border-star px-1.5 py-0.5 font-semibold text-ink">
-            {d.bonusCount(bonusCount)}
+          <span aria-label={d.bonusCountAria(bonusFound, bonusCount)} className="rounded-tile border border-star px-1.5 py-0.5 font-semibold text-ink">
+            {d.bonusCount(bonusFound, bonusCount)}
           </span>
         )}
+        {/* Hint sits on the clues it fills in, within thumb reach; the hit area is 44px tall. */}
+        {!finished && (
+          <button
+            type="button"
+            onClick={takeHint}
+            disabled={!hintLeft}
+            className="relative ml-auto inline-flex h-8 items-center gap-1 rounded-tile border-2 border-ink bg-limestone-50 px-2.5 text-sm font-bold text-ink shadow-block-sm before:absolute before:-inset-y-1.5 before:inset-x-0 before:content-[''] hover:bg-limestone-200 active:translate-y-px disabled:border-ink-soft/50 disabled:text-ink-soft disabled:shadow-none disabled:hover:bg-limestone-50"
+          >
+            <HintIcon className="size-4" />
+            {d.hint}
+          </button>
+        )}
       </div>
-      <ul className="space-y-2">
+      <ul className="space-y-1.5 md:space-y-2">
         {/* every clue stays in its place, easiest first; a found word fills its card in */}
         {clues.map((w) =>
           found.has(w.word) ? (
@@ -339,19 +415,19 @@ export function GherqGame({ lang }: { lang: Lang }) {
     const before = day < 0;
     body = (
       <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-        <h2 className="display-caps text-2xl">{before ? d.noPuzzleBeforeTitle : d.noPuzzleAfterTitle}</h2>
-        <p className="mt-3 max-w-xs text-ink-soft">{before ? d.noPuzzleBeforeBody : d.noPuzzleAfterBody}</p>
+        <h2 className="display-caps text-2xl">{before ? d.gherqBeforeTitle : d.gherqAfterTitle}</h2>
+        <p className="mt-3 max-w-xs text-ink-soft">{before ? d.gherqBeforeBody : d.gherqAfterBody}</p>
       </div>
     );
   } else if (!puzzle) {
     body = <div className="flex-1" />;
   } else {
     body = (
-      <div className="flex min-h-0 flex-1 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:gap-4">
+      <div className="flex min-h-0 flex-1 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:gap-4 phone-landscape:grid phone-landscape:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] phone-landscape:gap-3">
         <div className="relative flex min-h-0 flex-1 flex-col md:justify-center">
           <div className="relative flex min-h-0 flex-1 flex-col md:flex-none">
             {/* phones: a short scene so the clues fit; desktop: a sensible height, the game centred */}
-            <div className="relative h-[clamp(96px,22dvh,220px)] flex-none md:h-[clamp(200px,calc(100dvh-400px),560px)]">
+            <div ref={sceneBox} className="relative h-[clamp(96px,22dvh,220px)] flex-none md:h-[clamp(200px,calc(100dvh-400px),560px)] phone-landscape:h-[clamp(56px,18dvh,88px)]">
               <CarobScene
                 found={sceneKinds}
                 freshIndex={fresh ? state.found.indexOf(fresh) : null}
@@ -363,23 +439,28 @@ export function GherqGame({ lang }: { lang: Lang }) {
             </div>
             <div className="flex items-center justify-between gap-2 px-3 pt-2">
               <Stars stars={stars} d={d} />
-              <p className="text-right text-xs leading-tight text-ink-soft">
-                <span className="block font-semibold text-ink">
-                  {d.pointsOf(earned, total)}
-                  {bonus > 0 && <span className="ml-1 font-bold text-ink">{d.bonusPointsOf(bonus)}</span>}
-                </span>
+              {/* One line of progress: how far the next star is (the stars carry the rest). */}
+              <p className="text-right text-sm font-semibold leading-tight text-ink">
                 {found.size === 0 ? d.firstStar : toNext === null ? d.allStars : d.nextStar(toNext)}
               </p>
             </div>
             {/* phones: the clues between the tree and the keyboard */}
-            <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-2 md:hidden">{list}</div>
+            <div
+              ref={phoneList}
+              onScroll={checkMore}
+              className={`min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-2 md:hidden phone-landscape:hidden ${
+                moreBelow ? "[mask-image:linear-gradient(to_bottom,black_calc(100%-2.5rem),transparent)]" : ""
+              }`}
+            >
+              {list}
+            </div>
           </div>
 
           {finished ? (
             <div className="mx-auto w-full max-w-[500px] shrink-0 px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-2">
               <div className="flex items-center justify-between gap-3 rounded-tile border-2 border-ink bg-limestone-100 px-4 py-3 shadow-block-sm">
                 <p className="text-sm font-semibold text-ink-soft">
-                  {newDay ? d.newWordReady : d.nextRootIn}
+                  {newDay ? d.gherqNewRootReady : d.nextRootIn}
                   <br />
                   {newDay ? (
                     <button type="button" onClick={() => window.location.reload()} className="text-base font-bold text-sea-deep underline underline-offset-2">
@@ -399,7 +480,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
             </div>
           ) : (
             <>
-              <div className="relative">
+              <div ref={entryBox} className="relative">
                 <EntryRow letters={entry} shakeKey={shakeKey} placeholder={d.gherqTypePrompt} />
                 {flying && !reduce && (
                   <motion.div
@@ -407,7 +488,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
                     aria-hidden
                     className="pointer-events-none absolute inset-0 flex items-center justify-center gap-[3px]"
                     initial={{ y: 0, opacity: 1, scale: 1 }}
-                    animate={{ y: -160, opacity: 0, scale: 0.6 }}
+                    animate={{ y: flying.dy, opacity: 0, scale: 0.6 }}
                     transition={{ duration: 0.35, ease: [0.45, 0, 0.2, 1] }}
                   >
                     {flying.letters.map((l, i) => (
@@ -424,7 +505,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
         </div>
 
         {/* desktop: the list beside the tree */}
-        <aside className="hidden min-h-0 overflow-y-auto px-1 py-3 md:block" aria-label={puzzle ? d.cluesTitle(coreFound(puzzle, found), coreCount) : undefined}>
+        <aside className="hidden min-h-0 overflow-y-auto px-1 py-3 md:block phone-landscape:block" aria-label={puzzle ? d.cluesTitle(coreFound(puzzle, found), coreCount) : undefined}>
           {list}
         </aside>
       </div>
@@ -440,11 +521,6 @@ export function GherqGame({ lang }: { lang: Lang }) {
         <h1 className="min-w-0 flex-1 truncate whitespace-nowrap pl-1 leading-none">
           <span className="display-caps text-[0.85rem] tracking-normal">{puzzle ? d.gherqNumber(day + 1) : "Għerq"}</span>
         </h1>
-        {puzzle && !finished && (
-          <button type="button" className={iconBtn} aria-label={d.hint} onClick={takeHint}>
-            <HintIcon className="size-6" />
-          </button>
-        )}
         <button type="button" className={iconBtn} aria-label={d.helpAria} onClick={() => setPanel("help")}>
           <HelpIcon className="size-6" />
         </button>

@@ -138,11 +138,12 @@ const EN_MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-export function formatMaltaDate(lang: "mt" | "en", instant: Date = new Date()): string {
+export function formatMaltaDate(lang: "mt" | "en", instant: Date = new Date(), { year = true }: { year?: boolean } = {}): string {
   const parts = maltaDateParts(instant);
   const weekday = new Date(Date.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay();
+  const y = year ? ` ${parts.year}` : "";
   if (lang === "mt") {
-    return `${MT_DAYS[weekday]}, ${parts.day} ta' ${MT_MONTHS[parts.month - 1]} ${parts.year}`;
+    return `${MT_DAYS[weekday]}, ${parts.day} ta' ${MT_MONTHS[parts.month - 1]}${y}`;
   }
-  return `${EN_DAYS[weekday]}, ${parts.day} ${EN_MONTHS[parts.month - 1]} ${parts.year}`;
+  return `${EN_DAYS[weekday]}, ${parts.day} ${EN_MONTHS[parts.month - 1]}${y}`;
 }

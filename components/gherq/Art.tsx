@@ -99,11 +99,13 @@ export function CarobScene({
   return (
     // Positioning comes from the caller (e.g. "absolute inset-0"), so classes never conflict.
     <div className={`overflow-hidden [container-type:size] ${className || "relative"}`} style={{ background: SCENE_BG }}>
-      {/* A box with the viewBox's proportions, bottom-centred. It fills the width and may grow up to
-          1.5× to fill a short scene (the tree and cat stay in view); a taller scene shows more sky. */}
+      {/* A box with the viewBox's proportions, bottom-centred, always as tall as the scene so the
+          whole tree shows, canopy included (where found words grow). A short, wide scene (phones)
+          gets a smaller tree, and the sky, wall and fields, drawn far past the viewBox, fill the
+          sides. A tall, narrow scene zooms in up to 1.5× and crops the sides instead. */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2"
-        style={{ width: `max(100cqw, min(calc(100cqh * ${VB_W} / ${VB_H}), calc(100cqw * 1.5)))`, aspectRatio: `${VB_W} / ${VB_H}` }}
+        style={{ width: `min(calc(100cqh * ${VB_W} / ${VB_H}), calc(100cqw * 1.5))`, aspectRatio: `${VB_W} / ${VB_H}` }}
       >
         <svg aria-hidden viewBox={VIEWBOX} preserveAspectRatio="xMidYMax meet" className="absolute inset-0 size-full overflow-visible" focusable="false">
           <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
@@ -114,27 +116,10 @@ export function CarobScene({
         </svg>
         {root && (
           <div className="absolute inset-x-0 -translate-y-1/2" style={{ top: `${ROOT_TILES_Y * 100}%` }}>
-            <RootTiles root={root} onSoil />
+            <RootTiles root={root} size="scene" onSoil />
           </div>
         )}
       </div>
     </div>
-  );
-}
-
-/** A small crop of the same tree, in leaf, for the home-page carousel slide. */
-export function MiniCarob({ className }: { className?: string }) {
-  return (
-    <svg viewBox="66 14 228 186" className={className} aria-hidden focusable="false">
-      <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
-      <Raw html={GROUND} />
-      <Raw html={TREE} />
-      <g filter="url(#gq-sh)">
-        {SPRIG_SLOTS.slice(0, 8).map(([x, y, r, s], i) => (
-          <use key={i} href="#gq-sprig" transform={`translate(${x},${y}) rotate(${r}) scale(${s})`} />
-        ))}
-        <use href="#gq-pod" transform={`translate(${POD_SLOTS[0][0]},${POD_SLOTS[0][1]}) rotate(${POD_SLOTS[0][2]})`} />
-      </g>
-    </svg>
   );
 }

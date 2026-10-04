@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* A phone held sideways: too short to stack the game, so it lays out side by side like desktop. */
+@custom-variant phone-landscape (@media (orientation: landscape) and (max-height: 520px));
+
 /*
  * Kelma design tokens. Every colour traces back to something Maltese:
  * globigerina limestone, the Blue Grotto, festa gold, luzzu paint.
@@ -148,4 +151,26 @@ html[data-contrast] {
 .gq-z {
   opacity: 0;
   animation: gq-z 3.6s ease-out infinite;
+}
+
+/*
+ * Home: each game's tile picture plays its game once when its card comes into view (data-play):
+ * marked tiles flip and take their colour at the midpoint, like a guess in the game. The finished
+ * colours are the default, so reduced motion (above) and no-JS show the finished picture.
+ */
+@keyframes mini-flip {
+  0%, 100% { transform: rotateX(0deg); }
+  50% { transform: rotateX(90deg); }
+}
+@keyframes mini-paint {
+  from {
+    background-color: var(--color-limestone-50);
+    border-color: color-mix(in srgb, var(--color-ink-soft) 60%, transparent);
+    color: var(--color-ink);
+  }
+}
+[data-play] .mini-flip {
+  animation:
+    mini-flip 420ms var(--ease-flip) var(--d, 0ms) backwards,
+    mini-paint 210ms step-end var(--d, 0ms) backwards;
 }

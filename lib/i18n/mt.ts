@@ -4,6 +4,9 @@
  */
 export const mt = {
   // --- meta ---
+  siteTagline: "Logħob tal-kliem bil-Malti, kuljum", // REVIEW
+  doneForToday: "Lest għal-lum!", // REVIEW
+  newGamesIn: "Logħob ġdid fi", // REVIEW
   siteDescription: "Logħba tal-kliem bil-Malti. Kelma ġdida kuljum, f'żewġ livelli.", // REVIEW
   howTitle: "Kif taħdem", // REVIEW
 
@@ -20,7 +23,6 @@ export const mt = {
   tagline: "6 tentattivi biex taqta' kelma b'ħames ittri", // REVIEW
   modeNormali: "Normali", // REVIEW
   modeTqila: "Diffiċli", // REVIEW
-  howLink: "Kif taħdem?", // REVIEW
   doneToday: "lesta llum", // REVIEW
   wordOfDayTitle: "Kelma tal-llum", // REVIEW (spelling as requested; standard would be "tal-lum")
 
@@ -85,6 +87,9 @@ export const mt = {
   helpPresent: "Isfar: l-ittra fil-kelma, imma f'post ieħor.", // REVIEW
   helpAbsent: "Griż: l-ittra mhix fil-kelma.", // REVIEW
   helpMore: "Aktar dwar kif taħdem", // REVIEW
+  gherqIntroTitle: (root: string) => `Sib il-kliem li jikber minn ${root}.`, // REVIEW
+  gherqIntroBody: "Kull tifsira hawn taħt hija kelma: iktibha u agħfas DAĦĦAL.", // REVIEW
+  gherqIntroDismiss: "Aħbi din in-nota", // REVIEW
 
   // --- how it works page ---
   howHeading: "Kif taħdem", // REVIEW
@@ -160,12 +165,11 @@ export const mt = {
   gherqTodayRoot: (root: string) => `Illum: ${root}`, // REVIEW
   alreadyFound: "Diġà sibtha", // REVIEW
   notFromRoot: "Mhux minn dan l-għerq", // REVIEW
-  notCounted: "Din ma tgħoddx illum", // REVIEW
   checkingWord: "Qed niċċekkja…", // REVIEW
   pointsOf: (e: number, t: number) => `${e} / ${t} punti`, // REVIEW
   bonusPointsOf: (b: number) => `+${b} bonus`, // REVIEW
-  bonusCount: (n: number) => `+${n} bonus`, // REVIEW
-  bonusCountAria: (n: number) => (n === 1 ? "u kelma bonus waħda, mhux meħtieġa għall-istilel" : `u ${n} kliem bonus, mhux meħtieġa għall-istilel`), // REVIEW
+  bonusCount: (found: number, total: number) => (found ? `Bonus ${found}/${total}` : `+${total} bonus`), // REVIEW
+  bonusCountAria: (found: number, total: number) => `Kliem bonus, mhux meħtieġ għall-istilel: sibt ${found} minn ${total}`, // REVIEW
   bonusFound: "Kelma bonus!", // REVIEW
   bonusTitle: "Kliem bonus", // REVIEW
   nextStar: (n: number) => (n === 1 ? "Stilla oħra b'punt wieħed" : `Stilla oħra fi ${n} punti`), // REVIEW
@@ -176,7 +180,15 @@ export const mt = {
   clueAria: (len: number, hint: { position: number; letter: string } | null) => (hint ? `Kelma ta' ${len} ittri; l-ittra numru ${hint.position} hija ${hint.letter}` : `Kelma ta' ${len} ittri`), // REVIEW
   hint: "Ħjiel", // REVIEW
   hintNone: "M'hemmx aktar ħjiliet", // REVIEW
-  hintAnnounce: (gloss: string, position: number, letter: string) => `Ħjiel: f'"${gloss}", l-ittra numru ${position} hija ${letter}`, // REVIEW
+  hintAnnounce: (clue: string, position: number, letter: string) => `Ħjiel: ${letter} hija l-ittra numru ${position} ta' "${clue}"`, // REVIEW
+  gherqNotAWord: "Mhux kelma tad-dizzjunarju", // REVIEW
+  gherqNotToday: "Minn dan l-għerq, imma mhux fil-logħba tal-lum", // REVIEW
+  gherqEmptyStatsBody: "Hawn tara l-istilel u s-sekwenza tiegħek.", // REVIEW
+  gherqBeforeTitle: "Għerq għadu ma bediex", // REVIEW
+  gherqBeforeBody: "L-ewwel għerq joħroġ f'nofsillejl, ħin Malta.", // REVIEW
+  gherqAfterTitle: "M'hemmx għerq illum", // REVIEW
+  gherqAfterBody: "Qed inħejju l-għeruq li jmiss. Erġa' ara għada.", // REVIEW
+  gherqNewRootReady: "L-għerq il-ġdid lest", // REVIEW
   giveUp: "Ċedi", // REVIEW
   giveUpConfirm: "Żgur? Tara l-kliem kollu u l-logħba tal-lum tieqaf hawn. L-istilel li ksibt jibqgħu.", // REVIEW
   giveUpYes: "Iva, uri kollox", // REVIEW

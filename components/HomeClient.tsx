@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { dayIndex, formatMaltaDate } from "@/lib/day-index";
+import { dayIndex } from "@/lib/day-index";
 import { isDoneToday } from "@/lib/game-store";
 import { t, type Lang } from "@/lib/i18n";
 import type { Mode } from "@/lib/modes";
@@ -12,7 +12,22 @@ import { KEYS, readJSON } from "@/lib/storage";
 import { TickIcon } from "./Icons";
 
 export const primary =
-  "btn-block inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink bg-sea px-2 text-limestone-50 hover:bg-sea-deep sm:px-4";
+  "btn-block relative inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink bg-sea px-2 text-limestone-50 hover:bg-sea-deep sm:px-4";
+
+/**
+ * "Done today" on a play button: a tick badge on its corner, in the tiles' "correct" colour. It sits
+ * outside the label, so a long name (DIFFIĊLI) never has to share the button's width with it.
+ */
+export function DoneBadge({ label }: { label: string }) {
+  return (
+    <>
+      <span aria-hidden className="absolute -right-2 -top-2 flex size-6 items-center justify-center rounded-full border-2 border-ink bg-tile-correct text-tile-correct-fg">
+        <TickIcon className="size-3.5" />
+      </span>
+      <span className="sr-only">{` (${label})`}</span>
+    </>
+  );
+}
 
 /** Kelma's two modes, side by side. How-to-play lives in each game's help, not on the home page. */
 export function HomeButtons({ lang }: { lang: Lang }) {
@@ -27,12 +42,7 @@ export function HomeButtons({ lang }: { lang: Lang }) {
   const modeButton = (mode: Mode, label: string, area: string) => (
     <Link href={href(mode, lang)} className={`${primary} ${area}`}>
       <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{label}</span>
-      {done[mode] && (
-        <>
-          <TickIcon className="size-5 shrink-0" />
-          <span className="sr-only">{` (${d.doneToday})`}</span>
-        </>
-      )}
+      {done[mode] && <DoneBadge label={d.doneToday} />}
     </Link>
   );
 
@@ -43,17 +53,6 @@ export function HomeButtons({ lang }: { lang: Lang }) {
         {modeButton("tqila", d.modeTqila, "")}
       </div>
     </nav>
-  );
-}
-
-/** Today's date in Malta, in the page's language. Rendered after mount; space is reserved. */
-export function HomeDate({ lang }: { lang: Lang }) {
-  const [text, setText] = useState("");
-  useEffect(() => setText(formatMaltaDate(lang)), [lang]);
-  return (
-    <p className="min-h-6 text-base font-semibold text-ink-soft" suppressHydrationWarning>
-      {text}
-    </p>
   );
 }
 

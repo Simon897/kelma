@@ -5,6 +5,7 @@ import {
   bonusPoints,
   classifyEntry,
   clueOrder,
+  firstSense,
   hintLetter,
   coreWords,
   displayGherqStreak,
@@ -124,6 +125,10 @@ describe("clues and hints", () => {
     expect(hintLetter("ĦARREĠ", ħrġ)).toEqual({ index: 1, letter: "A" }); // a doubled radical is still the root
     expect(hintLetter("GĦERQ", ["GĦ", "R", "Q"])).toEqual({ index: 2, letter: "E" }); // GĦ is two tiles, both root
     expect(hintLetter("ĦRĠ", ħrġ)).toEqual({ index: 0, letter: "Ħ" }); // only root letters: the first
+  });
+  it("names a clue by its first sense", () => {
+    expect(firstSense("agreement; coming to terms")).toBe("agreement");
+    expect(firstSense("book")).toBe("book");
   });
   it("never hints a bonus word", () => {
     const core = coreWords(KTB).map((w) => w.word);

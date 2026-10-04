@@ -106,7 +106,7 @@ export function GherqResult({
         {stats.played === 0 ? (
           <div className="rounded-tile border-2 border-dashed border-limestone-400 px-4 py-5 text-center">
             <p className="font-bold">{d.emptyStats}</p>
-            <p className="mt-1 text-sm text-ink-soft">{d.emptyStatsBody}</p>
+            <p className="mt-1 text-sm text-ink-soft">{d.gherqEmptyStatsBody}</p>
           </div>
         ) : (
           <>
@@ -151,7 +151,7 @@ export function GherqResult({
         <>
           <div className="flex items-center justify-between gap-3 border-t-2 border-limestone-300 pt-4">
             <div>
-              <p className="text-xs font-semibold text-ink-soft">{newDay ? d.newWordReady : d.nextRootIn}</p>
+              <p className="text-xs font-semibold text-ink-soft">{newDay ? d.gherqNewRootReady : d.nextRootIn}</p>
               {newDay ? (
                 <button type="button" onClick={() => window.location.reload()} className="mt-1 font-bold text-sea-deep underline underline-offset-2">
                   {d.playNew}

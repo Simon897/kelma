@@ -10,8 +10,14 @@ import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 const EASE = [0.45, 0, 0.2, 1] as const;
 
 /** Today's root as stone tiles joined by hyphens: K-T-B. A digraph radical (GĦ) is one tile. */
-export function RootTiles({ root, size = "md", onSoil = false }: { root: string[]; size?: "sm" | "md"; onSoil?: boolean }) {
-  const box = size === "sm" ? "h-7 min-w-7 px-1 text-sm" : "h-10 min-w-10 px-1.5 text-xl";
+/** Root tiles. "scene" sizes with the screen: small under the phone's compact tree, full on tablets up. */
+export function RootTiles({ root, size = "md", onSoil = false }: { root: string[]; size?: "sm" | "md" | "scene"; onSoil?: boolean }) {
+  const box =
+    size === "sm"
+      ? "h-7 min-w-7 px-1 text-sm"
+      : size === "scene"
+        ? "h-7 min-w-7 px-1 text-sm md:h-10 md:min-w-10 md:px-1.5 md:text-xl phone-landscape:h-6 phone-landscape:min-w-6 phone-landscape:text-xs"
+        : "h-10 min-w-10 px-1.5 text-xl";
   return (
     <div role="img" aria-label={root.join("-")} className={`flex items-center justify-center gap-1 ${onSoil ? "mx-auto w-fit rounded-tile bg-soil px-2 py-1" : ""}`}>
       {root.map((r, i) => (
@@ -128,21 +134,32 @@ export function PointsBadge({ points, d, muted = false }: { points: number; d: D
   );
 }
 
+/**
+ * A word's meaning. On phones it shows two lines and the card expands on tap (`open`); from
+ * tablets up it is always in full. line-clamp is visual only, so screen readers get all of it.
+ */
+function Gloss({ text, open, className = "" }: { text: string; open: boolean; className?: string }) {
+  return <span className={`block text-sm leading-snug ${open ? "" : "line-clamp-2 md:line-clamp-none"} ${className}`}>{text}</span>;
+}
+
 /** A found word as a small dictionary entry: word in display caps, gloss beneath, points badge. */
 export function FoundCard({ word, d, fresh = false }: { word: GherqWord; d: Dict; fresh?: boolean }) {
   const reduce = usePrefersReducedMotion();
+  const [open, setOpen] = useState(false);
   return (
     <motion.li
       initial={fresh && !reduce ? { opacity: 0, x: -16 } : false}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, ease: EASE, delay: fresh ? 0.35 : 0 }}
-      className="stone flex items-start justify-between gap-2 rounded-tile border-2 border-ink/80 bg-limestone-50 px-3 py-2"
+      onClick={() => setOpen((o) => !o)}
+      data-clue={word.word}
+      className="stone flex items-start justify-between gap-2 rounded-tile border-2 border-ink/80 bg-limestone-50 px-2.5 py-1.5 md:px-3 md:py-2"
     >
       <span className="min-w-0">
         <span lang="mt" className="display-caps block text-base leading-tight">
           {word.word}
         </span>
-        <span className="block text-sm leading-snug text-ink-soft">{word.gloss}</span>
+        <Gloss text={word.gloss} open={open} className="text-ink-soft" />
       </span>
       <PointsBadge points={word.points} d={d} />
     </motion.li>
@@ -155,15 +172,20 @@ export function FoundCard({ word, d, fresh = false }: { word: GherqWord; d: Dict
  */
 export function ClueCard({ word, d, reveal }: { word: GherqWord; d: Dict; reveal: { index: number; letter: string } | null }) {
   const n = tiles(word.word).length;
+  const [open, setOpen] = useState(false);
   return (
-    <li className="flex items-start justify-between gap-2 rounded-tile border-2 border-dashed border-ink-soft px-3 py-2">
+    <li
+      onClick={() => setOpen((o) => !o)}
+      data-clue={word.word}
+      className="flex items-start justify-between gap-2 rounded-tile border border-ink-soft/50 bg-limestone-50/40 px-2.5 py-1.5 md:px-3 md:py-2"
+    >
       <span className="min-w-0">
         <span role="img" aria-label={d.clueAria(n, reveal && { position: reveal.index + 1, letter: reveal.letter })} className="flex flex-wrap gap-[3px] py-0.5">
           {Array.from({ length: n }, (_, i) => (
             <span
               key={i}
               aria-hidden
-              className={`flex size-[22px] items-center justify-center rounded-[2px] border text-xs font-bold leading-none ${
+              className={`flex size-5 items-center justify-center rounded-[2px] border text-xs font-bold leading-none md:size-[22px] ${
                 i === reveal?.index ? "border-ink bg-limestone-50 text-ink" : "border-ink-soft/70 bg-limestone-50/40"
               }`}
             >
@@ -171,7 +193,7 @@ export function ClueCard({ word, d, reveal }: { word: GherqWord; d: Dict; reveal
             </span>
           ))}
         </span>
-        <span className="mt-0.5 block text-sm leading-snug text-ink">{word.gloss}</span>
+        <Gloss text={word.gloss} open={open} className="mt-0.5 text-ink" />
       </span>
       <PointsBadge points={word.points} d={d} muted />
     </li>

@@ -111,6 +111,9 @@ export function nextStarIn(earned: number, total: number, foundCount: number): n
   return next === undefined ? null : next - earned;
 }
 
+/** A meaning's first sense, to name a clue briefly ("agreement; coming to terms" -> "agreement"). */
+export const firstSense = (gloss: string) => gloss.split(";")[0].trim();
+
 /** Easiest first: fewest points, then shortest, then A–Z. */
 const byEase = (a: GherqWord, b: GherqWord) => a.points - b.points || tiles(a.word).length - tiles(b.word).length || a.word.localeCompare(b.word, "mt");
 
