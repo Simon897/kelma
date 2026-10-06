@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { EPOCH, dayIndex, formatMaltaDate, maltaDateParts, msUntilNextDay, nextMaltaMidnight } from "../lib/day-index";
+import normali from "../data/kelma/normali.json";
+import tqila from "../data/kelma/tqila.json";
 import { MODES, getEntry } from "../lib/modes";
 
 const at = (iso: string) => new Date(iso);
@@ -61,9 +63,11 @@ describe("dayIndex (Europe/Malta)", () => {
   });
 
   it("serves nothing after the data runs out, and never wraps", () => {
+    const length = { normali: normali.length, tqila: tqila.length };
     for (const m of MODES) {
       expect(getEntry(m, 0)).not.toBeNull();
-      expect(getEntry(m, 7)).toBeNull();
+      expect(getEntry(m, length[m] - 1)).not.toBeNull();
+      expect(getEntry(m, length[m])).toBeNull();
       expect(getEntry(m, 100_000)).toBeNull();
     }
   });

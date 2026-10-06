@@ -39,5 +39,1993 @@
     "word": "KWIET",
     "gloss": "peaceful; quiet",
     "root": "k-w-j"
+  },
+  {
+    "day": 7,
+    "word": "QAFLA",
+    "gloss": "a cord used to bind; a lace",
+    "root": "q-f-l"
+  },
+  {
+    "day": 8,
+    "word": "PAVRU",
+    "gloss": "lapel"
+  },
+  {
+    "day": 9,
+    "word": "ARŻNU",
+    "gloss": "pine tree; pine wood"
+  },
+  {
+    "day": 10,
+    "word": "DAKAR",
+    "gloss": "a mule",
+    "root": "d-k-r"
+  },
+  {
+    "day": 11,
+    "word": "NIESI",
+    "gloss": "forgetful; oblivious",
+    "root": "n-s-j"
+  },
+  {
+    "day": 12,
+    "word": "ĦOTBA",
+    "gloss": "hump on one's back",
+    "root": "ħ-t-b"
+  },
+  {
+    "day": 13,
+    "word": "ĦABAR",
+    "gloss": "to predict; to forecast",
+    "root": "ħ-b-r"
+  },
+  {
+    "day": 14,
+    "word": "KEJLA",
+    "gloss": "a measuring instrument; a quantity",
+    "root": "k-j-l"
+  },
+  {
+    "day": 15,
+    "word": "DAQNA",
+    "gloss": "beard; goatee"
+  },
+  {
+    "day": 16,
+    "word": "ĦMIED",
+    "gloss": "stillness",
+    "root": "ħ-m-d"
+  },
+  {
+    "day": 17,
+    "word": "TOQLA",
+    "gloss": "physical weight; moral weight",
+    "root": "t-q-l"
+  },
+  {
+    "day": 18,
+    "word": "GRANĊ",
+    "gloss": "crab"
+  },
+  {
+    "day": 19,
+    "word": "PUFTA",
+    "gloss": "a male homosexual (derogatory; colloquial), this term is the rough equivalent of 'faggot' or 'poofter'"
+  },
+  {
+    "day": 20,
+    "word": "ANDAR",
+    "gloss": "earthen floor on which wheat is threshed",
+    "root": "n-d-r"
+  },
+  {
+    "day": 21,
+    "word": "DIENI",
+    "gloss": "liable to suppurate (especially used of a wound etc.)",
+    "root": "d-j-n"
+  },
+  {
+    "day": 22,
+    "word": "ĠLEKK",
+    "gloss": "coat; jacket"
+  },
+  {
+    "day": 23,
+    "word": "GIRNA",
+    "gloss": "small hut built out of rubble, typically found fields and used as a shelter"
+  },
+  {
+    "day": 24,
+    "word": "SEĦER",
+    "gloss": "enchantment; spell",
+    "root": "s-ħ-r"
+  },
+  {
+    "day": 25,
+    "word": "VIRGA",
+    "gloss": "can; rod"
+  },
+  {
+    "day": 26,
+    "word": "SEWQA",
+    "gloss": "a drive",
+    "root": "s-w-q"
+  },
+  {
+    "day": 27,
+    "word": "NAĦLA",
+    "gloss": "bee; impurity in limestone",
+    "root": "n-ħ-l"
+  },
+  {
+    "day": 28,
+    "word": "VAŻUN",
+    "gloss": "vase"
+  },
+  {
+    "day": 29,
+    "word": "NEMLA",
+    "gloss": "ant",
+    "root": "n-m-l"
+  },
+  {
+    "day": 30,
+    "word": "ĦJARA",
+    "gloss": "cucumber",
+    "root": "ħ-j-r"
+  },
+  {
+    "day": 31,
+    "word": "NAQAL",
+    "gloss": "sediment at the bottom of a liquid; a worthless remnant of sth.",
+    "root": "n-q-l"
+  },
+  {
+    "day": 32,
+    "word": "FLETT",
+    "gloss": "loin; fillet"
+  },
+  {
+    "day": 33,
+    "word": "LINKA",
+    "gloss": "ink"
+  },
+  {
+    "day": 34,
+    "word": "XERQA",
+    "gloss": "bout of coughing, usually due to sth. stuck in one's throat; a choking fit",
+    "root": "x-r-q"
+  },
+  {
+    "day": 35,
+    "word": "SADIQ",
+    "gloss": "righteous; virtuous",
+    "root": "s-d-q"
+  },
+  {
+    "day": 36,
+    "word": "ĊORMA",
+    "gloss": "large number; gang"
+  },
+  {
+    "day": 37,
+    "word": "ĦARUF",
+    "gloss": "lamb",
+    "root": "ħ-r-f"
+  },
+  {
+    "day": 38,
+    "word": "FASLA",
+    "gloss": "shape; design",
+    "root": "f-s-l"
+  },
+  {
+    "day": 39,
+    "word": "FELES",
+    "gloss": "a wedge",
+    "root": "f-l-s"
+  },
+  {
+    "day": 40,
+    "word": "KUĠIN",
+    "gloss": "cousin"
+  },
+  {
+    "day": 41,
+    "word": "WADAB",
+    "gloss": "sling",
+    "root": "w-d-b"
+  },
+  {
+    "day": 42,
+    "word": "ĦANEX",
+    "gloss": "worm",
+    "root": "ħ-n-x"
+  },
+  {
+    "day": 43,
+    "word": "ŻAQQA",
+    "gloss": "a small amount of food eaten by a fledgling",
+    "root": "ż-q-q"
+  },
+  {
+    "day": 44,
+    "word": "TRAVU",
+    "gloss": "beam"
+  },
+  {
+    "day": 45,
+    "word": "SAGRU",
+    "gloss": "sacred; holy"
+  },
+  {
+    "day": 46,
+    "word": "FUNGU",
+    "gloss": "mushroom"
+  },
+  {
+    "day": 47,
+    "word": "ŻIBĠA",
+    "gloss": "bead",
+    "root": "ż-b-ġ"
+  },
+  {
+    "day": 48,
+    "word": "BORKA",
+    "gloss": "wild duck",
+    "root": "b-r-k"
+  },
+  {
+    "day": 49,
+    "word": "TUTUR",
+    "gloss": "tutor"
+  },
+  {
+    "day": 50,
+    "word": "ZALZA",
+    "gloss": "sauce; gravy"
+  },
+  {
+    "day": 51,
+    "word": "TORTA",
+    "gloss": "pie; cake"
+  },
+  {
+    "day": 52,
+    "word": "NEMUS",
+    "gloss": "mosquitos"
+  },
+  {
+    "day": 53,
+    "word": "BGĦID",
+    "gloss": "distant",
+    "root": "b-għ-d"
+  },
+  {
+    "day": 54,
+    "word": "ĠENBA",
+    "gloss": "the crust of a bread loaf; a person's hip or side",
+    "root": "ġ-n-b"
+  },
+  {
+    "day": 55,
+    "word": "AJKLA",
+    "gloss": "eagle"
+  },
+  {
+    "day": 56,
+    "word": "BEJTA",
+    "gloss": "a nest; a den",
+    "root": "b-j-t"
+  },
+  {
+    "day": 57,
+    "word": "FOLJA",
+    "gloss": "blister"
+  },
+  {
+    "day": 58,
+    "word": "MOĦBA",
+    "gloss": "hiding place",
+    "root": "ħ-b-j"
+  },
+  {
+    "day": 59,
+    "word": "WIŻNA",
+    "gloss": "rotolo, a traditional unit of weight, where five rotolos are roughly equivalent to a kilogram",
+    "root": "w-ż-n"
+  },
+  {
+    "day": 60,
+    "word": "ĠURAT",
+    "gloss": "grasshopper; juror (court)"
+  },
+  {
+    "day": 61,
+    "word": "XITLA",
+    "gloss": "plant; shrub",
+    "root": "x-t-l"
+  },
+  {
+    "day": 62,
+    "word": "HIENI",
+    "gloss": "content; happy",
+    "root": "h-n-j"
+  },
+  {
+    "day": 63,
+    "word": "VJALA",
+    "gloss": "Vial"
+  },
+  {
+    "day": 64,
+    "word": "IŻRAQ",
+    "gloss": "sky-blue; azure",
+    "root": "ż-r-q"
+  },
+  {
+    "day": 65,
+    "word": "TARKA",
+    "gloss": "shield"
+  },
+  {
+    "day": 66,
+    "word": "FAWRA",
+    "gloss": "steam; in cooking, the process of steaming for a short time",
+    "root": "f-w-r"
+  },
+  {
+    "day": 67,
+    "word": "ŻABRA",
+    "gloss": "an act of pruning",
+    "root": "ż-b-r"
+  },
+  {
+    "day": 68,
+    "word": "MISQA",
+    "gloss": "water trough for an animal or bird",
+    "root": "s-q-j"
+  },
+  {
+    "day": 69,
+    "word": "KIEBI",
+    "gloss": "lachrymose; sad",
+    "root": "k-j-b"
+  },
+  {
+    "day": 70,
+    "word": "ISLAM",
+    "gloss": "Islam",
+    "root": "s-l-m"
+  },
+  {
+    "day": 71,
+    "word": "ŻAHAR",
+    "gloss": "to blossom; bloom",
+    "root": "ż-h-r"
+  },
+  {
+    "day": 72,
+    "word": "BJUDA",
+    "gloss": "whiteness",
+    "root": "b-j-d"
+  },
+  {
+    "day": 73,
+    "word": "KRUHA",
+    "gloss": "ugliness",
+    "root": "k-r-h"
+  },
+  {
+    "day": 74,
+    "word": "BRIJA",
+    "gloss": "dandruff"
+  },
+  {
+    "day": 75,
+    "word": "ŻINGU",
+    "gloss": "zinc"
+  },
+  {
+    "day": 76,
+    "word": "FRIĠĠ",
+    "gloss": "fridge; refrigerator"
+  },
+  {
+    "day": 77,
+    "word": "WARDI",
+    "gloss": "blossoming; with roses",
+    "root": "w-r-d"
+  },
+  {
+    "day": 78,
+    "word": "LANĊA",
+    "gloss": "ferry"
+  },
+  {
+    "day": 79,
+    "word": "XKUMA",
+    "gloss": "foam; scum"
+  },
+  {
+    "day": 80,
+    "word": "DELLI",
+    "gloss": "shady; sheltered from excessive sunlight",
+    "root": "d-l-l"
+  },
+  {
+    "day": 81,
+    "word": "TAKKA",
+    "gloss": "plastic covering or cartridge"
+  },
+  {
+    "day": 82,
+    "word": "SETTA",
+    "gloss": "sect",
+    "root": "s-t-r"
+  },
+  {
+    "day": 83,
+    "word": "ĦAWLI",
+    "gloss": "growing in a fixed place",
+    "root": "ħ-w-l"
+  },
+  {
+    "day": 84,
+    "word": "LVENT",
+    "gloss": "lively; swift"
+  },
+  {
+    "day": 85,
+    "word": "QOTNA",
+    "gloss": "cotton pod",
+    "root": "q-t-n"
+  },
+  {
+    "day": 86,
+    "word": "ĦALFA",
+    "gloss": "curse",
+    "root": "ħ-l-f"
+  },
+  {
+    "day": 87,
+    "word": "PLOTT",
+    "gloss": "plot"
+  },
+  {
+    "day": 88,
+    "word": "QASBI",
+    "gloss": "like a reed",
+    "root": "q-s-b"
+  },
+  {
+    "day": 89,
+    "word": "TIFUN",
+    "gloss": "typhoon"
+  },
+  {
+    "day": 90,
+    "word": "GODLI",
+    "gloss": "muscular; well-built",
+    "root": "g-d-l"
+  },
+  {
+    "day": 91,
+    "word": "ĦATEN",
+    "gloss": "to circumsise; brother-in-law",
+    "root": "ħ-t-n"
+  },
+  {
+    "day": 92,
+    "word": "KISRA",
+    "gloss": "a breakage; a fracture",
+    "root": "k-s-r"
+  },
+  {
+    "day": 93,
+    "word": "KRIKK",
+    "gloss": "brake (especially for a cart); ratchet"
+  },
+  {
+    "day": 94,
+    "word": "BRIKS",
+    "gloss": "bricks"
+  },
+  {
+    "day": 95,
+    "word": "GĦAKS",
+    "gloss": "famine; hunger",
+    "root": "għ-k-s"
+  },
+  {
+    "day": 96,
+    "word": "APERT",
+    "gloss": "open; forthright"
+  },
+  {
+    "day": 97,
+    "word": "PALAT",
+    "gloss": "palate"
+  },
+  {
+    "day": 98,
+    "word": "GĦADA",
+    "gloss": "tomorrow"
+  },
+  {
+    "day": 99,
+    "word": "SELĦA",
+    "gloss": "peeling of the skin; a scratch",
+    "root": "s-l-ħ"
+  },
+  {
+    "day": 100,
+    "word": "SOKRA",
+    "gloss": "a padlock",
+    "root": "s-k-r"
+  },
+  {
+    "day": 101,
+    "word": "KITLA",
+    "gloss": "kettle"
+  },
+  {
+    "day": 102,
+    "word": "ĠBARA",
+    "gloss": "an expression used for sb. who is excessively soft, calm or slow in their actions; a piece of bread dipped in hot milk, traditionally used as a poultice to soothe skin ailments",
+    "root": "ġ-b-r"
+  },
+  {
+    "day": 103,
+    "word": "NISĠA",
+    "gloss": "weft; texture",
+    "root": "n-s-ġ"
+  },
+  {
+    "day": 104,
+    "word": "ĦALJA",
+    "gloss": "wastage",
+    "root": "ħ-l-j"
+  },
+  {
+    "day": 105,
+    "word": "DIFER",
+    "gloss": "nail; talon",
+    "root": "d-f-r"
+  },
+  {
+    "day": 106,
+    "word": "PLEĠĠ",
+    "gloss": "pledge; bail"
+  },
+  {
+    "day": 107,
+    "word": "NASBA",
+    "gloss": "trap",
+    "root": "n-s-b"
+  },
+  {
+    "day": 108,
+    "word": "NADIR",
+    "gloss": "bottom; floor",
+    "root": "n-d-r"
+  },
+  {
+    "day": 109,
+    "word": "SUFAN",
+    "gloss": "couch; sofa"
+  },
+  {
+    "day": 110,
+    "word": "ĠMIED",
+    "gloss": "soot; black smudges",
+    "root": "ġ-m-d"
+  },
+  {
+    "day": 111,
+    "word": "ŻIFNA",
+    "gloss": "a dance; a ball",
+    "root": "ż-f-n"
+  },
+  {
+    "day": 112,
+    "word": "TFULI",
+    "gloss": "puerile; typical of children",
+    "root": "t-f-l"
+  },
+  {
+    "day": 113,
+    "word": "GĦADS",
+    "gloss": "lentils; generic term for foods falling in the class of pulses",
+    "root": "għ-d-s"
+  },
+  {
+    "day": 114,
+    "word": "KORLA",
+    "gloss": "wrath"
+  },
+  {
+    "day": 115,
+    "word": "SUFRA",
+    "gloss": "cork"
+  },
+  {
+    "day": 116,
+    "word": "BEŻQA",
+    "gloss": "a gob of saliva",
+    "root": "b-ż-q"
+  },
+  {
+    "day": 117,
+    "word": "PIZZA",
+    "gloss": "pizza"
+  },
+  {
+    "day": 118,
+    "word": "TIRMA",
+    "gloss": "anus"
+  },
+  {
+    "day": 119,
+    "word": "RENTA",
+    "gloss": "rent; income"
+  },
+  {
+    "day": 120,
+    "word": "MELLA",
+    "gloss": "disgust; disdain",
+    "root": "m-l-j"
+  },
+  {
+    "day": 121,
+    "word": "STOKK",
+    "gloss": "putty; stock"
+  },
+  {
+    "day": 122,
+    "word": "KUXIN",
+    "gloss": "cushion"
+  },
+  {
+    "day": 123,
+    "word": "KUTRA",
+    "gloss": "blanket"
+  },
+  {
+    "day": 124,
+    "word": "SKUNA",
+    "gloss": "schooner"
+  },
+  {
+    "day": 125,
+    "word": "DOĊĊA",
+    "gloss": "shower"
+  },
+  {
+    "day": 126,
+    "word": "GĦELM",
+    "gloss": "token; sign",
+    "root": "għ-l-m"
+  },
+  {
+    "day": 127,
+    "word": "XENQA",
+    "gloss": "desire; longing",
+    "root": "x-n-q"
+  },
+  {
+    "day": 128,
+    "word": "TAĦNA",
+    "gloss": "act of grinding",
+    "root": "t-ħ-n"
+  },
+  {
+    "day": 129,
+    "word": "DEMEL",
+    "gloss": "dung; manure",
+    "root": "d-m-l"
+  },
+  {
+    "day": 130,
+    "word": "ANKRA",
+    "gloss": "anchor"
+  },
+  {
+    "day": 131,
+    "word": "MANKA",
+    "gloss": "hosepipe"
+  },
+  {
+    "day": 132,
+    "word": "FETĦA",
+    "gloss": "opening; breach",
+    "root": "f-t-ħ"
+  },
+  {
+    "day": 133,
+    "word": "MLUĦA",
+    "gloss": "saltiness; foods preserved in salt (e.g. tuna fish etc)",
+    "root": "m-l-ħ"
+  },
+  {
+    "day": 134,
+    "word": "SOPPA",
+    "gloss": "soup",
+    "root": "s-p-p"
+  },
+  {
+    "day": 135,
+    "word": "ĦORŻA",
+    "gloss": "stone wall or kerb around the rim of a well, typically in a circular or square shape"
+  },
+  {
+    "day": 136,
+    "word": "KARMA",
+    "gloss": "fertility; a stretch of fertile land",
+    "root": "k-r-m"
+  },
+  {
+    "day": 137,
+    "word": "REŻĦA",
+    "gloss": "chill (used especially of cold weather)",
+    "root": "r-ż-ħ"
+  },
+  {
+    "day": 138,
+    "word": "SINED",
+    "gloss": "stretch of barren land"
+  },
+  {
+    "day": 139,
+    "word": "QADFA",
+    "gloss": "a stroke of the oar",
+    "root": "q-d-f"
+  },
+  {
+    "day": 140,
+    "word": "DWELL",
+    "gloss": "duel"
+  },
+  {
+    "day": 141,
+    "word": "UTIEQ",
+    "gloss": "strong; vigorous",
+    "root": "t-w-q"
+  },
+  {
+    "day": 142,
+    "word": "SFERA",
+    "gloss": "sphere"
+  },
+  {
+    "day": 143,
+    "word": "SPREJ",
+    "gloss": "spray"
+  },
+  {
+    "day": 144,
+    "word": "QOFFA",
+    "gloss": "hand basket",
+    "root": "q-f-q-f"
+  },
+  {
+    "day": 145,
+    "word": "STEJĠ",
+    "gloss": "stage; bus stop"
+  },
+  {
+    "day": 146,
+    "word": "PORGA",
+    "gloss": "laxative"
+  },
+  {
+    "day": 147,
+    "word": "TAFAL",
+    "gloss": "clay",
+    "root": "t-f-l"
+  },
+  {
+    "day": 148,
+    "word": "TOWST",
+    "gloss": "toast"
+  },
+  {
+    "day": 149,
+    "word": "QAĦBU",
+    "gloss": "sb. who is untrustworthy; a whore",
+    "root": "q-ħ-b"
+  },
+  {
+    "day": 150,
+    "word": "PEZZA",
+    "gloss": "piece of fabric"
+  },
+  {
+    "day": 151,
+    "word": "QŻIEŻ",
+    "gloss": "sth. that disgusts; ostentatious or affected behaviour",
+    "root": "q-ż-ż"
+  },
+  {
+    "day": 152,
+    "word": "ĦJATA",
+    "gloss": "needlework; sewing",
+    "root": "ħ-j-t"
+  },
+  {
+    "day": 153,
+    "word": "TUMUR",
+    "gloss": "tumor"
+  },
+  {
+    "day": 154,
+    "word": "RIĠEL",
+    "gloss": "leg; space between the bottom end of an object and the surface it is leaning against",
+    "root": "r-ġ-l"
+  },
+  {
+    "day": 155,
+    "word": "ĦAFUR",
+    "gloss": "oats",
+    "root": "ħ-f-r"
+  },
+  {
+    "day": 156,
+    "word": "DWETT",
+    "gloss": "duet"
+  },
+  {
+    "day": 157,
+    "word": "MEDHI",
+    "gloss": "engrossed, engaged"
+  },
+  {
+    "day": 158,
+    "word": "NAQLA",
+    "gloss": "a scraper",
+    "root": "n-q-l"
+  },
+  {
+    "day": 159,
+    "word": "ĠIDRA",
+    "gloss": "turnip",
+    "root": "ġ-d-r"
+  },
+  {
+    "day": 160,
+    "word": "KEMXA",
+    "gloss": "a crease (usually in fabric); a substantial quantity of money",
+    "root": "k-m-x"
+  },
+  {
+    "day": 161,
+    "word": "BUFFU",
+    "gloss": "clown"
+  },
+  {
+    "day": 162,
+    "word": "TEŻOR",
+    "gloss": "treasure"
+  },
+  {
+    "day": 163,
+    "word": "BLUŻA",
+    "gloss": "blouse"
+  },
+  {
+    "day": 164,
+    "word": "XAMPU",
+    "gloss": "shampoo"
+  },
+  {
+    "day": 165,
+    "word": "ANĠLU",
+    "gloss": "angel"
+  },
+  {
+    "day": 166,
+    "word": "BUQAR",
+    "gloss": "jug",
+    "root": "b-q-r"
+  },
+  {
+    "day": 167,
+    "word": "MATRA",
+    "gloss": "target; aim"
+  },
+  {
+    "day": 168,
+    "word": "QABLA",
+    "gloss": "midwife; an agreement",
+    "root": "q-b-l"
+  },
+  {
+    "day": 169,
+    "word": "DWIEM",
+    "gloss": "duration",
+    "root": "d-w-m"
+  },
+  {
+    "day": 170,
+    "word": "SEVER",
+    "gloss": "strict; rigid"
+  },
+  {
+    "day": 171,
+    "word": "ĦAWDA",
+    "gloss": "mixture",
+    "root": "ħ-w-d"
+  },
+  {
+    "day": 172,
+    "word": "DRIES",
+    "gloss": "things to thresh",
+    "root": "d-r-s"
+  },
+  {
+    "day": 173,
+    "word": "ŻNIED",
+    "gloss": "flint; also used with a pronominal possessive suffix (e.g. 'żnied-u') for things people make up off the cuff",
+    "root": "ż-n-d"
+  },
+  {
+    "day": 174,
+    "word": "LONGA",
+    "gloss": "a sultry summer heat; a persistent heat at the end of a hot day"
+  },
+  {
+    "day": 175,
+    "word": "XEĦTA",
+    "gloss": "attitude; appearance",
+    "root": "x-ħ-t"
+  },
+  {
+    "day": 176,
+    "word": "ĊIRKU",
+    "gloss": "circle; circus",
+    "root": "ċ-r-k"
+  },
+  {
+    "day": 177,
+    "word": "MERUŻ",
+    "gloss": "tending to contradict",
+    "root": "m-r-j"
+  },
+  {
+    "day": 178,
+    "word": "DĦULI",
+    "gloss": "friendly; courteous",
+    "root": "d-ħ-l"
+  },
+  {
+    "day": 179,
+    "word": "MADAR",
+    "gloss": "a cluster of dwellings",
+    "root": "d-j-r"
+  },
+  {
+    "day": 180,
+    "word": "KANUN",
+    "gloss": "cannon",
+    "root": "k-n-n"
+  },
+  {
+    "day": 181,
+    "word": "NEJBA",
+    "gloss": "tusk; eye tooth",
+    "root": "n-j-b"
+  },
+  {
+    "day": 182,
+    "word": "NAXRA",
+    "gloss": "the laundry hung out to dry",
+    "root": "n-x-r"
+  },
+  {
+    "day": 183,
+    "word": "ŻLIEQ",
+    "gloss": "muck; mud",
+    "root": "ż-l-q"
+  },
+  {
+    "day": 184,
+    "word": "GROKK",
+    "gloss": "a glass of an alcoholic drink; a measure of an alcoholic drink"
+  },
+  {
+    "day": 185,
+    "word": "XIŻMA",
+    "gloss": "schism"
+  },
+  {
+    "day": 186,
+    "word": "MILSA",
+    "gloss": "spleen",
+    "root": "m-l-s"
+  },
+  {
+    "day": 187,
+    "word": "TEWMA",
+    "gloss": "garlic",
+    "root": "t-w-m"
+  },
+  {
+    "day": 188,
+    "word": "GĦOXX",
+    "gloss": "archaic term for a bird's nest; colloquial term for female genitalia (vulgar)",
+    "root": "għ-x-x"
+  },
+  {
+    "day": 189,
+    "word": "BENNA",
+    "gloss": "flavour; the quality arising out of the use of good ingredients (used of food)",
+    "root": "b-n-n"
+  },
+  {
+    "day": 190,
+    "word": "NEWBA",
+    "gloss": "the right time for sth. (originates in an agricultural context, referring to seasons)",
+    "root": "n-w-b"
+  },
+  {
+    "day": 191,
+    "word": "MXIJA",
+    "gloss": "epidemy; contagion",
+    "root": "m-x-j"
+  },
+  {
+    "day": 192,
+    "word": "MOTTO",
+    "gloss": "slogan; motto"
+  },
+  {
+    "day": 193,
+    "word": "ARMEN",
+    "gloss": "Armenian; coming from or related to Armenia"
+  },
+  {
+    "day": 194,
+    "word": "DEKAN",
+    "gloss": "dean"
+  },
+  {
+    "day": 195,
+    "word": "FURJA",
+    "gloss": "fury; tantrum"
+  },
+  {
+    "day": 196,
+    "word": "ŻAFIR",
+    "gloss": "sapphire"
+  },
+  {
+    "day": 197,
+    "word": "RASTA",
+    "gloss": "a bunch of things strung together",
+    "root": "r-s-t"
+  },
+  {
+    "day": 198,
+    "word": "RDIGĦ",
+    "gloss": "sucking; french kissing",
+    "root": "r-d-għ"
+  },
+  {
+    "day": 199,
+    "word": "WISKI",
+    "gloss": "whisky"
+  },
+  {
+    "day": 200,
+    "word": "KONKA",
+    "gloss": "a ditch or trench (usually dug out around a tree)",
+    "root": "k-n-k"
+  },
+  {
+    "day": 201,
+    "word": "ĦOXNI",
+    "gloss": "fat; gauche",
+    "root": "ħ-x-n"
+  },
+  {
+    "day": 202,
+    "word": "VINJA",
+    "gloss": "vineyard"
+  },
+  {
+    "day": 203,
+    "word": "SPEĊI",
+    "gloss": "species"
+  },
+  {
+    "day": 204,
+    "word": "SABTA",
+    "gloss": "a slamming; sth. sudden",
+    "root": "s-b-t"
+  },
+  {
+    "day": 205,
+    "word": "XUXAN",
+    "gloss": "having long hair"
+  },
+  {
+    "day": 206,
+    "word": "SPJUN",
+    "gloss": "spy"
+  },
+  {
+    "day": 207,
+    "word": "KENNI",
+    "gloss": "sheltered (of a place); snug",
+    "root": "k-n-n"
+  },
+  {
+    "day": 208,
+    "word": "MEZZA",
+    "gloss": "wicker basket used to hold fruit, vegetables etc."
+  },
+  {
+    "day": 209,
+    "word": "FAĦXI",
+    "gloss": "obscene (used especially of foul language or cursing)",
+    "root": "f-ħ-x"
+  },
+  {
+    "day": 210,
+    "word": "KAKAW",
+    "gloss": "cacao"
+  },
+  {
+    "day": 211,
+    "word": "TAVLA",
+    "gloss": "plank; sheet of wood"
+  },
+  {
+    "day": 212,
+    "word": "ĠLIBA",
+    "gloss": "a large crowd; a crowd making a commotion",
+    "root": "ġ-l-b"
+  },
+  {
+    "day": 213,
+    "word": "ĠLATA",
+    "gloss": "frost"
+  },
+  {
+    "day": 214,
+    "word": "ĊOQQA",
+    "gloss": "monk's hood; habit"
+  },
+  {
+    "day": 215,
+    "word": "KLIPP",
+    "gloss": "clip (e.g. movie clip)"
+  },
+  {
+    "day": 216,
+    "word": "BRODU",
+    "gloss": "broth"
+  },
+  {
+    "day": 217,
+    "word": "GAWWI",
+    "gloss": "gull; seagull"
+  },
+  {
+    "day": 218,
+    "word": "TORBA",
+    "gloss": "layer of dust or earth used in the laying of roofs (stone-masonry); a quantity of dust",
+    "root": "t-r-b"
+  },
+  {
+    "day": 219,
+    "word": "SAFJA",
+    "gloss": "purification",
+    "root": "s-f-j"
+  },
+  {
+    "day": 220,
+    "word": "KORDA",
+    "gloss": "cord; chord (musucal)"
+  },
+  {
+    "day": 221,
+    "word": "VISTU",
+    "gloss": "mourning"
+  },
+  {
+    "day": 222,
+    "word": "TINSA",
+    "gloss": "a whimper",
+    "root": "t-n-s"
+  },
+  {
+    "day": 223,
+    "word": "XOQQA",
+    "gloss": "cloth; linen",
+    "root": "x-q-q"
+  },
+  {
+    "day": 224,
+    "word": "ALTAR",
+    "gloss": "altar"
+  },
+  {
+    "day": 225,
+    "word": "NDĦIL",
+    "gloss": "nosiness; interference",
+    "root": "d-ħ-l"
+  },
+  {
+    "day": 226,
+    "word": "QRUSA",
+    "gloss": "sourness; acridness",
+    "root": "q-r-s"
+  },
+  {
+    "day": 227,
+    "word": "ĊINJU",
+    "gloss": "swan"
+  },
+  {
+    "day": 228,
+    "word": "VAGUN",
+    "gloss": "wagon; carriage (of a train)"
+  },
+  {
+    "day": 229,
+    "word": "SAJFI",
+    "gloss": "summery",
+    "root": "s-j-f"
+  },
+  {
+    "day": 230,
+    "word": "MALJA",
+    "gloss": "bathing suit"
+  },
+  {
+    "day": 231,
+    "word": "PAGUN",
+    "gloss": "peacock"
+  },
+  {
+    "day": 232,
+    "word": "XAĦMI",
+    "gloss": "fatty; greasy",
+    "root": "x-ħ-m"
+  },
+  {
+    "day": 233,
+    "word": "LĠIEM",
+    "gloss": "bridle",
+    "root": "l-ġ-m"
+  },
+  {
+    "day": 234,
+    "word": "ARJAN",
+    "gloss": "aryan"
+  },
+  {
+    "day": 235,
+    "word": "ĠGANT",
+    "gloss": "giant"
+  },
+  {
+    "day": 236,
+    "word": "BABAW",
+    "gloss": "ghost; bogeyman"
+  },
+  {
+    "day": 237,
+    "word": "MTIRA",
+    "gloss": "furrow; space between furrows in a ploughed field",
+    "root": "m-t-r"
+  },
+  {
+    "day": 238,
+    "word": "RAGĦA",
+    "gloss": "to graze animals; to foam (used, e.g., of soap in water)",
+    "root": "r-għ-j"
+  },
+  {
+    "day": 239,
+    "word": "ĠIFEN",
+    "gloss": "sailing ship"
+  },
+  {
+    "day": 240,
+    "word": "RADAM",
+    "gloss": "to bury; to fill up (epecially with stones or masonry)",
+    "root": "r-d-m"
+  },
+  {
+    "day": 241,
+    "word": "SARAR",
+    "gloss": "struggling; wrestling",
+    "root": "s-r-j"
+  },
+  {
+    "day": 242,
+    "word": "ATOMU",
+    "gloss": "atom"
+  },
+  {
+    "day": 243,
+    "word": "VĠILI",
+    "gloss": "vigil"
+  },
+  {
+    "day": 244,
+    "word": "SARAM",
+    "gloss": "to confuse; to cause trouble",
+    "root": "s-r-m"
+  },
+  {
+    "day": 245,
+    "word": "BOTTA",
+    "gloss": "taunt; hint"
+  },
+  {
+    "day": 246,
+    "word": "DEHNI",
+    "gloss": "wise; rational",
+    "root": "d-h-n"
+  },
+  {
+    "day": 247,
+    "word": "STRAT",
+    "gloss": "layer; stratum"
+  },
+  {
+    "day": 248,
+    "word": "MOQLI",
+    "gloss": "fried",
+    "root": "q-l-j"
+  },
+  {
+    "day": 249,
+    "word": "BOQQA",
+    "gloss": "a sip; a swig",
+    "root": "b-q-q"
+  },
+  {
+    "day": 250,
+    "word": "NIĠMA",
+    "gloss": "Cynodon dactylon, or bermuda grass",
+    "root": "n-ġ-m"
+  },
+  {
+    "day": 251,
+    "word": "KALĊI",
+    "gloss": "chalice"
+  },
+  {
+    "day": 252,
+    "word": "MIĊĊA",
+    "gloss": "fuse; fuse for explosives",
+    "root": "m-ċ-ċ"
+  },
+  {
+    "day": 253,
+    "word": "PEJXU",
+    "gloss": "cat; pussy-cat"
+  },
+  {
+    "day": 254,
+    "word": "ĦLUSI",
+    "gloss": "easy; natural",
+    "root": "ħ-l-s"
+  },
+  {
+    "day": 255,
+    "word": "PALJU",
+    "gloss": "hand-held fan with a long wooden handle (traditionally used by men)"
+  },
+  {
+    "day": 256,
+    "word": "ŻIFFA",
+    "gloss": "breeze"
+  },
+  {
+    "day": 257,
+    "word": "KIENI",
+    "gloss": "humble; compliant",
+    "root": "k-j-n"
+  },
+  {
+    "day": 258,
+    "word": "NAĦLI",
+    "gloss": "pertaining to bees",
+    "root": "n-ħ-l"
+  },
+  {
+    "day": 259,
+    "word": "VIŻTA",
+    "gloss": "visit"
+  },
+  {
+    "day": 260,
+    "word": "DGĦIF",
+    "gloss": "lean; without fat (used of a cut of meat)",
+    "root": "d-j-f"
+  },
+  {
+    "day": 261,
+    "word": "ORFNI",
+    "gloss": "orphan"
+  },
+  {
+    "day": 262,
+    "word": "SIKTA",
+    "gloss": "stillness",
+    "root": "s-k-t"
+  },
+  {
+    "day": 263,
+    "word": "SIDRI",
+    "gloss": "related to the breast; pectoral",
+    "root": "s-d-r"
+  },
+  {
+    "day": 264,
+    "word": "GĦAWI",
+    "gloss": "howling",
+    "root": "għ-w-j"
+  },
+  {
+    "day": 265,
+    "word": "ANDRI",
+    "gloss": "tamped down or hard (used of earth)",
+    "root": "n-d-r"
+  },
+  {
+    "day": 266,
+    "word": "ŻIBĠI",
+    "gloss": "resembling a bead",
+    "root": "ż-b-ġ"
+  },
+  {
+    "day": 267,
+    "word": "SKRUN",
+    "gloss": "propellor"
+  },
+  {
+    "day": 268,
+    "word": "KEFEN",
+    "gloss": "a shroud; a wrap",
+    "root": "k-f-n"
+  },
+  {
+    "day": 269,
+    "word": "NIEDI",
+    "gloss": "damp",
+    "root": "n-d-j"
+  },
+  {
+    "day": 270,
+    "word": "POLZA",
+    "gloss": "raffle; lottery draw"
+  },
+  {
+    "day": 271,
+    "word": "ĠARRA",
+    "gloss": "jar; any vessel that can contain liquids",
+    "root": "ġ-r-r"
+  },
+  {
+    "day": 272,
+    "word": "LOKER",
+    "gloss": "locker"
+  },
+  {
+    "day": 273,
+    "word": "FINIT",
+    "gloss": "finished; finite"
+  },
+  {
+    "day": 274,
+    "word": "RVINA",
+    "gloss": "ruin; damaged goods"
+  },
+  {
+    "day": 275,
+    "word": "RMIXK",
+    "gloss": "trash; useless stuff"
+  },
+  {
+    "day": 276,
+    "word": "XWIEK",
+    "gloss": "thorns; eagerness, i.e. tenterhooks",
+    "root": "x-w-k"
+  },
+  {
+    "day": 277,
+    "word": "FLAWT",
+    "gloss": "flute"
+  },
+  {
+    "day": 278,
+    "word": "LABRA",
+    "gloss": "needle; brooch",
+    "root": "l-b-r"
+  },
+  {
+    "day": 279,
+    "word": "MOLLA",
+    "gloss": "spring; clip"
+  },
+  {
+    "day": 280,
+    "word": "ABBON",
+    "gloss": "abatement; release"
+  },
+  {
+    "day": 281,
+    "word": "FARDA",
+    "gloss": "saddle-cloth",
+    "root": "f-r-d"
+  },
+  {
+    "day": 282,
+    "word": "QIEGĦ",
+    "gloss": "bottom"
+  },
+  {
+    "day": 283,
+    "word": "WITJA",
+    "gloss": "an instance of levelling",
+    "root": "w-t-j"
+  },
+  {
+    "day": 284,
+    "word": "KUBAN",
+    "gloss": "Cuban; hailing from or pertaining to Cuba"
+  },
+  {
+    "day": 285,
+    "word": "RASSA",
+    "gloss": "crowd; throng",
+    "root": "r-s-s"
+  },
+  {
+    "day": 286,
+    "word": "PESTA",
+    "gloss": "plague"
+  },
+  {
+    "day": 287,
+    "word": "RGĦIB",
+    "gloss": "avid; stingy",
+    "root": "r-għ-b"
+  },
+  {
+    "day": 288,
+    "word": "ĊINGA",
+    "gloss": "leash; strap"
+  },
+  {
+    "day": 289,
+    "word": "SKOLL",
+    "gloss": "reef"
+  },
+  {
+    "day": 290,
+    "word": "VASKA",
+    "gloss": "pond; vat"
+  },
+  {
+    "day": 291,
+    "word": "LANZA",
+    "gloss": "fishing line"
+  },
+  {
+    "day": 292,
+    "word": "GĦATU",
+    "gloss": "cover; lid",
+    "root": "għ-t-j"
+  },
+  {
+    "day": 293,
+    "word": "KOLJA",
+    "gloss": "to coil; to take the shape of a coil",
+    "root": "k-l-j-j"
+  },
+  {
+    "day": 294,
+    "word": "DAKRA",
+    "gloss": "act of pollinating artificially",
+    "root": "d-k-r"
+  },
+  {
+    "day": 295,
+    "word": "SKJAV",
+    "gloss": "slave"
+  },
+  {
+    "day": 296,
+    "word": "GĦANI",
+    "gloss": "rich; affluent",
+    "root": "għ-n-j"
+  },
+  {
+    "day": 297,
+    "word": "SAQQU",
+    "gloss": "mattress"
+  },
+  {
+    "day": 298,
+    "word": "POVRU",
+    "gloss": "a poor person; sb. who inspires pity"
+  },
+  {
+    "day": 299,
+    "word": "MOFFA",
+    "gloss": "mould"
+  },
+  {
+    "day": 300,
+    "word": "LEMMA",
+    "gloss": "the head word in a dictionary, grouping a number of related words; In Linguistics, a word which is the basic form from which others are derived through the application of word-formation rules"
+  },
+  {
+    "day": 301,
+    "word": "TEWMI",
+    "gloss": "twin",
+    "root": "t-w-m"
+  },
+  {
+    "day": 302,
+    "word": "ERRUR",
+    "gloss": "error"
+  },
+  {
+    "day": 303,
+    "word": "QIRDA",
+    "gloss": "destruction; chaos",
+    "root": "q-r-d"
+  },
+  {
+    "day": 304,
+    "word": "TARJA",
+    "gloss": "thin pasta noodles",
+    "root": "t-r-j"
+  },
+  {
+    "day": 305,
+    "word": "SAĦNA",
+    "gloss": "anger; sexual arousal",
+    "root": "s-ħ-n"
+  },
+  {
+    "day": 306,
+    "word": "GĦEJA",
+    "gloss": "to get tired; to become fatigued",
+    "root": "għ-j-j"
+  },
+  {
+    "day": 307,
+    "word": "LINFA",
+    "gloss": "chandelier"
+  },
+  {
+    "day": 308,
+    "word": "DEHIX",
+    "gloss": "shock; fright",
+    "root": "d-h-x"
+  },
+  {
+    "day": 309,
+    "word": "PERĊA",
+    "gloss": "washing line; clothesline",
+    "root": "p-r-ċ"
+  },
+  {
+    "day": 310,
+    "word": "DEBĦA",
+    "gloss": "the slaughter of an animal as a sacrificial offering",
+    "root": "d-b-ħ"
+  },
+  {
+    "day": 311,
+    "word": "KREDU",
+    "gloss": "creed"
+  },
+  {
+    "day": 312,
+    "word": "RATAL",
+    "gloss": "a rotolo (old unit of mass of roughly 800g)",
+    "root": "r-t-l"
+  },
+  {
+    "day": 313,
+    "word": "ŻWIEĠ",
+    "gloss": "marriage; wedding",
+    "root": "ż-w-ġ"
+  },
+  {
+    "day": 314,
+    "word": "LAQAM",
+    "gloss": "nickname; moniker",
+    "root": "l-q-m"
+  },
+  {
+    "day": 315,
+    "word": "NAMRA",
+    "gloss": "hobby; fancy",
+    "root": "n-m-r"
+  },
+  {
+    "day": 316,
+    "word": "FORĠA",
+    "gloss": "forge"
+  },
+  {
+    "day": 317,
+    "word": "MIDRA",
+    "gloss": "threshing fork",
+    "root": "d-r-j"
+  },
+  {
+    "day": 318,
+    "word": "LITEM",
+    "gloss": "to lose one's parents; to be orphaned",
+    "root": "l-t-m"
+  },
+  {
+    "day": 319,
+    "word": "ANIŻI",
+    "gloss": "anise"
+  },
+  {
+    "day": 320,
+    "word": "SMIDA",
+    "gloss": "semolina; fodder for domestic fowl",
+    "root": "s-m-d"
+  },
+  {
+    "day": 321,
+    "word": "SOKIT",
+    "gloss": "socket"
+  },
+  {
+    "day": 322,
+    "word": "MĦARA",
+    "gloss": "clam"
+  },
+  {
+    "day": 323,
+    "word": "QOTON",
+    "gloss": "cotton",
+    "root": "q-t-n"
+  },
+  {
+    "day": 324,
+    "word": "QAWMA",
+    "gloss": "uprising; rebellion",
+    "root": "q-w-m"
+  },
+  {
+    "day": 325,
+    "word": "XADIN",
+    "gloss": "monkey; ape"
+  },
+  {
+    "day": 326,
+    "word": "VJOLA",
+    "gloss": "purple; violet"
+  },
+  {
+    "day": 327,
+    "word": "NAMUR",
+    "gloss": "hobby; courtship",
+    "root": "n-m-r"
+  },
+  {
+    "day": 328,
+    "word": "IDOLU",
+    "gloss": "idol"
+  },
+  {
+    "day": 329,
+    "word": "ŻELQA",
+    "gloss": "a slip",
+    "root": "ż-l-q"
+  },
+  {
+    "day": 330,
+    "word": "WILĠA",
+    "gloss": "large area of fields"
+  },
+  {
+    "day": 331,
+    "word": "QILLA",
+    "gloss": "fury; vehemence",
+    "root": "q-l-l"
+  },
+  {
+    "day": 332,
+    "word": "SEMMI",
+    "gloss": "poisonous",
+    "root": "s-m-m"
+  },
+  {
+    "day": 333,
+    "word": "KIRXA",
+    "gloss": "tripe"
+  },
+  {
+    "day": 334,
+    "word": "ŻBARK",
+    "gloss": "landing (from a ship or other transportation)"
+  },
+  {
+    "day": 335,
+    "word": "QLIBA",
+    "gloss": "a wrestling match",
+    "root": "q-l-b"
+  },
+  {
+    "day": 336,
+    "word": "QALJA",
+    "gloss": "a fry-up; a difficult or awkward situation",
+    "root": "q-l-j"
+  },
+  {
+    "day": 337,
+    "word": "ĠELAT",
+    "gloss": "ice cream"
+  },
+  {
+    "day": 338,
+    "word": "GĦERA",
+    "gloss": "to be stripped or denuded; to lose hair",
+    "root": "għ-r-j"
+  },
+  {
+    "day": 339,
+    "word": "ĦEMDA",
+    "gloss": "silence",
+    "root": "ħ-m-d"
+  },
+  {
+    "day": 340,
+    "word": "ĠENJU",
+    "gloss": "genius"
+  },
+  {
+    "day": 341,
+    "word": "GARŻA",
+    "gloss": "gauze; wound dressing"
+  },
+  {
+    "day": 342,
+    "word": "DEJMA",
+    "gloss": "standing army",
+    "root": "d-w-m"
+  },
+  {
+    "day": 343,
+    "word": "STOĊĊ",
+    "gloss": "cartridge"
+  },
+  {
+    "day": 344,
+    "word": "SATRA",
+    "gloss": "stealth; concealment",
+    "root": "s-t-r"
+  },
+  {
+    "day": 345,
+    "word": "SEQER",
+    "gloss": "falcon; hawk",
+    "root": "s-q-r"
+  },
+  {
+    "day": 346,
+    "word": "TINJA",
+    "gloss": "crease",
+    "root": "t-n-j"
+  },
+  {
+    "day": 347,
+    "word": "BLUHA",
+    "gloss": "nonsense; folly",
+    "root": "b-l-h"
+  },
+  {
+    "day": 348,
+    "word": "XEDAQ",
+    "gloss": "jaw"
+  },
+  {
+    "day": 349,
+    "word": "LAJMA",
+    "gloss": "slowness; lethargy",
+    "root": "l-j-m"
+  },
+  {
+    "day": 350,
+    "word": "BGĦIT",
+    "gloss": "the act of sending",
+    "root": "b-għ-t"
+  },
+  {
+    "day": 351,
+    "word": "ĦEDLA",
+    "gloss": "lethargy",
+    "root": "ħ-d-l"
+  },
+  {
+    "day": 352,
+    "word": "TERRA",
+    "gloss": "talcum powder"
+  },
+  {
+    "day": 353,
+    "word": "ĦRARA",
+    "gloss": "zeal; zealousness",
+    "root": "ħ-r-r"
+  },
+  {
+    "day": 354,
+    "word": "JARDA",
+    "gloss": "yard (in the imperial measurement scheme)"
+  },
+  {
+    "day": 355,
+    "word": "FATAT",
+    "gloss": "spectre; spook",
+    "root": "f-t-t"
+  },
+  {
+    "day": 356,
+    "word": "SFIEQ",
+    "gloss": "density",
+    "root": "s-f-q"
+  },
+  {
+    "day": 357,
+    "word": "PRIŻA",
+    "gloss": "prey"
+  },
+  {
+    "day": 358,
+    "word": "KAĦLA",
+    "gloss": "sand of a greenish colour; cuckoo",
+    "root": "k-ħ-l"
+  },
+  {
+    "day": 359,
+    "word": "XABLA",
+    "gloss": "sabre; sword"
+  },
+  {
+    "day": 360,
+    "word": "QARES",
+    "gloss": "sour; sour",
+    "root": "q-r-s"
+  },
+  {
+    "day": 361,
+    "word": "DANIŻ",
+    "gloss": "Danish; hailing from or related to Denmark"
+  },
+  {
+    "day": 362,
+    "word": "ĦMURA",
+    "gloss": "redness",
+    "root": "ħ-m-r"
+  },
+  {
+    "day": 363,
+    "word": "KARFA",
+    "gloss": "chaff"
+  },
+  {
+    "day": 364,
+    "word": "SETAĦ",
+    "gloss": "an unroofed passage between rooms; a verandah",
+    "root": "s-t-ħ"
   }
 ]
