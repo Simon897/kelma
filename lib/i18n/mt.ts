@@ -6,6 +6,7 @@ export const mt = {
   // --- meta ---
   siteTagline: "Logħob tal-kliem bil-Malti, kuljum", // REVIEW
   doneForToday: "Lest għal-lum!", // REVIEW
+  aboutLink: "Dwar Kelma", // REVIEW
   newGamesIn: "Logħob ġdid fi", // REVIEW
   siteDescription: "Logħba tal-kliem bil-Malti. Kelma ġdida kuljum, f'żewġ livelli.", // REVIEW
   howTitle: "Kif taħdem", // REVIEW

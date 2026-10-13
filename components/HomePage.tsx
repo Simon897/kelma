@@ -1,5 +1,7 @@
+import Link from "next/link";
 import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
+import { href } from "@/lib/routes";
 import { GameCarousel } from "./GameCarousel";
 import { DoneForToday, HomeCat } from "./DoneForToday";
 import { HomeLangRedirect } from "./HomeClient";
@@ -32,6 +34,15 @@ export function HomePage({ lang }: { lang: Lang }) {
         </div>
       </main>
       <IdleVideo />
+      {/* The page ends below the street scene: a dark strip, like the ground it stands on. */}
+      <footer className="bg-ink px-4 py-5 text-center text-sm text-limestone-50">
+        <Link
+          href={href("about", lang)}
+          className="inline-flex min-h-11 items-center font-bold underline underline-offset-4 hover:text-limestone-200 focus-visible:outline-limestone-50"
+        >
+          {d.aboutLink}
+        </Link>
+      </footer>
     </>
   );
 }

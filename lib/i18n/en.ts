@@ -4,6 +4,7 @@ import type { Dict } from "./index";
 export const en: Dict = {
   siteTagline: "Daily word games in Maltese",
   doneForToday: "All done today!",
+  aboutLink: "About Kelma",
   newGamesIn: "New games in",
   siteDescription: "A daily word game in Maltese. A new word every day, at two levels.",
   howTitle: "How it works",
