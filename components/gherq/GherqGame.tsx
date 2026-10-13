@@ -50,13 +50,17 @@ import { CarobScene } from "./Art";
 import type { CatHandle, CatPose } from "./Cat";
 import { CatDebugPanel } from "./CatDebug";
 import { GherqResult } from "./GherqResult";
-import { ClueCard, EntryRow, FoundCard, Stars } from "./Parts";
+import { ClueCard, EntryRow, FoundCard, RootTiles, Stars } from "./Parts";
 
 type Panel = "none" | "help" | "stats";
 const iconBtn = "inline-flex size-11 items-center justify-center rounded-tile text-ink hover:bg-limestone-200 active:translate-y-px";
 const SEEN_HELP = "kelma:gherq:seen-help";
 /** The end panel waits for the last leaf, the stars and the confetti, then about 1.2s more. */
 const RESULT_DELAY_MS = 900 + 1200;
+/** How long the tree opens back up on a phone to show a new leaf before shrinking to its strip. */
+const PEEK_MS = 1600;
+/** Upright phones stack the game (same query as the phone-portrait CSS variant). */
+const PHONE_PORTRAIT = "(max-width: 767.98px) and ((orientation: portrait) or (min-height: 521px))";
 
 const HintIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden fill="none" stroke="currentColor" strokeWidth={2.25} strokeLinecap="square">
@@ -76,11 +80,27 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const [flying, setFlying] = useState<{ letters: string[]; key: number; dy: number } | null>(null);
   const sceneBox = useRef<HTMLDivElement>(null);
   const entryBox = useRef<HTMLDivElement>(null);
+  /**
+   * Phones: the tree is big until play starts (a letter typed or the clues scrolled), then shrinks
+   * to a strip with the root and stars so the clues get the room. It opens back up briefly when a
+   * word grows a leaf, or for as long as you like after a tap, until the next letter.
+   */
+  const [engaged, setEngaged] = useState(false);
+  const [peek, setPeek] = useState(false);
+  const peekTimer = useRef<number | undefined>(undefined);
+  const engage = useCallback(() => {
+    window.clearTimeout(peekTimer.current);
+    setEngaged(true);
+    setPeek(false);
+  }, []);
   /** How far the found word's tiles fly to reach the tree's canopy (layouts differ by screen). */
   const flightTo = () => {
     const s = sceneBox.current?.getBoundingClientRect();
     const e = entryBox.current?.getBoundingClientRect();
-    return s && e ? s.top + s.height * 0.4 - (e.top + e.height / 2) : -160;
+    if (!s || !e) return -160;
+    // On a phone the strip is opening as the tiles fly: aim for the open tree's canopy.
+    const h = window.matchMedia(PHONE_PORTRAIT).matches ? Math.min(240, Math.max(120, window.innerHeight * 0.26)) : s.height;
+    return s.top + h * 0.4 - (e.top + e.height / 2);
   };
   /** Brings a clue card into view in whichever list is showing (the phone list scrolls). */
   const showCard = useCallback(
@@ -111,7 +131,13 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const later = useCallback((fn: () => void, ms: number) => {
     timers.current.push(window.setTimeout(fn, ms));
   }, []);
-  useEffect(() => () => timers.current.forEach((id) => window.clearTimeout(id)), []);
+  useEffect(
+    () => () => {
+      timers.current.forEach((id) => window.clearTimeout(id));
+      window.clearTimeout(peekTimer.current);
+    },
+    [],
+  );
 
   const showToast = useCallback(
     (text: string, spoken = text, ms = 1800) => {
@@ -208,6 +234,9 @@ export function GherqGame({ lang }: { lang: Lang }) {
       const next: GherqState = { ...state, found: [...state.found, w.word] };
       commit(next);
       setFlying({ letters: tiles(word), key: Date.now(), dy: flightTo() });
+      setPeek(true);
+      window.clearTimeout(peekTimer.current);
+      peekTimer.current = window.setTimeout(() => setPeek(false), PEEK_MS);
       later(() => showCard(w.word), 450);
       setEntry([]);
       setFresh(w.word);
@@ -246,9 +275,10 @@ export function GherqGame({ lang }: { lang: Lang }) {
       if (!puzzle || finished) return;
       if (key === "ENTER") return void submitWord(entry.join(""));
       if (key === "BACKSPACE") return setEntry((e) => e.slice(0, -1));
+      engage();
       setEntry((e) => (e.length < MAX_LETTERS ? [...e, key] : e));
     },
-    [entry, finished, puzzle, submitWord],
+    [engage, entry, finished, puzzle, submitWord],
   );
 
   // Physical keyboard, same rules as the other games.
@@ -349,6 +379,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
     () => (puzzle ? state.found.map((w) => (puzzle.words.find((x) => x.word === w)?.points === 3 ? "pod" : "leaf") as "leaf" | "pod") : []),
     [puzzle, state.found],
   );
+  const compact = engaged && !peek && !finished;
   const catState: CatPose = debugPose ?? (stars >= 5 ? "happy" : stars >= 2 ? "awake" : "nap");
 
   const list = puzzle && (
@@ -426,28 +457,42 @@ export function GherqGame({ lang }: { lang: Lang }) {
       <div className="flex min-h-0 flex-1 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:gap-4 phone-landscape:grid phone-landscape:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] phone-landscape:gap-3">
         <div className="relative flex min-h-0 flex-1 flex-col md:justify-center">
           <div className="relative flex min-h-0 flex-1 flex-col md:flex-none">
-            {/* phones: a short scene so the clues fit; desktop: a sensible height, the game centred */}
-            <div ref={sceneBox} className="relative h-[clamp(96px,22dvh,220px)] flex-none md:h-[clamp(200px,calc(100dvh-400px),560px)] phone-landscape:h-[clamp(56px,18dvh,88px)]">
-              <CarobScene
-                found={sceneKinds}
-                freshIndex={fresh ? state.found.indexOf(fresh) : null}
-                catState={catState}
-                catRef={cat}
-                root={puzzle.root}
-                className="absolute inset-0"
-              />
-            </div>
-            <div className="flex items-center justify-between gap-2 px-3 pt-2">
-              <Stars stars={stars} d={d} />
-              {/* One line of progress: how far the next star is (the stars carry the rest). */}
-              <p className="text-right text-sm font-semibold leading-tight text-ink">
-                {found.size === 0 ? d.firstStar : toNext === null ? d.allStars : d.nextStar(toNext)}
-              </p>
+            {/* phones: the tree, shrinking to a strip once play starts, with the stars laid over its sky;
+                desktop: a sensible height, the game centred, the stars on a row beneath */}
+            <div className="group relative flex-none" data-compact={compact || undefined} onClick={compact ? () => setPeek(true) : undefined}>
+              <div
+                ref={sceneBox}
+                className="relative h-[clamp(120px,26dvh,240px)] flex-none transition-[height] duration-300 ease-flip motion-reduce:transition-none phone-portrait:group-data-compact:h-[60px] md:h-[clamp(200px,calc(100dvh-400px),560px)] phone-landscape:h-[clamp(56px,18dvh,88px)]"
+              >
+                <CarobScene
+                  found={sceneKinds}
+                  freshIndex={fresh ? state.found.indexOf(fresh) : null}
+                  catState={catState}
+                  catRef={cat}
+                  root={puzzle.root}
+                  rootClassName="transition-opacity duration-200 phone-portrait:group-data-compact:opacity-0"
+                  className="absolute inset-0"
+                />
+              </div>
+              {/* the strip: the root moves out of the soil to its right-hand end */}
+              <div aria-hidden className="absolute right-2 top-1/2 hidden -translate-y-1/2 phone-portrait:group-data-compact:block">
+                <RootTiles root={puzzle.root} size="sm" onSoil />
+              </div>
+              <div className="flex items-center justify-between gap-2 px-3 pt-2 phone-portrait:absolute phone-portrait:left-2 phone-portrait:top-2 phone-portrait:flex-col phone-portrait:items-start phone-portrait:gap-0.5 phone-portrait:rounded-tile phone-portrait:bg-limestone-50/85 phone-portrait:px-1.5 phone-portrait:py-1 phone-portrait:group-data-compact:top-1">
+                <Stars stars={stars} d={d} />
+                {/* One line of progress: how far the next star is (the stars carry the rest). */}
+                <p className="text-right text-sm font-semibold leading-tight text-ink phone-portrait:text-left phone-portrait:text-xs">
+                  {found.size === 0 ? d.firstStar : toNext === null ? d.allStars : d.nextStar(toNext)}
+                </p>
+              </div>
             </div>
             {/* phones: the clues between the tree and the keyboard */}
             <div
               ref={phoneList}
               onScroll={checkMore}
+              // only a scroll by hand shrinks the tree (showCard scrolls the list during the peek)
+              onTouchMove={engage}
+              onWheel={engage}
               className={`min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-2 md:hidden phone-landscape:hidden ${
                 moreBelow ? "[mask-image:linear-gradient(to_bottom,black_calc(100%-2.5rem),transparent)]" : ""
               }`}

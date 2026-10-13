@@ -65,6 +65,7 @@ export function CarobScene({
   catState,
   catRef,
   root,
+  rootClassName = "",
   className = "",
 }: {
   found: ("leaf" | "pod")[];
@@ -75,6 +76,8 @@ export function CarobScene({
   catRef?: Ref<CatHandle>;
   /** Today's root, shown as the site's stone tiles in the soil. */
   root?: string[];
+  /** Extra classes for the root tiles' wrapper (the game hides them while the scene is a strip). */
+  rootClassName?: string;
   className?: string;
 }) {
   const reduce = usePrefersReducedMotion();
@@ -115,7 +118,7 @@ export function CarobScene({
           <Cat ref={catRef} pose={catState} reduce={reduce} hasPod={batIndex >= 0} onPodBat={() => setSwing((n) => n + 1)} />
         </svg>
         {root && (
-          <div className="absolute inset-x-0 -translate-y-1/2" style={{ top: `${ROOT_TILES_Y * 100}%` }}>
+          <div className={`absolute inset-x-0 -translate-y-1/2 ${rootClassName}`} style={{ top: `${ROOT_TILES_Y * 100}%` }}>
             <RootTiles root={root} size="scene" onSoil />
           </div>
         )}

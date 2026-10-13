@@ -33,7 +33,7 @@ export function RootTiles({ root, size = "md", onSoil = false }: { root: string[
 function Star({ filled, pop, reduce }: { filled: boolean; pop: boolean; reduce: boolean }) {
   return (
     <motion.span
-      className="relative inline-flex size-[26px]"
+      className="relative inline-flex size-5 md:size-[26px] phone-landscape:size-[26px]"
       initial={false}
       animate={pop && !reduce ? { scale: [0, 1.25, 1] } : { scale: 1 }}
       transition={{ duration: 0.25, ease: EASE }}
@@ -153,7 +153,7 @@ export function FoundCard({ word, d, fresh = false }: { word: GherqWord; d: Dict
       transition={{ duration: 0.3, ease: EASE, delay: fresh ? 0.35 : 0 }}
       onClick={() => setOpen((o) => !o)}
       data-clue={word.word}
-      className="stone flex items-start justify-between gap-2 rounded-tile border-2 border-ink/80 bg-limestone-50 px-2.5 py-1.5 md:px-3 md:py-2"
+      className="stone flex items-start justify-between gap-2 rounded-tile bg-limestone-50 px-2.5 py-1.5 md:px-3 md:py-2"
     >
       <span className="min-w-0">
         <span lang="mt" className="display-caps block text-base leading-tight">
@@ -177,7 +177,7 @@ export function ClueCard({ word, d, reveal }: { word: GherqWord; d: Dict; reveal
     <li
       onClick={() => setOpen((o) => !o)}
       data-clue={word.word}
-      className="flex items-start justify-between gap-2 rounded-tile border border-ink-soft/50 bg-limestone-50/40 px-2.5 py-1.5 md:px-3 md:py-2"
+      className="flex items-start justify-between gap-2 rounded-tile border border-dashed border-ink-soft/60 px-2.5 py-1.5 md:px-3 md:py-2"
     >
       <span className="min-w-0">
         <span role="img" aria-label={d.clueAria(n, reveal && { position: reveal.index + 1, letter: reveal.letter })} className="flex flex-wrap gap-[3px] py-0.5">

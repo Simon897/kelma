@@ -2,6 +2,8 @@
 
 /* A phone held sideways: too short to stack the game, so it lays out side by side like desktop. */
 @custom-variant phone-landscape (@media (orientation: landscape) and (max-height: 520px));
+/* A phone held upright: the stacked layout (everything below md that isn't phone-landscape). */
+@custom-variant phone-portrait (@media (max-width: 767.98px) and ((orientation: portrait) or (min-height: 521px)));
 
 /*
  * Kelma design tokens. Every colour traces back to something Maltese:
