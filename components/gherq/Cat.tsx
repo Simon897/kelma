@@ -2,14 +2,7 @@
 
 import { motion, useAnimationControls, type TargetAndTransition } from "framer-motion";
 import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState, type ReactNode, type Ref } from "react";
-import {
-  IDLES,
-  REACTION_MS,
-  createIdleScheduler,
-  type CatPose,
-  type IdleName,
-  type ReactionType,
-} from "@/lib/gherq/cat-scheduler";
+import { IDLES, REACTION_MS, createIdleScheduler, type CatPose, type IdleName, type ReactionType } from "@/lib/gherq/cat-scheduler";
 import {
   AWAKE_TAIL,
   BELL,
@@ -62,12 +55,32 @@ export interface CatHandle {
   react: (type: CatReaction) => void;
   /** Debug: play one idle now. */
   playIdle: (name: IdleName) => void;
+  /** The result panel's finale: glance up at the ripening pods, then bat one. */
+  playMove: (name: FinaleMove) => void;
 }
+export type FinaleMove = "finaleGlance" | "finaleBat";
 
 const EASE = [0.45, 0, 0.2, 1] as const;
-const PARTS = ["root", "body", "head", "earL", "earR", "eyes", "pupils", "tail", "tailTip", "pawL", "pawR", "napFront", "napBack", "bell", "glint", "leaf"] as const;
+const PARTS = [
+  "root",
+  "body",
+  "head",
+  "earL",
+  "earR",
+  "eyes",
+  "pupils",
+  "tail",
+  "tailTip",
+  "pawL",
+  "pawR",
+  "napFront",
+  "napBack",
+  "bell",
+  "glint",
+  "leaf",
+] as const;
 type Part = (typeof PARTS)[number];
-type ActionName = IdleName | ReactionType;
+type ActionName = IdleName | ReactionType | FinaleMove;
 type Moves = Partial<Record<Part, TargetAndTransition>>;
 type Action = { name: ActionName; key: number } | null;
 
@@ -158,6 +171,15 @@ function movesFor(name: ActionName, pose: CatPose): Moves {
       const wiggle = [0, 2, -2, 2, -2, 2, -2, 0];
       return { body: kf(0.8, { x: wiggle }), bell: kf(0.8, { x: wiggle }), glint: kf(0.8, { opacity: [0, 1, 1, 0] }, [0, 0.2, 0.5, 1]) };
     }
+    // --- the result panel's finale ---
+    case "finaleGlance": {
+      const t = [0, 0.25, 0.75, 1];
+      return { head: kf(1.2, { rotate: [0, -7, -7, 0], y: [0, -3, -3, 0] }, t), pupils: kf(1.2, { x: [0, -1.5, -1.5, 0], y: [0, -2.5, -2.5, 0] }, t) };
+    }
+    case "finaleBat": {
+      const t = [0, 0.2, 0.4, 0.6, 0.8, 1];
+      return { root: kf(1.2, { y: [0, -16, -16, -16, -16, 0] }, t), pawL: kf(1.2, { rotate: [0, 120, 150, 120, 150, 0] }, t) };
+    }
     case "podBat": {
       const t = [0, 0.2, 0.4, 0.6, 0.8, 1];
       return {
@@ -200,9 +222,27 @@ const Raw = ({ html }: { html: string }) => <g dangerouslySetInnerHTML={{ __html
  * A part that the action can move. The pivot is a share of the part's own box (fill-box), or a
  * fixed point in the drawing's own units (`at`) where clipped shapes make the box misleading.
  */
-function P({ c, ox = 0.5, oy = 0.5, at, children, initial }: { c: ReturnType<typeof useAnimationControls>; ox?: number; oy?: number; at?: [string, string]; children: ReactNode; initial?: TargetAndTransition }) {
+function P({
+  c,
+  ox = 0.5,
+  oy = 0.5,
+  at,
+  children,
+  initial,
+}: {
+  c: ReturnType<typeof useAnimationControls>;
+  ox?: number;
+  oy?: number;
+  at?: [string, string];
+  children: ReactNode;
+  initial?: TargetAndTransition;
+}) {
   return (
-    <motion.g animate={c} initial={initial} style={at ? { transformBox: "view-box", originX: at[0], originY: at[1] } : { transformBox: "fill-box", originX: ox, originY: oy }}>
+    <motion.g
+      animate={c}
+      initial={initial}
+      style={at ? { transformBox: "view-box", originX: at[0], originY: at[1] } : { transformBox: "fill-box", originX: ox, originY: oy }}
+    >
       {children}
     </motion.g>
   );
@@ -215,10 +255,13 @@ export function Cat({
   reduce,
   hasPod = false,
   onPodBat,
+  still = false,
   ref,
 }: {
   pose: CatPose;
   reduce: boolean;
+  /** No idles and no settling into a nap: she holds her pose (the result panel). */
+  still?: boolean;
   /** A golden pod hangs within reach (for the rare pod-batting idle). */
   hasPod?: boolean;
   onPodBat?: () => void;
@@ -228,10 +271,10 @@ export function Cat({
   const [settled, setSettled] = useState(false);
   useEffect(() => {
     setSettled(false);
-    if (posed !== "happy") return;
+    if (posed !== "happy" || still) return;
     const id = window.setTimeout(() => setSettled(true), AFTER_SETTLE_MS);
     return () => window.clearTimeout(id);
-  }, [posed]);
+  }, [posed, still]);
   const pose: CatPose = posed === "happy" && settled ? "drowsy" : posed;
 
   const controls = {} as Record<Part, ReturnType<typeof useAnimationControls>>;
@@ -268,10 +311,10 @@ export function Cat({
 
   // Idles run only with motion allowed, and pause while the tab is hidden or the scene off-screen.
   useEffect(() => {
-    if (reduce) return scheduler.stop();
+    if (reduce || still) return scheduler.stop();
     scheduler.start();
     return () => scheduler.stop();
-  }, [reduce, scheduler]);
+  }, [reduce, scheduler, still]);
   useEffect(() => {
     const sync = () => scheduler.setPaused("hidden", document.hidden);
     sync();
@@ -297,24 +340,27 @@ export function Cat({
       firstPose.current = false;
       return;
     }
-    if (pose === "happy" && !reduceRef.current) {
+    if (pose === "happy" && !reduceRef.current && !still) {
       scheduler.react(IDLES.happy[0].ms);
       play("tailFlick");
     }
-  }, [pose, play, scheduler]);
+  }, [pose, play, scheduler, still]);
 
   // Reduced motion: no idles, only a very slow blink every 10–15s (an instant swap).
   useEffect(() => {
     if (!reduce) return;
     let id = 0;
     const loop = () => {
-      id = window.setTimeout(() => {
-        setReducedBlink(true);
-        id = window.setTimeout(() => {
-          setReducedBlink(false);
-          loop();
-        }, 300);
-      }, 10_000 + Math.random() * 5000);
+      id = window.setTimeout(
+        () => {
+          setReducedBlink(true);
+          id = window.setTimeout(() => {
+            setReducedBlink(false);
+            loop();
+          }, 300);
+        },
+        10_000 + Math.random() * 5000,
+      );
     };
     loop();
     return () => window.clearTimeout(id);
@@ -337,6 +383,9 @@ export function Cat({
         if (!def) return;
         scheduler.react(def.ms);
         play(name);
+      },
+      playMove(name) {
+        if (!reduceRef.current) play(name);
       },
     }),
     [play, scheduler],
@@ -489,10 +538,7 @@ export function Cat({
 /** Breathing: a slow rise and fall of the body (about 3.5s, ±2%). */
 function Breathe({ on, children }: { on: boolean; children: ReactNode }) {
   return (
-    <motion.g
-      animate={on ? BREATHE_ON : BREATHE_OFF}
-      style={{ transformBox: "fill-box", originX: 0.5, originY: 1 }}
-    >
+    <motion.g animate={on ? BREATHE_ON : BREATHE_OFF} style={{ transformBox: "fill-box", originX: 0.5, originY: 1 }}>
       {children}
     </motion.g>
   );

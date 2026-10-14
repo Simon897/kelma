@@ -2,17 +2,32 @@
 
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
-import { averageStars, byLengthThenAlpha, displayGherqStreak, isBonus, type GherqPuzzle, type GherqStats, type GherqWord } from "@/lib/gherq/game";
+import {
+  averageStars,
+  bonusWords,
+  byLengthThenAlpha,
+  coreFound,
+  coreWords,
+  displayGherqStreak,
+  isBonus,
+  type GherqPuzzle,
+  type GherqStats,
+  type GherqWord,
+} from "@/lib/gherq/game";
 import { t, type Lang } from "@/lib/i18n";
 import { href } from "@/lib/routes";
 import { GABRA_URL } from "@/lib/site";
 import { Countdown } from "../Countdown";
 import { ArrowIcon } from "../Icons";
+import { CarobScene } from "./Art";
+import type { CatPose } from "./Cat";
 import { PointsBadge, RootTiles, Stars } from "./Parts";
 
 const POS_ORDER = ["VERB", "NOUN", "ADJ"];
 
 export function GherqResult({
+  open,
+  catState,
   lang,
   puzzle,
   found,
@@ -28,6 +43,9 @@ export function GherqResult({
   onGiveUp,
   shareButton,
 }: {
+  /** The panel is showing: the tree's finale plays each time it opens. */
+  open: boolean;
+  catState: CatPose;
   lang: Lang;
   puzzle: GherqPuzzle;
   found: ReadonlySet<string>;
@@ -57,6 +75,16 @@ export function GherqResult({
 
   return (
     <div className="space-y-5">
+      {finished && open && (
+        <CarobScene
+          variant="result"
+          coreFound={coreFound(puzzle, found)}
+          coreTotal={coreWords(puzzle).length}
+          bonus={bonusWords(puzzle).filter((w) => found.has(w.word)).length}
+          catState={catState}
+          root={puzzle.root}
+        />
+      )}
       <div className="flex items-center justify-between gap-3">
         <Stars stars={stars} d={d} />
         <p className="text-sm font-semibold">
@@ -78,7 +106,10 @@ export function GherqResult({
                   return (
                     <li key={w.word} className={`flex items-start justify-between gap-2 ${got ? "" : "text-ink-soft"}`}>
                       <span className="min-w-0">
-                        <span lang="mt" className={`font-bold tracking-wide ${got ? "text-ink" : missed ? "text-ink-soft line-through decoration-1" : "text-ink-soft"}`}>
+                        <span
+                          lang="mt"
+                          className={`font-bold tracking-wide ${got ? "text-ink" : missed ? "text-ink-soft line-through decoration-1" : "text-ink-soft"}`}
+                        >
                           {w.word}
                         </span>
                         {missed && <span className="ml-1.5 rounded-tile border border-ink-soft px-1 text-xs font-semibold">{d.missed}</span>}
@@ -163,11 +194,17 @@ export function GherqResult({
             {shareButton}
           </div>
           <div className="grid gap-2">
-            <Link href={href("normali", lang)} className="flex min-h-11 items-center justify-between rounded-tile border-2 border-ink px-4 py-2 font-bold hover:bg-limestone-200">
+            <Link
+              href={href("normali", lang)}
+              className="flex min-h-11 items-center justify-between rounded-tile border-2 border-ink px-4 py-2 font-bold hover:bg-limestone-200"
+            >
               {d.playKelma}
               <ArrowIcon className="size-5" />
             </Link>
-            <Link href={href("sellum", lang)} className="flex min-h-11 items-center justify-between rounded-tile border-2 border-ink px-4 py-2 font-bold hover:bg-limestone-200">
+            <Link
+              href={href("sellum", lang)}
+              className="flex min-h-11 items-center justify-between rounded-tile border-2 border-ink px-4 py-2 font-bold hover:bg-limestone-200"
+            >
               {d.playSellum}
               <ArrowIcon className="size-5" />
             </Link>
@@ -179,16 +216,28 @@ export function GherqResult({
             <div className="space-y-3">
               <p className="text-sm">{d.giveUpConfirm}</p>
               <div className="flex flex-wrap gap-2">
-                <button type="button" onClick={onGiveUp} className="btn-block inline-flex min-h-11 items-center rounded-tile border-2 border-ink bg-ink px-4 font-bold text-limestone-50">
+                <button
+                  type="button"
+                  onClick={onGiveUp}
+                  className="btn-block inline-flex min-h-11 items-center rounded-tile border-2 border-ink bg-ink px-4 font-bold text-limestone-50"
+                >
                   {d.giveUpYes}
                 </button>
-                <button type="button" onClick={() => setConfirm(false)} className="inline-flex min-h-11 items-center rounded-tile border-2 border-ink px-4 font-bold hover:bg-limestone-200">
+                <button
+                  type="button"
+                  onClick={() => setConfirm(false)}
+                  className="inline-flex min-h-11 items-center rounded-tile border-2 border-ink px-4 font-bold hover:bg-limestone-200"
+                >
                   {d.cancel}
                 </button>
               </div>
             </div>
           ) : (
-            <button type="button" onClick={() => setConfirm(true)} className="inline-flex min-h-11 items-center rounded-tile border-2 border-ink px-4 font-bold hover:bg-limestone-200">
+            <button
+              type="button"
+              onClick={() => setConfirm(true)}
+              className="inline-flex min-h-11 items-center rounded-tile border-2 border-ink px-4 font-bold hover:bg-limestone-200"
+            >
               {d.giveUp}
             </button>
           )}

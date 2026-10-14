@@ -358,10 +358,6 @@ export function GherqGame({ lang }: { lang: Lang }) {
         : [],
     [found, puzzle],
   );
-  const sceneKinds = useMemo(
-    () => (puzzle ? state.found.map((w) => (puzzle.words.find((x) => x.word === w)?.points === 3 ? "pod" : "leaf") as "leaf" | "pod") : []),
-    [puzzle, state.found],
-  );
   const catState: CatPose = debugPose ?? (stars >= 5 ? "happy" : stars >= 2 ? "awake" : "nap");
 
   const list = puzzle && (
@@ -463,8 +459,9 @@ export function GherqGame({ lang }: { lang: Lang }) {
             >
               {!portraitPhone && (
                 <CarobScene
-                  found={sceneKinds}
-                  freshIndex={fresh ? state.found.indexOf(fresh) : null}
+                  coreFound={coreFound(puzzle, found)}
+                  coreTotal={coreCount}
+                  bonus={bonusFound}
                   catState={catState}
                   catRef={cat}
                   root={puzzle.root}
@@ -609,14 +606,10 @@ export function GherqGame({ lang }: { lang: Lang }) {
         title={finished ? (stars === 5 ? d.gherqDone : d.gherqRevealed) : d.statsFor("Għerq")}
         closeLabel={d.close}
       >
-        {puzzle && portraitPhone && finished && (
-          // phones: the tree is the reward, grown with every word found today
-          <div className="relative -mt-2 mb-4 h-48">
-            <CarobScene found={sceneKinds} freshIndex={null} catState={catState} className="absolute inset-0" />
-          </div>
-        )}
         {puzzle && (
           <GherqResult
+            open={panel === "stats"}
+            catState={catState}
             lang={lang}
             puzzle={puzzle}
             found={found}
