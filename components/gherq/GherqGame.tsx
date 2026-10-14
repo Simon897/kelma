@@ -50,7 +50,7 @@ import { CarobScene } from "./Art";
 import type { CatHandle, CatPose } from "./Cat";
 import { CatDebugPanel } from "./CatDebug";
 import { GherqResult } from "./GherqResult";
-import { ClueCard, EntryRow, FoundCard, Stars } from "./Parts";
+import { ClueCard, EntryRow, FoundCard, RootTiles, Stars } from "./Parts";
 
 type Panel = "none" | "help" | "stats";
 const iconBtn = "inline-flex size-11 items-center justify-center rounded-tile text-ink hover:bg-limestone-200 active:translate-y-px";
@@ -75,10 +75,21 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const [entry, setEntry] = useState<string[]>([]);
   const [flying, setFlying] = useState<{ letters: string[]; key: number; dy: number } | null>(null);
   const sceneBox = useRef<HTMLDivElement>(null);
+  const barBox = useRef<HTMLDivElement>(null);
   const entryBox = useRef<HTMLDivElement>(null);
-  /** How far the found word's tiles fly to reach the tree's canopy (layouts differ by screen). */
+  /** Portrait phones swap the tree for a slim root bar, and the tree waits in the result panel (its SVG ids must exist only once). */
+  const [portraitPhone, setPortraitPhone] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px) and (not ((orientation: landscape) and (max-height: 520px)))");
+    const on = () => setPortraitPhone(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  /** How far the found word's tiles fly to reach the tree's canopy (or the root bar, when it shows). */
   const flightTo = () => {
-    const s = sceneBox.current?.getBoundingClientRect();
+    const target = sceneBox.current?.offsetParent ? sceneBox.current : barBox.current;
+    const s = target?.getBoundingClientRect();
     const e = entryBox.current?.getBoundingClientRect();
     return s && e ? s.top + s.height * 0.4 - (e.top + e.height / 2) : -160;
   };
@@ -161,13 +172,10 @@ export function GherqGame({ lang }: { lang: Lang }) {
     return () => window.removeEventListener("pagehide", onHide);
   }, [coreCount, day, found, puzzle, stars, state.hints, state.revealed]);
 
-  const commit = useCallback(
-    (next: GherqState) => {
-      setState(next);
-      saveGherqState(next);
-    },
-    [],
-  );
+  const commit = useCallback((next: GherqState) => {
+    setState(next);
+    saveGherqState(next);
+  }, []);
 
   const submitWord = useCallback(
     async (word: string) => {
@@ -342,7 +350,12 @@ export function GherqGame({ lang }: { lang: Lang }) {
   }, [checkMore, puzzle]);
   // Bonus words aren't listed as clues; once found they join the list underneath.
   const foundBonus = useMemo(
-    () => (puzzle ? bonusWords(puzzle).filter((w) => found.has(w.word)).sort((a, b) => byLengthThenAlpha(a.word, b.word)) : []),
+    () =>
+      puzzle
+        ? bonusWords(puzzle)
+            .filter((w) => found.has(w.word))
+            .sort((a, b) => byLengthThenAlpha(a.word, b.word))
+        : [],
     [found, puzzle],
   );
   const sceneKinds = useMemo(
@@ -369,7 +382,12 @@ export function GherqGame({ lang }: { lang: Lang }) {
               {d.helpTitle}
             </button>
           </p>
-          <button type="button" onClick={endIntro} aria-label={d.gherqIntroDismiss} className="-my-1 inline-flex size-11 shrink-0 items-center justify-center rounded-tile text-ink hover:bg-limestone-200">
+          <button
+            type="button"
+            onClick={endIntro}
+            aria-label={d.gherqIntroDismiss}
+            className="-my-1 inline-flex size-11 shrink-0 items-center justify-center rounded-tile text-ink hover:bg-limestone-200"
+          >
             <CloseIcon className="size-5" />
           </button>
         </div>
@@ -426,18 +444,35 @@ export function GherqGame({ lang }: { lang: Lang }) {
       <div className="flex min-h-0 flex-1 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:gap-4 phone-landscape:grid phone-landscape:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] phone-landscape:gap-3">
         <div className="relative flex min-h-0 flex-1 flex-col md:justify-center">
           <div className="relative flex min-h-0 flex-1 flex-col md:flex-none">
-            {/* phones: a short scene so the clues fit; desktop: a sensible height, the game centred */}
-            <div ref={sceneBox} className="relative h-[clamp(96px,22dvh,220px)] flex-none md:h-[clamp(200px,calc(100dvh-400px),560px)] phone-landscape:h-[clamp(56px,18dvh,88px)]">
-              <CarobScene
-                found={sceneKinds}
-                freshIndex={fresh ? state.found.indexOf(fresh) : null}
-                catState={catState}
-                catRef={cat}
-                root={puzzle.root}
-                className="absolute inset-0"
-              />
+            {/* phones: the root and the stars in one strip, so the clues get the room */}
+            <div ref={barBox} className="flex flex-none items-center gap-3 border-b border-ink/15 px-3 py-2 md:hidden phone-landscape:hidden">
+              <div className="shrink-0">
+                <RootTiles root={puzzle.root} size="sm" onSoil />
+              </div>
+              <div className="ml-auto flex min-w-0 flex-col items-end gap-0.5">
+                <Stars stars={stars} d={d} />
+                <p className="truncate text-xs font-semibold leading-tight text-ink-soft">
+                  {found.size === 0 ? d.firstStar : toNext === null ? d.allStars : d.nextStar(toNext)}
+                </p>
+              </div>
             </div>
-            <div className="flex items-center justify-between gap-2 px-3 pt-2">
+            {/* desktop and phones on their side: the tree, at a sensible height with the game centred */}
+            <div
+              ref={sceneBox}
+              className="relative hidden flex-none md:block md:h-[clamp(200px,calc(100dvh-400px),560px)] phone-landscape:block phone-landscape:h-[clamp(56px,18dvh,88px)]"
+            >
+              {!portraitPhone && (
+                <CarobScene
+                  found={sceneKinds}
+                  freshIndex={fresh ? state.found.indexOf(fresh) : null}
+                  catState={catState}
+                  catRef={cat}
+                  root={puzzle.root}
+                  className="absolute inset-0"
+                />
+              )}
+            </div>
+            <div className={`flex items-center justify-between gap-2 px-3 pt-2 hidden md:flex phone-landscape:flex`}>
               <Stars stars={stars} d={d} />
               {/* One line of progress: how far the next star is (the stars carry the rest). */}
               <p className="text-right text-sm font-semibold leading-tight text-ink">
@@ -472,7 +507,11 @@ export function GherqGame({ lang }: { lang: Lang }) {
                     </span>
                   )}
                 </p>
-                <button type="button" onClick={() => setPanel("stats")} className="btn-block inline-flex h-11 items-center gap-2 rounded-tile bg-sea px-4 font-bold text-limestone-50 hover:bg-sea-deep">
+                <button
+                  type="button"
+                  onClick={() => setPanel("stats")}
+                  className="btn-block inline-flex h-11 items-center gap-2 rounded-tile bg-sea px-4 font-bold text-limestone-50 hover:bg-sea-deep"
+                >
                   {d.seeResult}
                   <ArrowIcon className="size-5" />
                 </button>
@@ -505,7 +544,10 @@ export function GherqGame({ lang }: { lang: Lang }) {
         </div>
 
         {/* desktop: the list beside the tree */}
-        <aside className="hidden min-h-0 overflow-y-auto px-1 py-3 md:block phone-landscape:block" aria-label={puzzle ? d.cluesTitle(coreFound(puzzle, found), coreCount) : undefined}>
+        <aside
+          className="hidden min-h-0 overflow-y-auto px-1 py-3 md:block phone-landscape:block"
+          aria-label={puzzle ? d.cluesTitle(coreFound(puzzle, found), coreCount) : undefined}
+        >
           {list}
         </aside>
       </div>
@@ -567,6 +609,12 @@ export function GherqGame({ lang }: { lang: Lang }) {
         title={finished ? (stars === 5 ? d.gherqDone : d.gherqRevealed) : d.statsFor("Għerq")}
         closeLabel={d.close}
       >
+        {puzzle && portraitPhone && finished && (
+          // phones: the tree is the reward, grown with every word found today
+          <div className="relative -mt-2 mb-4 h-48">
+            <CarobScene found={sceneKinds} freshIndex={null} catState={catState} className="absolute inset-0" />
+          </div>
+        )}
         {puzzle && (
           <GherqResult
             lang={lang}
@@ -583,7 +631,11 @@ export function GherqGame({ lang }: { lang: Lang }) {
             onElapsed={() => setNewDay(true)}
             onGiveUp={giveUp}
             shareButton={
-              <button type="button" onClick={share} className="btn-block inline-flex h-12 items-center gap-2 rounded-tile bg-sea px-5 font-bold text-limestone-50 hover:bg-sea-deep">
+              <button
+                type="button"
+                onClick={share}
+                className="btn-block inline-flex h-12 items-center gap-2 rounded-tile bg-sea px-5 font-bold text-limestone-50 hover:bg-sea-deep"
+              >
                 {copied ? <TickIcon className="size-5" /> : <ShareIcon className="size-5" />}
                 {copied ? d.copiedShort : d.share}
               </button>

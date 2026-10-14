@@ -5,7 +5,7 @@ import { href } from "@/lib/routes";
 import { GameCarousel } from "./GameCarousel";
 import { DoneForToday, HomeCat } from "./DoneForToday";
 import { HomeLangRedirect } from "./HomeClient";
-import { IdleVideo } from "./IdleVideo";
+import { StreetScene } from "./StreetScene";
 import { LangToggle } from "./LangToggle";
 import { WordOfDay } from "./WordOfDay";
 
@@ -33,7 +33,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           <WordOfDay lang={lang} />
         </div>
       </main>
-      <IdleVideo />
+      <StreetScene />
       {/* The page ends below the street scene: a dark strip, like the ground it stands on. */}
       <footer className="bg-ink px-4 py-5 text-center text-sm text-limestone-50">
         <Link
