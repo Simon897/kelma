@@ -103,8 +103,8 @@ export const mt = {
   howDoublesBody: "Ittra tixgħel daqs kemm hemm kopji tagħha fil-kelma. Jekk tikteb żewġ A u l-kelma għandha A waħda biss, waħda biss tieħu l-kulur; l-oħra tibqa' griża.", // REVIEW
   howDoublesExample: "Jekk il-kelma hi SODDA, DAWRA tieħu A waħda biss: dik fil-post it-tajjeb. Id-D tixgħel isfar għax SODDA fiha D.", // REVIEW
   howModesTitle: "Żewġ livelli", // REVIEW
-  howNormaliBody: "Kliem komuni ta' kuljum. Għal min qed jitgħallem il-Malti jew għadu qed jibnih.", // REVIEW
-  howTqilaBody: "Kliem inqas komuni, għal min jitkellem il-Malti sew. Kultant tiltaqa' ma' kelma rari u antika li qed tintilef mill-użu. Dawk il-jiem jiġu, imma ma nwissukx meta.", // REVIEW
+  howNormaliBody: "Kliem familjari ta' kuljum b'ittri faċli: ftit ittri doppji u ftit mill-ittri diffiċli bħal X, Ż u Q. Għal min qed jitgħallem il-Malti jew għadu qed jibnih.", // REVIEW
+  howTqilaBody: "Kliem aktar qarrieqi, għal min jitkellem il-Malti sew: ittri doppji, X, Ż u Q, u kliem li jixbah ħafna kliem ieħor, allura anke tentattiv tajjeb jista' jħallik weħel.", // REVIEW
   howModesShared: "Kull livell għandu l-kelma tiegħu, l-istatistika tiegħu u s-sekwenza tiegħu.", // REVIEW
   howLettersTitle: "L-ittri Maltin", // REVIEW
   howLettersDigraphs: "GĦ u IE jieħdu żewġ kaxxi: waħda għal kull ittra.", // REVIEW
@@ -184,6 +184,10 @@ export const mt = {
   hintAnnounce: (clue: string, position: number, letter: string) => `Ħjiel: ${letter} hija l-ittra numru ${position} ta' "${clue}"`, // REVIEW
   gherqNotAWord: "Mhux kelma tad-dizzjunarju", // REVIEW
   gherqNotToday: "Minn dan l-għerq, imma mhux fil-logħba tal-lum", // REVIEW
+  gherqFormPlural: "Dik plural: ipprova s-singular", // REVIEW
+  gherqFormFeminine: "Dik femminili: ipprova l-maskil", // REVIEW
+  gherqFormVerb: "Dik forma tal-verb: ipprova l-passat ta' 'huwa', bħal KITEB", // REVIEW
+  bonusMore: (n: number) => (n === 1 ? "Kelma bonus oħra li ma sibtiex" : `${n} kliem bonus ieħor li ma sibtx`), // REVIEW
   gherqEmptyStatsBody: "Hawn tara l-istilel u s-sekwenza tiegħek.", // REVIEW
   gherqBeforeTitle: "Għerq għadu ma bediex", // REVIEW
   gherqBeforeBody: "L-ewwel għerq joħroġ f'nofsillejl, ħin Malta.", // REVIEW

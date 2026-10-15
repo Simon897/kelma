@@ -24,6 +24,13 @@ data/kelma/valid-guesses.json  every accepted guess (flat uppercase array)
 
 Each answer entry is `{ day, word, gloss, root?, note? }`. `word` is exactly 5 Unicode characters, uppercase (GĦ and IE are two tiles). No difficulty tiers ship to the client.
 
+The lists are built by how hard each word is to solve, not just how common it is. `scripts/kelma-difficulty.mjs` (about 5 minutes) has a solver play every candidate and writes `data/source/kelma-difficulty.json`; `scripts/build-kelma.mjs --from N` then fills days N–364. Normali takes the easiest familiar words (few repeats, few unusual letters such as X, Ż or Q, few one-letter-off traps); Diffiċli takes the hardest that the solver still gets in 6 guesses. Days before N are never changed, so pass tomorrow's day index.
+
+```bash
+node scripts/kelma-difficulty.mjs
+node scripts/build-kelma.mjs --from 17
+```
+
 `npm run build` runs `scripts/validate-data.mjs` first. It fails the build if an answer is missing from the guess list, a word isn't 5 characters, a day repeats or skips, or an entry has extra fields.
 
 Words and meanings come from Ġabra (University of Malta, MLRS), CC BY 4.0. Ġabra's site (`mlrs.research.um.edu.mt`) has redirected to `um.edu.mt` since at least 29 Sep 2026, so the credit links to the MLRS GitHub (`GABRA_URL` in `lib/site.ts`). Keep a safe copy of the lexicon dump: the pipeline can no longer re-download it.
@@ -61,21 +68,25 @@ Sellum has its own epoch, `SELLUM_EPOCH` in `lib/day-index.ts` (provisional), an
 
 ## Għerq (root words)
 
-Each day gives one root (K-T-B). The player finds the dictionary words that grow from it, scoring points by rarity (tiers 1–2: 1, tier 3: 2) towards five stars. Uncommon and rare words (tiers 4–5, or no data) are bonus words: 3 points and a golden pod if found, but never needed for the stars, never hinted and not in the length counts. There are no lives or time limit. Hints reveal the meaning of the lowest-point word not yet found. Giving up shows the whole family.
+Each day gives one root (K-T-B). The player finds the dictionary words that grow from it, scoring points by rarity (tiers 1–2: 1, tier 3: 2) towards five stars. Uncommon and rare words (tiers 4–5, or no data) are bonus words: 3 points and a golden pod if found, but never needed for the stars, never hinted and not in the length counts. There are no lives or time limit. Hints reveal the meaning of the lowest-point word not yet found. Giving up shows the whole family; of the bonus words, only those found are listed, with a count of the rest. A plural, feminine or verb form of one of today's words gets a hint towards its dictionary form instead of "not a word".
 
 ```
 data/gherq/puzzles.json   one entry per day: { day, root, words: [{ word, alts, pos, gloss, points }] }
-data/gherq/lexicon.json   spelling -> root (or roots, or null): separates "not from this root" from "not a word"; lazy-loaded
-data/source/lexemes.json  generator input: [{ word, alts, root, pos, gloss, tier, flags }]
+data/gherq/lexicon.json     spelling -> root (or roots, or null): separates "not from this root" from "not a word"; lazy-loaded
+data/gherq/forms.json       plural/feminine/verb form of a puzzle word -> { root: "pl" | "f" | "verb" }: "try the singular"; lazy-loaded
+data/source/lexemes.json    generator input: [{ word, alts, root, pos, gloss, tier, flags }]
+data/source/wordforms.json  generator input: { HEADWORD: { FORM: kind } }
+data/source/word-sheet.json tiers and flags from the word-tiers sheet
 ```
 
 ```bash
+node scripts/import-gabra.mjs path/to/gabra   # the unpacked dump folder (lexemes.bson, wordforms.bson)
 node scripts/build-gherq.ts
 ```
 
 The generator keeps plain three-letter roots (no weak J, W or ' in the middle or at the end, so no Ħ-J-N or B-N-J; a W or J at the start is fine) with 6–20 core (tier 1–3) noun/verb/adjective words, at least 3 of them worth 1 point; bonus words come on top. The build rejects any other root. It puts easier roots early in the week, never lets consecutive days share a radical, and never repeats a root within 365 days. It skips k-t-b, which the how-to-play page shows in full.
 
-The placeholder `lexemes.json` comes from the general word-tiers sheet (`node scripts/placeholder-gherq-lexemes.mjs <xlsx>`). It only covers words with frequency data and has no alternative spellings, so it yields 57 days. The full Ġabra export replaces it.
+`lexemes.json` is every verified Ġabra headword (not pending, archaic, hypothetical, multi-word, a proper noun or a place name) with its alternative spellings, from the dump `gabra_data_2026-06-01.tar.gz`. Tiers and flags come from `word-sheet.json` (`node scripts/placeholder-gherq-lexemes.mjs <xlsx>`); a word the sheet doesn't have has no tier, so it is a bonus word. Core words still need a tier, which is why there are 57 days. Days already in `puzzles.json` keep their root when rebuilding, so played puzzles don't change. Ġabra's site no longer serves the dump: keep a safe copy.
 
 Many sheet words have no root. To fill the gaps by hand:
 

@@ -68,9 +68,11 @@ export function GherqResult({
   const sorted = (ws: GherqWord[]) => [...ws].sort((a, b) => byLengthThenAlpha(a.word, b.word));
   const groups = [
     ...POS_ORDER.map((pos) => ({ key: pos, title: posLabel[pos], bonus: false, words: sorted(puzzle.words.filter((w) => w.pos === pos && !isBonus(w))) })),
-    // Bonus words last: never "missed", since no star needs them.
-    { key: "bonus", title: d.bonusTitle, bonus: true, words: sorted(puzzle.words.filter(isBonus)) },
+    // Bonus words last: only the ones found (the full dictionary makes the rest long and obscure),
+    // with a count of the others. Never "missed", since no star needs them.
+    { key: "bonus", title: d.bonusTitle, bonus: true, words: sorted(puzzle.words.filter((w) => isBonus(w) && found.has(w.word))) },
   ].filter((g) => g.words.length);
+  const bonusLeft = puzzle.words.filter((w) => isBonus(w) && !found.has(w.word)).length;
   const maxBucket = Math.max(1, ...stats.stars);
 
   return (
@@ -122,6 +124,7 @@ export function GherqResult({
               </ul>
             </div>
           ))}
+          {bonusLeft > 0 && <p className="mt-3 text-sm text-ink-soft">{d.bonusMore(bonusLeft)}</p>}
           <p className="mt-3 border-t border-limestone-300 pt-2 text-xs text-ink-soft">
             {`${d.meaningFrom} `}
             <a href={GABRA_URL} target="_blank" rel="noopener" className="font-semibold text-ink underline underline-offset-2">

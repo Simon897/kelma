@@ -1,4 +1,4 @@
-import type { Lexicon } from "./game";
+import type { Forms, Lexicon } from "./game";
 
 /**
  * lexicon.json (~170 KB) is loaded after first paint, as its own chunk. Until it arrives the
@@ -9,4 +9,11 @@ let promise: Promise<Lexicon> | null = null;
 export function loadLexicon(): Promise<Lexicon> {
   promise ??= import("../../data/gherq/lexicon.json").then((m) => (m.default ?? m) as Lexicon);
   return promise;
+}
+
+/** Plural, feminine and verb forms of puzzle words (forms.json), loaded alongside the lexicon. */
+let formsPromise: Promise<Forms> | null = null;
+export function loadForms(): Promise<Forms> {
+  formsPromise ??= import("../../data/gherq/forms.json").then((m) => (m.default ?? m) as Forms);
+  return formsPromise;
 }

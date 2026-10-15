@@ -30,9 +30,10 @@ import {
   type GherqPuzzle,
   type GherqState,
   type GherqStats,
+  type Forms,
   type Lexicon,
 } from "@/lib/gherq/game";
-import { loadLexicon } from "@/lib/gherq/lexicon";
+import { loadForms, loadLexicon } from "@/lib/gherq/lexicon";
 import { getGherqPuzzle } from "@/lib/gherq/puzzles";
 import { loadGherqState, loadGherqStats, saveGherqStars, saveGherqState, trackGherqOnce } from "@/lib/gherq/store";
 import { t, type Lang } from "@/lib/i18n";
@@ -72,6 +73,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const [state, setState] = useState<GherqState>(() => newGherqState(0));
   const [stats, setStats] = useState<GherqStats>(emptyGherqStats);
   const [lexicon, setLexicon] = useState<Lexicon | null>(null);
+  const [forms, setForms] = useState<Forms | null>(null);
   const [entry, setEntry] = useState<string[]>([]);
   const [flying, setFlying] = useState<{ letters: string[]; key: number; dy: number } | null>(null);
   const sceneBox = useRef<HTMLDivElement>(null);
@@ -147,7 +149,10 @@ export function GherqGame({ lang }: { lang: Lang }) {
     setState(loadGherqState(today));
     // First visit: a two-line note above the clues instead of a pop-up over the game.
     if (!readJSON<boolean>(SEEN_HELP)) setIntro(true);
-    const id = window.setTimeout(() => void loadLexicon().then(setLexicon), 0);
+    const id = window.setTimeout(() => {
+      void loadLexicon().then(setLexicon);
+      void loadForms().then(setForms);
+    }, 0);
     return () => window.clearTimeout(id);
   }, []);
 
@@ -180,12 +185,13 @@ export function GherqGame({ lang }: { lang: Lang }) {
   const submitWord = useCallback(
     async (word: string) => {
       if (!puzzle || finished) return;
-      let r = classifyEntry(word, puzzle, found, lexicon);
+      let r = classifyEntry(word, puzzle, found, lexicon, forms);
       if (r.kind === "pending") {
         showToast(d.checkingWord);
-        const lex = await loadLexicon();
+        const [lex, fm] = await Promise.all([loadLexicon(), loadForms()]);
         setLexicon(lex);
-        r = classifyEntry(word, puzzle, found, lex);
+        setForms(fm);
+        r = classifyEntry(word, puzzle, found, lex, fm);
       }
       switch (r.kind) {
         case "short":
@@ -200,6 +206,11 @@ export function GherqGame({ lang }: { lang: Lang }) {
         case "wrong-root":
           cat.current?.react("wrong");
           showToast(d.notFromRoot);
+          setEntry([]);
+          return;
+        case "form":
+          // a real word, just not the dictionary form: point the way, no shake
+          showToast(r.form === "pl" ? d.gherqFormPlural : r.form === "f" ? d.gherqFormFeminine : d.gherqFormVerb, undefined, 2600);
           setEntry([]);
           return;
         case "excluded":
@@ -246,7 +257,7 @@ export function GherqGame({ lang }: { lang: Lang }) {
         later(() => setPanel("stats"), RESULT_DELAY_MS);
       }
     },
-    [commit, coreCount, d, day, endIntro, found, finished, intro, later, lexicon, puzzle, showCard, showToast, stars, state, total],
+    [commit, coreCount, d, day, endIntro, forms, found, finished, intro, later, lexicon, puzzle, showCard, showToast, stars, state, total],
   );
 
   const onKey = useCallback(

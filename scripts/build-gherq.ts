@@ -11,11 +11,15 @@
 //   the tier; tiers 4–5 are bonus words (3 points, never needed for the stars). Plain
 //   three-letter roots (no weak J/W in the middle or at the end) with 6–20 core words, at least 3
 //   of them worth 1 point, qualify.
-// - Schedule: easier roots (more 1-point words) early in the week, richer roots later; no two
-//   consecutive roots share a radical; no root repeats within 365 days.
+// - Schedule: days already in puzzles.json keep their root (their words are rebuilt), so played
+//   days stay the same puzzle; new days put easier roots (more 1-point words) early in the week
+//   and richer roots later; no two consecutive roots share a radical; no root repeats within 365 days.
+// - Forms: data/gherq/forms.json maps each plural, feminine or verb form of a puzzle word to
+//   { root: kind }, from data/source/wordforms.json, so a form gets "try the singular" rather
+//   than "not a word". Forms that are themselves dictionary words are left out.
 import { readFileSync, writeFileSync } from "node:fs";
 import { GHERQ_EPOCH } from "../lib/day-index.ts";
-import { MAX_LETTERS, MIN_LETTERS, pointsForTier, type GherqPuzzle, type GherqWord, type Lexicon } from "../lib/gherq/game.ts";
+import { MAX_LETTERS, MIN_LETTERS, pointsForTier, type FormKind, type Forms, type GherqPuzzle, type GherqWord, type Lexicon } from "../lib/gherq/game.ts";
 import { MAX_WORDS, MIN_ONE_POINT, MIN_WORDS, isSimpleRoot, validateGherq } from "../lib/gherq/validate.ts";
 import { EXAMPLE_ROOT_KEY } from "../lib/gherq/example.ts";
 
@@ -34,6 +38,8 @@ interface Lexeme {
 
 const read = (p: string) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url), "utf8"));
 const lexemes: Lexeme[] = read("data/source/lexemes.json");
+const wordforms: Record<string, Record<string, FormKind>> = read("data/source/wordforms.json");
+const previous: GherqPuzzle[] = read("data/gherq/puzzles.json");
 
 const LETTERS = /^[A-BD-XZĠĦŻĊ]+$/u; // Maltese letters only: no C (it's Ċ), no Y, no spaces/apostrophes
 const len = (w: string) => Array.from(w).length;
@@ -82,9 +88,10 @@ for (const l of lexemes) {
   fam.set(l.word, { word: l.word, alts: (l.alts ?? []).filter(okSpelling), pos, gloss: l.gloss, points: pointsForTier(l.tier), tier: l.tier });
 }
 
-// An alternative spelling that is itself a headword in the family folds into it.
+// An "alternative" that is itself a headword in the family (Ġabra lists QRIB under QOROB) stays
+// its own word: drop it from the alternatives instead of folding the two together.
 for (const fam of families.values()) {
-  for (const w of [...fam.values()]) for (const a of w.alts) fam.delete(a);
+  for (const w of fam.values()) w.alts = w.alts.filter((a) => !fam.has(a));
 }
 
 const radicals = (root: string) => root.split("-").map((r) => r.toLocaleUpperCase("mt"));
@@ -133,11 +140,19 @@ const days = Math.min(DAYS, pool.length);
  * carrying the most-remaining radicals go first (when they don't clash with yesterday), with
  * the weekday's target ease as the tie-break. Returns the order and its number of clashes.
  */
+const familyOf = new Map(qualifying.map((f) => [f.root, f]));
+const pinned: Family[] = previous.map((p) => {
+  const key = p.root.join("-").toLocaleLowerCase("mt");
+  const f = familyOf.get(key);
+  if (!f) throw new Error(`day ${p.day} (${key}) no longer qualifies with the new word list`);
+  return f;
+});
+
 function schedule(order: Family[]): { picked: Family[]; clashes: number } {
-  const remaining = [...order];
-  const picked: Family[] = [];
+  const remaining = order.filter((f) => !pinned.includes(f));
+  const picked: Family[] = [...pinned];
   let clashes = 0;
-  for (let day = 0; day < days; day++) {
+  for (let day = pinned.length; day < days; day++) {
     const want = 0.8 - (weekday(day) / 6) * 0.6; // Monday easiest … Sunday richest
     const prev = picked[day - 1];
     const load = new Map<string, number>();
@@ -186,6 +201,19 @@ if (errors.length) {
 const consecutiveShared = puzzles.filter((p, i) => i > 0 && shares(p.root.join("-").toLocaleLowerCase("mt"), puzzles[i - 1].root.join("-").toLocaleLowerCase("mt"))).length;
 writeFileSync(new URL("../data/gherq/puzzles.json", import.meta.url), JSON.stringify(puzzles) + "\n");
 writeFileSync(new URL("../data/gherq/lexicon.json", import.meta.url), JSON.stringify(lexicon) + "\n");
+
+const forms: Forms = {};
+for (const p of puzzles) {
+  const key = p.root.join("-").toLocaleLowerCase("mt");
+  for (const w of p.words)
+    for (const s of [w.word, ...w.alts])
+      for (const [form, kind] of Object.entries(wordforms[s] ?? {})) {
+        if (form in lexicon || !okSpelling(form)) continue;
+        (forms[form] ??= {})[key] ??= kind;
+      }
+}
+writeFileSync(new URL("../data/gherq/forms.json", import.meta.url), JSON.stringify(forms) + "\n");
+console.log(`forms.json: ${Object.keys(forms).length} forms`);
 console.log(
   `Wrote ${puzzles.length} days to data/gherq/puzzles.json${puzzles.length < DAYS ? ` (only ${pool.length} qualifying roots, and roots can't repeat within 365 days)` : ""}; consecutive days sharing a radical: ${consecutiveShared}.`,
 );

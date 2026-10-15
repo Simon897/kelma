@@ -70,6 +70,15 @@ describe("entry classification (rules table)", () => {
     // a spelling the lexicon gives today's root, but which isn't in the puzzle, doesn't count
     expect(classifyEntry("KITTEB", KTB, none, LEX).kind).toBe("excluded");
   });
+  it("a plural or verb form of today's word points to its dictionary form", () => {
+    const FORMS = { KOTBA: { "k-t-b": "pl" as const }, KTIBT: { "k-t-b": "verb" as const }, BĦUR: { "b-ħ-r": "pl" as const } };
+    expect(classifyEntry("KOTBA", KTB, none, LEX, FORMS)).toEqual({ kind: "form", form: "pl" });
+    expect(classifyEntry("KTIBT", KTB, none, LEX, FORMS)).toEqual({ kind: "form", form: "verb" });
+    // a form of another root's word is still just not a dictionary word
+    expect(classifyEntry("BĦUR", KTB, none, LEX, FORMS).kind).toBe("not-word");
+    // without the forms table, forms are not dictionary words
+    expect(classifyEntry("KOTBA", KTB, none, LEX).kind).toBe("not-word");
+  });
   it("fewer than 2 letters is a shake with no toast", () => {
     expect(classifyEntry("K", KTB, none, LEX).kind).toBe("short");
   });

@@ -1,5 +1,5 @@
-// PLACEHOLDER ONLY. Writes data/source/lexemes.json from the general word-tiers sheet, in the
-// contract shape the real Ġabra export will use: [{ word, alts, root, pos, gloss, tier, flags }].
+// Writes data/source/word-sheet.json from the general word-tiers sheet: each word's tier and flags,
+// in the lexeme shape [{ word, alts, root, pos, gloss, tier, flags }]. scripts/import-gabra.mjs merges it into the full Ġabra list.
 //
 //   node scripts/placeholder-gherq-lexemes.mjs path/to/gabra-word-tiers-general.xlsx
 //
@@ -38,5 +38,5 @@ const reviewUrl = new URL("../data/source/root-review.json", import.meta.url);
 const review = existsSync(reviewUrl) ? JSON.parse(readFileSync(reviewUrl, "utf8")) : {};
 for (const l of out) if (!l.root && review[l.word]) l.root = review[l.word];
 
-writeFileSync(new URL("../data/source/lexemes.json", import.meta.url), JSON.stringify(out) + "\n");
-console.log(`Wrote ${out.length} lexemes to data/source/lexemes.json (placeholder).`);
+writeFileSync(new URL("../data/source/word-sheet.json", import.meta.url), JSON.stringify(out) + "\n");
+console.log(`Wrote ${out.length} sheet words to data/source/word-sheet.json.`);

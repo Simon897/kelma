@@ -22,6 +22,11 @@ export interface GherqPuzzle {
 /** Spelling -> root ("k-t-b"), several roots for multi-root spellings, or null for no root. */
 export type Lexicon = Record<string, string | string[] | null>;
 
+/** What a non-dictionary form is: a plural (or dual), a feminine, or a conjugated verb. */
+export type FormKind = "pl" | "f" | "verb";
+/** A form of a puzzle word (KOTBA, NŻILT) -> { root: kind }. Loaded with the lexicon. */
+export type Forms = Record<string, Record<string, FormKind>>;
+
 export const MIN_LETTERS = 2;
 export const MAX_LETTERS = 15;
 
@@ -58,7 +63,7 @@ export function spellingIndex(puzzle: GherqPuzzle): Map<string, string> {
 const rootsOf = (entry: string | string[] | null | undefined): string[] =>
   entry == null ? [] : Array.isArray(entry) ? entry : [entry];
 
-export type EntryKind = "short" | "ok" | "repeat" | "wrong-root" | "not-word" | "excluded" | "pending";
+export type EntryKind = "short" | "ok" | "repeat" | "wrong-root" | "not-word" | "excluded" | "pending" | "form";
 
 /**
  * How a typed entry is treated (rules table §2). Wrong answers never cost anything.
@@ -69,12 +74,17 @@ export function classifyEntry(
   puzzle: GherqPuzzle,
   found: ReadonlySet<string>,
   lexicon: Lexicon | null,
-): { kind: EntryKind; word?: string } {
+  forms?: Forms | null,
+): { kind: EntryKind; word?: string; form?: FormKind } {
   if (tiles(entry).length < MIN_LETTERS) return { kind: "short" };
   const canonical = spellingIndex(puzzle).get(entry);
   if (canonical) return { kind: found.has(canonical) ? "repeat" : "ok", word: canonical };
   if (!lexicon) return { kind: "pending" };
-  if (!(entry in lexicon)) return { kind: "not-word" };
+  if (!(entry in lexicon)) {
+    // A plural or verb form of one of today's words: point at its dictionary form instead.
+    const form = forms?.[entry]?.[rootKey(puzzle.root)];
+    return form ? { kind: "form", form } : { kind: "not-word" };
+  }
   // A real word of today's root that isn't in the puzzle (e.g. removed in approval) doesn't count.
   return { kind: rootsOf(lexicon[entry]).includes(rootKey(puzzle.root)) ? "excluded" : "wrong-root" };
 }
