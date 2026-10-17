@@ -17,16 +17,20 @@ import { WordOfDay } from "./WordOfDay";
 export function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
   return (
-    <>
+    // The footer sits at the bottom of the screen even when the page is shorter (tall or ultrawide screens).
+    <div className="flex min-h-svh flex-col">
       <HomeLangRedirect lang={lang} />
-      <main className="relative">
+      {/* spare height (tall or ultrawide screens) goes above and below, so the page sits in the middle */}
+      <main className="relative flex flex-1 flex-col justify-center">
         <LangToggle lang={lang} page="home" className="absolute right-4 top-4 z-20 bg-limestone-50" />
         <div className="flex flex-col items-center px-4 pt-10 text-center sm:pt-14">
           <h1 className="display-caps text-[2.75rem] leading-none sm:text-7xl">Kelma</h1>
           {/* Says what the site is, so the site's name and the Kelma game aren't confused. */}
           <p className="mt-1 text-sm font-semibold text-ink-soft sm:mt-2 sm:text-lg">{d.siteTagline}</p>
         </div>
-        <div className="relative mt-1 h-[clamp(190px,30svh,260px)] md:h-[clamp(260px,40svh,380px)]">
+        {/* Up to 1600px wide, so ultrawide screens see the street, not a zoomed band of it; wider than
+            that, its sides fade into the page like the pavement does. */}
+        <div className="relative mx-auto mt-1 h-[clamp(190px,30svh,260px)] w-full max-w-[1600px] md:h-[clamp(260px,40svh,380px)] min-[1600px]:[mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
           <HomeStreet />
         </div>
         {/* One slide per game, edge to edge so the next slide peeks in; the cards stand on the pavement. */}
@@ -48,6 +52,6 @@ export function HomePage({ lang }: { lang: Lang }) {
           {d.aboutLink}
         </Link>
       </footer>
-    </>
+    </div>
   );
 }
