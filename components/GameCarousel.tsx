@@ -10,7 +10,7 @@ import { t, type Lang } from "@/lib/i18n";
 import { href } from "@/lib/routes";
 import { KEYS, readJSON, writeJSON } from "@/lib/storage";
 import { NEW_DAY_EVENT, gamesToday, type Progress } from "@/lib/today";
-import { DoneBadge, HomeButtons, primary } from "./HomeClient";
+import { DoneBadge, HomeButtons, playButton } from "./HomeClient";
 import { TickIcon } from "./Icons";
 
 const NAMES: Record<GameKey, string> = { gherq: "Għerq", kelma: "Kelma", sellum: "Sellum" };
@@ -120,7 +120,8 @@ const Chevron = ({ dir }: { dir: "left" | "right" }) => (
  * sides, labelled dots with done (and Għerq's started) marks, arrows on desktop, a counter and a
  * one-time nudge on the first visit. Native scroll-snap for swiping; no auto-rotation, ever.
  */
-export function GameCarousel({ lang }: { lang: Lang }) {
+/** `solid`: opaque cards with a stone-block shadow, for when they stand over the street scene. */
+export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: boolean }) {
   const d = t(lang);
   const track = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
@@ -224,7 +225,7 @@ export function GameCarousel({ lang }: { lang: Lang }) {
         <p className="mt-1 text-balance text-base font-medium leading-snug">{d.gherqTagline}</p>
         {gherqPreview && <p className="mt-1 text-sm font-bold">{d.gherqTodayRoot(gherqPreview)}</p>}
         <div className="mt-auto pt-3">
-          <Link href={href("gherq", lang)} className={`${primary} w-full`}>
+          <Link href={href("gherq", lang)} className={`${playButton.gherq} w-full`}>
             <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
             {doneTick("gherq")}
           </Link>
@@ -249,7 +250,7 @@ export function GameCarousel({ lang }: { lang: Lang }) {
         </Mark>
         <p className="mt-1 text-balance text-base font-medium leading-snug">{d.sellumTagline}</p>
         <div className="mt-auto pt-3">
-          <Link href={href("sellum", lang)} className={`${primary} w-full`}>
+          <Link href={href("sellum", lang)} className={`${playButton.sellum} w-full`}>
             <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
             {doneTick("sellum")}
           </Link>
@@ -307,7 +308,7 @@ export function GameCarousel({ lang }: { lang: Lang }) {
                 role="group"
                 aria-roledescription="slide"
                 aria-label={d.gameOf(i + 1, GAMES.length, NAMES[g])}
-                className={`stone relative flex w-[min(76vw,21rem)] shrink-0 snap-center flex-col rounded-tile border-2 border-t-[6px] border-ink/25 bg-limestone-50/60 px-3 pb-4 pt-3 sm:px-4 md:w-[26rem] lg:w-auto ${RAIL[g]}`}
+                className={`stone relative flex w-[min(76vw,21rem)] shrink-0 snap-center flex-col rounded-tile border-2 border-t-[6px] ${solid ? "border-ink/60 bg-limestone-50 shadow-block" : "border-ink/25 bg-limestone-50/60"} px-3 pb-4 pt-3 sm:px-4 md:w-[26rem] lg:w-auto ${RAIL[g]}`}
               >
                 <h2 className="display-caps mb-1.5 text-center text-lg leading-none text-ink">{NAMES[g]}</h2>
                 {content[g]}

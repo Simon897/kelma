@@ -11,8 +11,13 @@ import { href } from "@/lib/routes";
 import { KEYS, readJSON } from "@/lib/storage";
 import { TickIcon } from "./Icons";
 
-export const primary =
-  "btn-block relative inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink bg-sea px-2 text-limestone-50 hover:bg-sea-deep sm:px-4";
+const playBase = "btn-block relative inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink px-2 sm:px-4";
+/** Each game's play buttons take its card's rail colour: Għerq soil, Kelma green, Sellum sea. */
+export const playButton = {
+  gherq: `${playBase} bg-soil text-limestone-50 hover:brightness-90`,
+  kelma: `${playBase} bg-tile-correct text-tile-correct-fg hover:brightness-90`,
+  sellum: `${playBase} bg-sea text-limestone-50 hover:bg-sea-deep`,
+};
 
 /**
  * "Done today" on a play button: a tick badge on its corner, in the tiles' "correct" colour. It sits
@@ -40,7 +45,7 @@ export function HomeButtons({ lang }: { lang: Lang }) {
   }, []);
 
   const modeButton = (mode: Mode, label: string, area: string) => (
-    <Link href={href(mode, lang)} className={`${primary} ${area}`}>
+    <Link href={href(mode, lang)} className={`${playButton.kelma} ${area}`}>
       <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{label}</span>
       {done[mode] && <DoneBadge label={d.doneToday} />}
     </Link>

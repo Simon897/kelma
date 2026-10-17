@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import { t, type Lang } from "@/lib/i18n";
 import { NEW_DAY_EVENT, allDone, gamesToday } from "@/lib/today";
-import { CatLogo } from "./CatLogo";
 import { Countdown } from "./Countdown";
 
 /** True once every game is done today; re-checked when a new day starts on the page. */
-function useAllDone() {
+export function useAllDone() {
   const [done, setDone] = useState(false);
   useEffect(() => {
     const check = () => setDone(allDone(gamesToday()));
@@ -16,11 +15,6 @@ function useAllDone() {
     return () => window.removeEventListener(NEW_DAY_EVENT, check);
   }, []);
   return done;
-}
-
-/** The home page's cat. With every game done for the day it curls up and naps (unannounced). */
-export function HomeCat({ className }: { className?: string }) {
-  return <CatLogo className={className} sleeping={useAllDone()} />;
 }
 
 /** One line once every game is done: done for today, and how long until the new games. */
