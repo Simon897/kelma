@@ -10,7 +10,7 @@ export interface SellumPuzzle {
   example: string[];
 }
 
-export const MIN_ROUTES = 3;
+export const MIN_ROUTES = 2;
 
 /** Build-time checks for data/sellum/puzzles.json. Returns a list of problems (empty = OK). */
 export function validateSellum(puzzles: SellumPuzzle[], validGuesses: string[], graph?: WordGraph): string[] {

@@ -1,24 +1,28 @@
 // Generates data/sellum/puzzles.json: 365 daily word ladders.
 //
-//   node scripts/build-sellum.ts [days]
+//   node scripts/build-sellum.ts [--from N] [days]   (days before N are kept as they are)
 //
 // Input: data/source/answer-candidates.json  [{ word, tier, gloss, flags }]
 //        data/kelma/valid-guesses.json       (the graph every route may use)
 // A pair qualifies when:
 //   - start and target are common words: tier 1–3, no flags (so no proper nouns)
-//   - they are exactly 4 steps apart in the full valid-word graph
-//   - at least 2 shortest routes use only dictionary words (tier 1–5, no flags), and at least
-//     3 shortest routes exist in total (any valid words; that's the number on the end screen)
-// The schedule then never repeats a pair, keeps any start/target word out for 60 days,
+//   - they differ in exactly 4 places and are 4 steps apart, so every step puts one of the
+//     target's letters in place: no detour through a letter the target doesn't have
+//   - at least 1 shortest route uses only dictionary words (tier 1–5, no flags), and at least
+//     2 shortest routes exist in total (any valid words; that's the number on the end screen)
+// The schedule then never repeats a pair, keeps any start/target word out for 45 days (60 left too few days),
 // and never runs consecutive puzzles with the same start letter or the same target letter.
 import { readFileSync, writeFileSync } from "node:fs";
-import { LADDER_STEPS, buildGraph, countShortestRoutes, distancesFrom, shortestRoutes } from "../lib/sellum/graph.ts";
+import { LADDER_STEPS, buildGraph, countShortestRoutes, diffCount, distancesFrom, shortestRoutes } from "../lib/sellum/graph.ts";
 import { MIN_ROUTES, validateSellum, type SellumPuzzle } from "../lib/sellum/validate.ts";
 
-const DAYS = Number(process.argv[2] ?? 365);
-const WORD_COOLDOWN = 60;
-// Lowered from 3 (which yielded only 278 pairs / 115 days) to 2: 958 pairs.
-const MIN_DICTIONARY_ROUTES = 2;
+const args = process.argv.slice(2);
+const fromAt = args.indexOf("--from");
+const FROM = fromAt >= 0 ? Number(args[fromAt + 1]) : 0;
+const DAYS = Number(args.filter((_, i) => fromAt < 0 || (i !== fromAt && i !== fromAt + 1))[0] ?? 365);
+const WORD_COOLDOWN = 45;
+// Direct ladders are rarer: 1 dictionary route (with MIN_ROUTES = 2) gives 418 pairs.
+const MIN_DICTIONARY_ROUTES = 1;
 const SEED = 0x53656c6c; // "Sell"
 
 interface Candidate {
@@ -60,11 +64,13 @@ type Pair = { a: string; b: string; routes: number; example: string[] };
 const pairs: Pair[] = [];
 const commonList = [...common].sort();
 const t0 = Date.now();
+const toCache = new Map<string, Map<string, number>>();
 for (const a of commonList) {
-  const fromA = distancesFrom(graph, a, LADDER_STEPS);
-  for (const [b, d] of fromA) {
-    if (d !== LADDER_STEPS || !common.has(b) || b <= a) continue;
-    const toB = distancesFrom(graph, b, LADDER_STEPS);
+  for (const b of commonList) {
+    if (b <= a || diffCount(a, b) !== LADDER_STEPS) continue;
+    let toB = toCache.get(b);
+    if (!toB) toCache.set(b, (toB = distancesFrom(graph, b, LADDER_STEPS)));
+    if (toB.get(a) !== LADDER_STEPS) continue;
     const dictRoutes = countShortestRoutes(graph, a, toB, (w) => dictionary.has(w));
     if (dictRoutes < MIN_DICTIONARY_ROUTES) continue;
     const routes = countShortestRoutes(graph, a, toB);
@@ -82,12 +88,16 @@ const TRIES = 400;
 const first = (w: string) => Array.from(w)[0];
 type Oriented = [start: string, target: string, example: string[]];
 
+const kept: SellumPuzzle[] = (read("data/sellum/puzzles.json") as SellumPuzzle[]).slice(0, FROM);
+const keptPair = new Set(kept.map((p) => [p.start, p.target].sort().join("|")));
+
 function schedule(order: Pair[]): { puzzles: SellumPuzzle[]; relaxed: number } {
   const lastUsed = new Map<string, number>(); // word -> last day it was a start or target
-  const puzzles: SellumPuzzle[] = [];
-  const pool = [...order];
+  for (const p of kept) for (const w of [p.start, p.target]) lastUsed.set(w, p.day);
+  const puzzles: SellumPuzzle[] = [...kept];
+  const pool = order.filter((p) => !keptPair.has([p.a, p.b].sort().join("|")));
   let relaxed = 0;
-  for (let day = 0; day < DAYS; day++) {
+  for (let day = kept.length; day < DAYS; day++) {
     const prev = puzzles[day - 1];
     const rested = (p: Pair) =>
       [p.a, p.b].every((w) => {

@@ -106,322 +106,326 @@
   },
   {
     "day": 19,
-    "word": "ARMEN",
-    "gloss": "Armenian; coming from or related to Armenia"
+    "word": "POETA",
+    "gloss": "poet"
   },
   {
     "day": 20,
-    "word": "ASTUŻ",
-    "gloss": "shrewd; cunning"
+    "word": "RAĠEL",
+    "gloss": "man; husband",
+    "root": "r-ġ-l"
   },
   {
     "day": 21,
-    "word": "NISEL",
-    "gloss": "lineage; offspring",
-    "root": "n-s-l"
+    "word": "ĦAŻIN",
+    "gloss": "bad; wicked",
+    "root": "ħ-ż-n"
   },
   {
     "day": 22,
-    "word": "FEHIM",
-    "gloss": "understanding; one's viewpoint",
-    "root": "f-h-m"
+    "word": "KITLA",
+    "gloss": "kettle"
   },
   {
     "day": 23,
-    "word": "UNIKU",
-    "gloss": "unique"
+    "word": "KULUR",
+    "gloss": "color; dye"
   },
   {
     "day": 24,
-    "word": "KARTA",
-    "gloss": "paper",
-    "root": "k-r-t"
+    "word": "LENTI",
+    "gloss": "lens"
   },
   {
     "day": 25,
-    "word": "MALTI",
-    "gloss": "Maltese; Maltese person"
+    "word": "BIKRI",
+    "gloss": "early; belonging to an earlier era",
+    "root": "b-k-r"
   },
   {
     "day": 26,
-    "word": "ĦDURA",
-    "gloss": "green colour; greenery",
-    "root": "ħ-d-r"
+    "word": "DIETA",
+    "gloss": "diet"
   },
   {
     "day": 27,
-    "word": "LAĦAM",
-    "gloss": "meat; flesh",
-    "root": "l-ħ-m"
+    "word": "NEFQA",
+    "gloss": "expense",
+    "root": "n-f-q"
   },
   {
     "day": 28,
-    "word": "SKOLL",
-    "gloss": "reef"
+    "word": "TGĦIN",
+    "gloss": "stabbing with a dagger",
+    "root": "t-għ-n"
   },
   {
     "day": 29,
-    "word": "APTIT",
-    "gloss": "appetite; urge"
-  },
-  {
-    "day": 30,
-    "word": "XORTA",
-    "gloss": "kind; still"
-  },
-  {
-    "day": 31,
-    "word": "DAĦLA",
-    "gloss": "entrance; introduction (to a written work)",
-    "root": "d-ħ-l"
-  },
-  {
-    "day": 32,
-    "word": "RAĦAL",
-    "gloss": "village",
-    "root": "r-ħ-l"
-  },
-  {
-    "day": 33,
-    "word": "BREJK",
-    "gloss": "brake"
-  },
-  {
-    "day": 34,
-    "word": "KOMDU",
-    "gloss": "convenient; cosy"
-  },
-  {
-    "day": 35,
-    "word": "POPLU",
-    "gloss": "people (collective of people comprising a nation)"
-  },
-  {
-    "day": 36,
-    "word": "NDĦIL",
-    "gloss": "nosiness; interference",
-    "root": "d-ħ-l"
-  },
-  {
-    "day": 37,
-    "word": "LAMTU",
-    "gloss": "starch"
-  },
-  {
-    "day": 38,
-    "word": "PUDIL",
-    "gloss": "poodle"
-  },
-  {
-    "day": 39,
-    "word": "BRONŻ",
-    "gloss": "bronze"
-  },
-  {
-    "day": 40,
-    "word": "TORBA",
-    "gloss": "layer of dust or earth used in the laying of roofs (stone-masonry); a quantity of dust",
-    "root": "t-r-b"
-  },
-  {
-    "day": 41,
     "word": "RUMAN",
     "gloss": "Roman"
   },
   {
-    "day": 42,
+    "day": 30,
+    "word": "LAMTU",
+    "gloss": "starch"
+  },
+  {
+    "day": 31,
+    "word": "POTER",
+    "gloss": "power"
+  },
+  {
+    "day": 32,
     "word": "KAĠUN",
     "gloss": "cause"
   },
   {
+    "day": 33,
+    "word": "QORTI",
+    "gloss": "lawcourt; court house"
+  },
+  {
+    "day": 34,
+    "word": "STMAT",
+    "gloss": "estimated"
+  },
+  {
+    "day": 35,
+    "word": "LIKUR",
+    "gloss": "liqueur"
+  },
+  {
+    "day": 36,
+    "word": "BIDLA",
+    "gloss": "a change; an exchange",
+    "root": "b-d-l"
+  },
+  {
+    "day": 37,
+    "word": "QADIM",
+    "gloss": "old; aged",
+    "root": "q-d-m"
+  },
+  {
+    "day": 38,
+    "word": "SIDER",
+    "gloss": "chest; breasts",
+    "root": "s-d-r"
+  },
+  {
+    "day": 39,
+    "word": "GĦOTI",
+    "gloss": "covering",
+    "root": "għ-t-j"
+  },
+  {
+    "day": 40,
+    "word": "KOBOR",
+    "gloss": "large size; importance",
+    "root": "k-b-r"
+  },
+  {
+    "day": 41,
+    "word": "IDEAL",
+    "gloss": "ideal"
+  },
+  {
+    "day": 42,
+    "word": "ARMAT",
+    "gloss": "armed; set up",
+    "root": "r-m-j"
+  },
+  {
     "day": 43,
-    "word": "ŻIBEL",
-    "gloss": "garbage; rubbish",
-    "root": "ż-b-l"
+    "word": "SPTAR",
+    "gloss": "hospital"
   },
   {
     "day": 44,
-    "word": "ĦIDMA",
-    "gloss": "work",
-    "root": "ħ-d-m"
-  },
-  {
-    "day": 45,
-    "word": "SINED",
-    "gloss": "stretch of barren land"
-  },
-  {
-    "day": 46,
-    "word": "ĦARES",
-    "gloss": "to look; to watch",
-    "root": "ħ-r-s"
-  },
-  {
-    "day": 47,
-    "word": "LANDA",
-    "gloss": "tin; can"
-  },
-  {
-    "day": 48,
-    "word": "TRABA",
-    "gloss": "a speck of dust",
-    "root": "t-r-b"
-  },
-  {
-    "day": 49,
     "word": "PROVA",
     "gloss": "trial; ordeal"
   },
   {
+    "day": 45,
+    "word": "EŻAMI",
+    "gloss": "examination; test"
+  },
+  {
+    "day": 46,
+    "word": "XORTI",
+    "gloss": "destiny; fate"
+  },
+  {
+    "day": 47,
+    "word": "FIDIL",
+    "gloss": "faithful; loyal",
+    "root": "f-d-l"
+  },
+  {
+    "day": 48,
+    "word": "SALIB",
+    "gloss": "crucifix; cross",
+    "root": "s-l-b"
+  },
+  {
+    "day": 49,
+    "word": "ĦMURA",
+    "gloss": "redness",
+    "root": "ħ-m-r"
+  },
+  {
     "day": 50,
-    "word": "TORRI",
-    "gloss": "tower"
+    "word": "ĦABEL",
+    "gloss": "rope",
+    "root": "ħ-b-l"
   },
   {
     "day": 51,
-    "word": "KLERU",
-    "gloss": "clergy"
+    "word": "KOMMA",
+    "gloss": "sleeve",
+    "root": "k-m-m"
   },
   {
     "day": 52,
-    "word": "FORMA",
-    "gloss": "shape; mould"
+    "word": "ISLAM",
+    "gloss": "Islam",
+    "root": "s-l-m"
   },
   {
     "day": 53,
-    "word": "MKIEN",
-    "gloss": "place; somewhere",
-    "root": "k-w-n"
+    "word": "FETĦA",
+    "gloss": "opening; breach",
+    "root": "f-t-ħ"
   },
   {
     "day": 54,
-    "word": "DEKAN",
-    "gloss": "dean"
+    "word": "ŻBALL",
+    "gloss": "error; mistake",
+    "root": "ż-b-l"
   },
   {
     "day": 55,
+    "word": "ĦSARA",
+    "gloss": "damage; harm",
+    "root": "ħ-s-r"
+  },
+  {
+    "day": 56,
+    "word": "NĦAWI",
+    "gloss": "whereabouts"
+  },
+  {
+    "day": 57,
+    "word": "ĦMIEĠ",
+    "gloss": "dirt; filth",
+    "root": "ħ-m-ġ"
+  },
+  {
+    "day": 58,
+    "word": "DANNU",
+    "gloss": "harm; damage"
+  },
+  {
+    "day": 59,
+    "word": "DITTA",
+    "gloss": "brand; company"
+  },
+  {
+    "day": 60,
+    "word": "TEĦID",
+    "gloss": "the act of taking something",
+    "root": "'-ħ-d"
+  },
+  {
+    "day": 61,
+    "word": "TMIEM",
+    "gloss": "end; termination",
+    "root": "t-m-m"
+  },
+  {
+    "day": 62,
+    "word": "XITAN",
+    "gloss": "devil; demon",
+    "root": "x-j-t-n"
+  },
+  {
+    "day": 63,
+    "word": "POMPA",
+    "gloss": "pump"
+  },
+  {
+    "day": 64,
     "word": "RIEDA",
     "gloss": "will; desire for sth.",
     "root": "r-j-d"
   },
   {
-    "day": 56,
-    "word": "KANAL",
-    "gloss": "channel"
-  },
-  {
-    "day": 57,
-    "word": "SANTU",
-    "gloss": "saint"
-  },
-  {
-    "day": 58,
-    "word": "KBURI",
-    "gloss": "proud; haughty",
-    "root": "k-b-r"
-  },
-  {
-    "day": 59,
-    "word": "LIKUR",
-    "gloss": "liqueur"
-  },
-  {
-    "day": 60,
-    "word": "KLIMA",
-    "gloss": "climate"
-  },
-  {
-    "day": 61,
-    "word": "EPOKA",
-    "gloss": "epoch"
-  },
-  {
-    "day": 62,
-    "word": "AĦBAR",
-    "gloss": "a piece of news",
-    "root": "ħ-b-r"
-  },
-  {
-    "day": 63,
-    "word": "LITRU",
-    "gloss": "litre"
-  },
-  {
-    "day": 64,
-    "word": "BITĦA",
-    "gloss": "yard; courtyard",
-    "root": "b-t-ħ"
-  },
-  {
     "day": 65,
-    "word": "MORMI",
-    "gloss": "thrown away; discarded",
-    "root": "r-m-j"
+    "word": "ITTRA",
+    "gloss": "letter"
   },
   {
     "day": 66,
-    "word": "ĦADID",
-    "gloss": "iron"
+    "word": "SKRIN",
+    "gloss": "screen"
   },
   {
     "day": 67,
+    "word": "NVJAR",
+    "gloss": "smoothing of stone; levelling of a stone surface or wall"
+  },
+  {
+    "day": 68,
+    "word": "ĦAMRI",
+    "gloss": "red soil; reddish",
+    "root": "ħ-m-r"
+  },
+  {
+    "day": 69,
+    "word": "BTALA",
+    "gloss": "a holiday; a feast day",
+    "root": "b-t-l"
+  },
+  {
+    "day": 70,
+    "word": "DRAPP",
+    "gloss": "cloth; fabric"
+  },
+  {
+    "day": 71,
+    "word": "TIFUN",
+    "gloss": "typhoon"
+  },
+  {
+    "day": 72,
+    "word": "ŻEBRA",
+    "gloss": "zebra"
+  },
+  {
+    "day": 73,
+    "word": "BRONŻ",
+    "gloss": "bronze"
+  },
+  {
+    "day": 74,
+    "word": "SKEMA",
+    "gloss": "scheme; schema"
+  },
+  {
+    "day": 75,
+    "word": "ROTTA",
+    "gloss": "course; route"
+  },
+  {
+    "day": 76,
     "word": "PARTI",
     "gloss": "part; component"
   },
   {
-    "day": 68,
-    "word": "SERJU",
-    "gloss": "serious"
-  },
-  {
-    "day": 69,
-    "word": "REBĦA",
-    "gloss": "triumph; victory",
-    "root": "r-b-ħ"
-  },
-  {
-    "day": 70,
-    "word": "ĦARIR",
-    "gloss": "silk",
-    "root": "ħ-r-r"
-  },
-  {
-    "day": 71,
-    "word": "OMBRA",
-    "gloss": "shadow"
-  },
-  {
-    "day": 72,
-    "word": "LBIES",
-    "gloss": "attire; clothes",
-    "root": "l-b-s"
-  },
-  {
-    "day": 73,
-    "word": "TADAM",
-    "gloss": "tomato"
-  },
-  {
-    "day": 74,
-    "word": "UTENT",
-    "gloss": "user"
-  },
-  {
-    "day": 75,
-    "word": "ARTAB",
-    "gloss": "soft; slack",
-    "root": "r-t-b"
-  },
-  {
-    "day": 76,
-    "word": "SKEDA",
-    "gloss": "schedule; programme"
-  },
-  {
     "day": 77,
-    "word": "KOMMA",
-    "gloss": "sleeve",
-    "root": "k-m-m"
+    "word": "IKĦAL",
+    "gloss": "blue",
+    "root": "k-ħ-l"
   },
   {
     "day": 78,
@@ -431,85 +435,81 @@
   },
   {
     "day": 79,
-    "word": "FAĊLI",
-    "gloss": "easy"
+    "word": "TADAM",
+    "gloss": "tomato"
   },
   {
     "day": 80,
-    "word": "DANNU",
-    "gloss": "harm; damage"
+    "word": "FENEK",
+    "gloss": "rabbit"
   },
   {
     "day": 81,
-    "word": "TELFA",
-    "gloss": "defeat; vanquishment",
-    "root": "t-l-f"
+    "word": "PATRI",
+    "gloss": "monk; male member of a religious order"
   },
   {
     "day": 82,
-    "word": "BOMBA",
-    "gloss": "bomb"
+    "word": "ĦOXNI",
+    "gloss": "fat; gauche",
+    "root": "ħ-x-n"
   },
   {
     "day": 83,
-    "word": "BRAVU",
-    "gloss": "capable; clever"
+    "word": "SENAT",
+    "gloss": "senate"
   },
   {
     "day": 84,
-    "word": "LVANT",
-    "gloss": "east"
+    "word": "LVENT",
+    "gloss": "lively; swift"
   },
   {
     "day": 85,
-    "word": "LAMPA",
-    "gloss": "lamp"
+    "word": "BERĠA",
+    "gloss": "auberge"
   },
   {
     "day": 86,
-    "word": "DIFER",
-    "gloss": "nail; talon",
-    "root": "d-f-r"
+    "word": "IMEJL",
+    "gloss": "email"
   },
   {
     "day": 87,
-    "word": "KISRA",
-    "gloss": "a breakage; a fracture",
-    "root": "k-s-r"
+    "word": "LOKER",
+    "gloss": "locker"
   },
   {
     "day": 88,
-    "word": "BARRI",
-    "gloss": "bull; ox",
-    "root": "b-r-r"
+    "word": "ĦIDMA",
+    "gloss": "work",
+    "root": "ħ-d-m"
   },
   {
     "day": 89,
-    "word": "DIETA",
-    "gloss": "diet"
+    "word": "KMAND",
+    "gloss": "command; precept"
   },
   {
     "day": 90,
-    "word": "POETA",
-    "gloss": "poet"
+    "word": "TRAVU",
+    "gloss": "beam"
   },
   {
     "day": 91,
-    "word": "BIDLA",
-    "gloss": "a change; an exchange",
-    "root": "b-d-l"
+    "word": "BANDA",
+    "gloss": "band; musical ensemble",
+    "root": "b-n-d-j"
   },
   {
     "day": 92,
-    "word": "BRUDA",
-    "gloss": "chill; lack of enthusiasm",
-    "root": "b-r-d"
+    "word": "KLABB",
+    "gloss": "club"
   },
   {
     "day": 93,
-    "word": "GĦERF",
-    "gloss": "knowledge; wisdom",
-    "root": "għ-r-f"
+    "word": "VIĊIN",
+    "gloss": "close; near"
   },
   {
     "day": 94,
@@ -518,18 +518,20 @@
   },
   {
     "day": 95,
-    "word": "STESS",
-    "gloss": "same; self"
+    "word": "SIĠRA",
+    "gloss": "tree",
+    "root": "s-ġ-r"
   },
   {
     "day": 96,
-    "word": "RAWND",
-    "gloss": "round (e.g. in a game)"
+    "word": "PANEL",
+    "gloss": "GATT Panel; panel"
   },
   {
     "day": 97,
-    "word": "SFOND",
-    "gloss": "background"
+    "word": "SEMEN",
+    "gloss": "butter",
+    "root": "s-m-n"
   },
   {
     "day": 98,
@@ -538,65 +540,69 @@
   },
   {
     "day": 99,
-    "word": "FOSSA",
-    "gloss": "cesspit; ditch"
+    "word": "SFOND",
+    "gloss": "background"
   },
   {
     "day": 100,
-    "word": "TUMUR",
-    "gloss": "tumor"
+    "word": "BRAVU",
+    "gloss": "capable; clever"
   },
   {
     "day": 101,
-    "word": "FRODI",
-    "gloss": "fraudulent activity; swindle"
+    "word": "ASTUŻ",
+    "gloss": "shrewd; cunning"
   },
   {
     "day": 102,
-    "word": "FIRDA",
-    "gloss": "separation",
-    "root": "f-r-d"
+    "word": "TAMIM",
+    "gloss": "perfect; just",
+    "root": "t-m-m"
   },
   {
     "day": 103,
-    "word": "PANEL",
-    "gloss": "GATT Panel; panel"
+    "word": "MKIEN",
+    "gloss": "place; somewhere",
+    "root": "k-w-n"
   },
   {
     "day": 104,
-    "word": "BTALA",
-    "gloss": "a holiday; a feast day",
-    "root": "b-t-l"
+    "word": "KOTRA",
+    "gloss": "crowd; the general public",
+    "root": "k-t-r"
   },
   {
     "day": 105,
-    "word": "PLOTT",
-    "gloss": "plot"
+    "word": "LEMIN",
+    "gloss": "right"
   },
   {
     "day": 106,
-    "word": "TAPIT",
-    "gloss": "carpet; rug"
+    "word": "MEDJA",
+    "gloss": "average"
   },
   {
     "day": 107,
-    "word": "TRAKK",
-    "gloss": "truck"
+    "word": "RAMEL",
+    "gloss": "sand",
+    "root": "r-m-l"
   },
   {
     "day": 108,
-    "word": "PUDUR",
-    "gloss": "modesty; shame"
+    "word": "FERGĦ",
+    "gloss": "a branch; the thin, flexible end of a telescopic fishing rod",
+    "root": "f-r-għ"
   },
   {
     "day": 109,
-    "word": "PERIT",
-    "gloss": "architect"
+    "word": "ISQOF",
+    "gloss": "bishop",
+    "root": "s-q-f"
   },
   {
     "day": 110,
-    "word": "ATTIV",
-    "gloss": "active"
+    "word": "ANKRA",
+    "gloss": "anchor"
   },
   {
     "day": 111,
@@ -605,48 +611,44 @@
   },
   {
     "day": 112,
-    "word": "TGĦIN",
-    "gloss": "stabbing with a dagger",
-    "root": "t-għ-n"
+    "word": "PRUNA",
+    "gloss": "prune"
   },
   {
     "day": 113,
-    "word": "TAMIM",
-    "gloss": "perfect; just",
-    "root": "t-m-m"
+    "word": "POVRU",
+    "gloss": "a poor person; sb. who inspires pity"
   },
   {
     "day": 114,
-    "word": "ARENA",
-    "gloss": "arena; stadium"
+    "word": "SFORZ",
+    "gloss": "strain; endeavour"
   },
   {
     "day": 115,
-    "word": "BLATA",
-    "gloss": "rock; boulder",
-    "root": "b-l-t"
+    "word": "VAGUN",
+    "gloss": "wagon; carriage (of a train)"
   },
   {
     "day": 116,
-    "word": "LEĦEN",
-    "gloss": "voice; tone of voice",
-    "root": "l-ħ-n"
+    "word": "APTIT",
+    "gloss": "appetite; urge"
   },
   {
     "day": 117,
-    "word": "SENAT",
-    "gloss": "senate"
+    "word": "BITĦA",
+    "gloss": "yard; courtyard",
+    "root": "b-t-ħ"
   },
   {
     "day": 118,
-    "word": "TIRMA",
-    "gloss": "anus"
+    "word": "SFERA",
+    "gloss": "sphere"
   },
   {
     "day": 119,
-    "word": "ĠLIED",
-    "gloss": "fight; quarrel",
-    "root": "ġ-l-d"
+    "word": "TAĠEN",
+    "gloss": "frying pan; pan"
   },
   {
     "day": 120,
@@ -660,133 +662,133 @@
   },
   {
     "day": 122,
-    "word": "SPTAR",
-    "gloss": "hospital"
+    "word": "NGĦAS",
+    "gloss": "sleep; drowsiness",
+    "root": "n-għ-s"
   },
   {
     "day": 123,
-    "word": "TEĦID",
-    "gloss": "the act of taking something",
-    "root": "'-ħ-d"
+    "word": "TELFA",
+    "gloss": "defeat; vanquishment",
+    "root": "t-l-f"
   },
   {
     "day": 124,
-    "word": "TOQOL",
-    "gloss": "weight; heaviness",
-    "root": "t-q-l"
+    "word": "KALMA",
+    "gloss": "calm; calmness"
   },
   {
     "day": 125,
-    "word": "BANDA",
-    "gloss": "band; musical ensemble",
-    "root": "b-n-d-j"
+    "word": "RAWND",
+    "gloss": "round (e.g. in a game)"
   },
   {
     "day": 126,
-    "word": "MOĦBA",
-    "gloss": "hiding place",
-    "root": "ħ-b-j"
+    "word": "ROKNA",
+    "gloss": "corner",
+    "root": "r-k-n"
   },
   {
     "day": 127,
-    "word": "ĦERBA",
-    "gloss": "ruins; grievous damage",
-    "root": "ħ-r-b"
+    "word": "KANAL",
+    "gloss": "channel"
   },
   {
     "day": 128,
+    "word": "TUMUR",
+    "gloss": "tumor"
+  },
+  {
+    "day": 129,
     "word": "FRAŻI",
     "gloss": "phrase; sentence"
   },
   {
-    "day": 129,
-    "word": "TOMNA",
-    "gloss": "tumolo (a measure of land)"
-  },
-  {
     "day": 130,
-    "word": "ĦRAFA",
-    "gloss": "fable; myth",
-    "root": "ħ-r-f"
+    "word": "ĦANUT",
+    "gloss": "shop; store"
   },
   {
     "day": 131,
-    "word": "DROGA",
-    "gloss": "drug; illicit substance"
+    "word": "SKOLL",
+    "gloss": "reef"
   },
   {
     "day": 132,
-    "word": "ISLAM",
-    "gloss": "Islam",
-    "root": "s-l-m"
+    "word": "DMUGĦ",
+    "gloss": "tears",
+    "root": "d-m-għ"
   },
   {
     "day": 133,
-    "word": "KREDU",
-    "gloss": "creed"
+    "word": "SPIŻA",
+    "gloss": "expense; cost"
   },
   {
     "day": 134,
-    "word": "LEMIN",
-    "gloss": "right"
+    "word": "KREMA",
+    "gloss": "cream"
   },
   {
     "day": 135,
-    "word": "ŻBALL",
-    "gloss": "error; mistake",
-    "root": "ż-b-l"
+    "word": "KOMDU",
+    "gloss": "convenient; cosy"
   },
   {
     "day": 136,
-    "word": "POSTA",
-    "gloss": "mail; post office"
+    "word": "TORRI",
+    "gloss": "tower"
   },
   {
     "day": 137,
-    "word": "SIDER",
-    "gloss": "chest; breasts",
-    "root": "s-d-r"
+    "word": "BHIMA",
+    "gloss": "a beast; a brute (figurative, used of rough or uncouth persons)",
+    "root": "b-h-m"
   },
   {
     "day": 138,
-    "word": "ROKIT",
-    "gloss": "rocket"
+    "word": "NEMUS",
+    "gloss": "mosquitos"
   },
   {
     "day": 139,
-    "word": "LUSSU",
-    "gloss": "luxury"
+    "word": "LBIES",
+    "gloss": "attire; clothes",
+    "root": "l-b-s"
   },
   {
     "day": 140,
-    "word": "KOSTA",
-    "gloss": "coast"
+    "word": "KISRA",
+    "gloss": "a breakage; a fracture",
+    "root": "k-s-r"
   },
   {
     "day": 141,
-    "word": "LOKER",
-    "gloss": "locker"
+    "word": "GĦOLI",
+    "gloss": "aloud; high",
+    "root": "għ-l-j"
   },
   {
     "day": 142,
-    "word": "KMAND",
-    "gloss": "command; precept"
+    "word": "GĦIRA",
+    "gloss": "envy; jealousy",
+    "root": "għ-j-r"
   },
   {
     "day": 143,
-    "word": "ADULT",
-    "gloss": "an adult"
+    "word": "UNIKU",
+    "gloss": "unique"
   },
   {
     "day": 144,
-    "word": "BATUT",
-    "gloss": "ailing; unhealthy",
-    "root": "b-t-j"
+    "word": "ARMAR",
+    "gloss": "equipment; street decorations",
+    "root": "r-m-j"
   },
   {
     "day": 145,
-    "word": "PULIT",
-    "gloss": "polite; tidy"
+    "word": "SUFAN",
+    "gloss": "couch; sofa"
   },
   {
     "day": 146,
@@ -795,74 +797,72 @@
   },
   {
     "day": 147,
-    "word": "RIKBA",
-    "gloss": "a ride (e.g. on a horse or car); a lift given to sb. in one's car",
-    "root": "r-k-b"
+    "word": "TRAKK",
+    "gloss": "truck"
   },
   {
     "day": 148,
-    "word": "KOBOR",
-    "gloss": "large size; importance",
-    "root": "k-b-r"
+    "word": "NUMRU",
+    "gloss": "number"
   },
   {
     "day": 149,
-    "word": "TIFUN",
-    "gloss": "typhoon"
+    "word": "LAPES",
+    "gloss": "pencil"
   },
   {
     "day": 150,
-    "word": "KULUR",
-    "gloss": "color; dye"
+    "word": "MALTI",
+    "gloss": "Maltese; Maltese person"
   },
   {
     "day": 151,
-    "word": "PATRI",
-    "gloss": "monk; male member of a religious order"
+    "word": "ISFAR",
+    "gloss": "yellow; egg yolk",
+    "root": "s-f-r"
   },
   {
     "day": 152,
-    "word": "GIDEB",
-    "gloss": "lies; untruths",
-    "root": "g-d-b"
+    "word": "KLERU",
+    "gloss": "clergy"
   },
   {
     "day": 153,
-    "word": "ORFNI",
-    "gloss": "orphan"
+    "word": "KREDU",
+    "gloss": "creed"
   },
   {
     "day": 154,
-    "word": "ŻEBRA",
-    "gloss": "zebra"
+    "word": "ĦABTA",
+    "gloss": "bump; coup",
+    "root": "ħ-b-t"
   },
   {
     "day": 155,
-    "word": "LVENT",
-    "gloss": "lively; swift"
+    "word": "ĦLUSI",
+    "gloss": "easy; natural",
+    "root": "ħ-l-s"
   },
   {
     "day": 156,
-    "word": "SKRIN",
-    "gloss": "screen"
+    "word": "ROKIT",
+    "gloss": "rocket"
   },
   {
     "day": 157,
-    "word": "TINSA",
-    "gloss": "a whimper",
-    "root": "t-n-s"
+    "word": "PARIR",
+    "gloss": "advice; counsel"
   },
   {
     "day": 158,
-    "word": "SEHEM",
-    "gloss": "share; the part one plays in sth.",
-    "root": "s-h-m"
+    "word": "BASAL",
+    "gloss": "onions",
+    "root": "b-s-l"
   },
   {
     "day": 159,
-    "word": "ĦMIEĠ",
-    "gloss": "dirt; filth",
-    "root": "ħ-m-ġ"
+    "word": "PINTA",
+    "gloss": "pint"
   },
   {
     "day": 160,
@@ -872,51 +872,52 @@
   },
   {
     "day": 161,
-    "word": "RENJU",
-    "gloss": "reign"
+    "word": "FEHMA",
+    "gloss": "opinion; standpoint",
+    "root": "f-h-m"
   },
   {
     "day": 162,
-    "word": "STIMA",
-    "gloss": "estimate"
+    "word": "KRUHA",
+    "gloss": "ugliness",
+    "root": "k-r-h"
   },
   {
     "day": 163,
-    "word": "ARBLU",
-    "gloss": "mast; pole"
+    "word": "ATTIV",
+    "gloss": "active"
   },
   {
     "day": 164,
-    "word": "NITFA",
-    "gloss": "a very small amount; a smidgeon",
-    "root": "n-t-f"
+    "word": "KSIEĦ",
+    "gloss": "cold; chill",
+    "root": "k-s-ħ"
   },
   {
     "day": 165,
-    "word": "POVRU",
-    "gloss": "a poor person; sb. who inspires pity"
+    "word": "SANTU",
+    "gloss": "saint"
   },
   {
     "day": 166,
-    "word": "NEFQA",
-    "gloss": "expense",
-    "root": "n-f-q"
+    "word": "SERJU",
+    "gloss": "serious"
   },
   {
     "day": 167,
-    "word": "TIBEN",
-    "gloss": "straw",
-    "root": "t-b-n"
+    "word": "MUTUR",
+    "gloss": "motor; engine"
   },
   {
     "day": 168,
-    "word": "FAMUŻ",
-    "gloss": "famous; superb (when used as an interjection)"
+    "word": "BORMA",
+    "gloss": "cooking pot",
+    "root": "b-r-m"
   },
   {
     "day": 169,
-    "word": "ATTUR",
-    "gloss": "actor; player"
+    "word": "XORTA",
+    "gloss": "kind; still"
   },
   {
     "day": 170,
@@ -925,25 +926,26 @@
   },
   {
     "day": 171,
-    "word": "ĊIFRA",
-    "gloss": "estimate; quantity"
+    "word": "DIFER",
+    "gloss": "nail; talon",
+    "root": "d-f-r"
   },
   {
     "day": 172,
-    "word": "TIGRA",
-    "gloss": "tiger"
+    "word": "ĦRAFA",
+    "gloss": "fable; myth",
+    "root": "ħ-r-f"
   },
   {
     "day": 173,
-    "word": "ARMEL",
-    "gloss": "widower",
-    "root": "r-m-l"
+    "word": "FUTUR",
+    "gloss": "future; future"
   },
   {
     "day": 174,
-    "word": "ĦTIJA",
-    "gloss": "guilt; fault",
-    "root": "ħ-t-j"
+    "word": "GĦERF",
+    "gloss": "knowledge; wisdom",
+    "root": "għ-r-f"
   },
   {
     "day": 175,
@@ -952,30 +954,30 @@
   },
   {
     "day": 176,
-    "word": "BASAL",
-    "gloss": "onions",
-    "root": "b-s-l"
+    "word": "SEDQA",
+    "gloss": "righteousness",
+    "root": "s-d-q"
   },
   {
     "day": 177,
-    "word": "ĊILEN",
-    "gloss": "Chilean; hailing from or related to Chile"
+    "word": "LAĦAM",
+    "gloss": "meat; flesh",
+    "root": "l-ħ-m"
   },
   {
     "day": 178,
-    "word": "ANKRA",
-    "gloss": "anchor"
+    "word": "SEKLU",
+    "gloss": "century"
   },
   {
     "day": 179,
-    "word": "NGĦAS",
-    "gloss": "sleep; drowsiness",
-    "root": "n-għ-s"
+    "word": "TEBUT",
+    "gloss": "coffin; casket"
   },
   {
     "day": 180,
-    "word": "NEMUS",
-    "gloss": "mosquitos"
+    "word": "PONTA",
+    "gloss": "tip; pimple"
   },
   {
     "day": 181,
@@ -984,30 +986,33 @@
   },
   {
     "day": 182,
-    "word": "FROTT",
-    "gloss": "fruit"
+    "word": "ĠILDA",
+    "gloss": "leather; skin",
+    "root": "ġ-l-d"
   },
   {
     "day": 183,
-    "word": "ĦMIRA",
-    "gloss": "yeast",
-    "root": "ħ-m-r"
+    "word": "QRUSA",
+    "gloss": "sourness; acridness",
+    "root": "q-r-s"
   },
   {
     "day": 184,
-    "word": "PLATT",
-    "gloss": "dish; plate"
+    "word": "IEBES",
+    "gloss": "hard; strict",
+    "root": "j-b-s"
   },
   {
     "day": 185,
-    "word": "ĦOXNI",
-    "gloss": "fat; gauche",
-    "root": "ħ-x-n"
+    "word": "RABTA",
+    "gloss": "bond; tie",
+    "root": "r-b-t"
   },
   {
     "day": 186,
-    "word": "DRAMM",
-    "gloss": "drama; play"
+    "word": "DAĦLA",
+    "gloss": "entrance; introduction (to a written work)",
+    "root": "d-ħ-l"
   },
   {
     "day": 187,
@@ -1017,41 +1022,41 @@
   },
   {
     "day": 188,
-    "word": "KOTRA",
-    "gloss": "crowd; the general public",
-    "root": "k-t-r"
+    "word": "BERAĦ",
+    "gloss": "to open wide; open space",
+    "root": "b-r-ħ"
   },
   {
     "day": 189,
-    "word": "RIGAL",
-    "gloss": "present; gift"
+    "word": "KĊINA",
+    "gloss": "kitchen; cuisine",
+    "root": "k-ċ-n-r"
   },
   {
     "day": 190,
-    "word": "FERGĦ",
-    "gloss": "a branch; the thin, flexible end of a telescopic fishing rod",
-    "root": "f-r-għ"
+    "word": "ĦABSI",
+    "gloss": "prisoner",
+    "root": "ħ-b-s"
   },
   {
     "day": 191,
-    "word": "EŻATT",
-    "gloss": "exact; precise"
+    "word": "TOMNA",
+    "gloss": "tumolo (a measure of land)"
   },
   {
     "day": 192,
-    "word": "QRUSA",
-    "gloss": "sourness; acridness",
-    "root": "q-r-s"
+    "word": "BUTIR",
+    "gloss": "butter"
   },
   {
     "day": 193,
-    "word": "KUTRA",
-    "gloss": "blanket"
+    "word": "LANDA",
+    "gloss": "tin; can"
   },
   {
     "day": 194,
-    "word": "BOLLA",
-    "gloss": "stamp"
+    "word": "KORSA",
+    "gloss": "racing track (often in the context of horse racing)"
   },
   {
     "day": 195,
@@ -1060,20 +1065,19 @@
   },
   {
     "day": 196,
-    "word": "ĦAŻIN",
-    "gloss": "bad; wicked",
-    "root": "ħ-ż-n"
+    "word": "DRAMM",
+    "gloss": "drama; play"
   },
   {
     "day": 197,
-    "word": "BAĊIR",
-    "gloss": "dock"
+    "word": "SINED",
+    "gloss": "stretch of barren land"
   },
   {
     "day": 198,
-    "word": "BORMA",
-    "gloss": "cooking pot",
-    "root": "b-r-m"
+    "word": "ĦARIR",
+    "gloss": "silk",
+    "root": "ħ-r-r"
   },
   {
     "day": 199,
@@ -1082,8 +1086,8 @@
   },
   {
     "day": 200,
-    "word": "PARIR",
-    "gloss": "advice; counsel"
+    "word": "PUDIL",
+    "gloss": "poodle"
   },
   {
     "day": 201,
@@ -1099,32 +1103,30 @@
   },
   {
     "day": 203,
-    "word": "NIKTA",
-    "gloss": "a dot",
-    "root": "n-k-t"
+    "word": "TIGRA",
+    "gloss": "tiger"
   },
   {
     "day": 204,
-    "word": "ISFAR",
-    "gloss": "yellow; egg yolk",
-    "root": "s-f-r"
+    "word": "KLIMA",
+    "gloss": "climate"
   },
   {
     "day": 205,
-    "word": "ARMAT",
-    "gloss": "armed; set up",
-    "root": "r-m-j"
-  },
-  {
-    "day": 206,
-    "word": "DĦULI",
-    "gloss": "friendly; courteous",
+    "word": "NDĦIL",
+    "gloss": "nosiness; interference",
     "root": "d-ħ-l"
   },
   {
+    "day": 206,
+    "word": "LIŻAR",
+    "gloss": "sheet"
+  },
+  {
     "day": 207,
-    "word": "SUFRA",
-    "gloss": "cork"
+    "word": "RIKBA",
+    "gloss": "a ride (e.g. on a horse or car); a lift given to sb. in one's car",
+    "root": "r-k-b"
   },
   {
     "day": 208,
@@ -1133,79 +1135,82 @@
   },
   {
     "day": 209,
-    "word": "TAĠEN",
-    "gloss": "frying pan; pan"
+    "word": "LAMPA",
+    "gloss": "lamp"
   },
   {
     "day": 210,
-    "word": "LENTI",
-    "gloss": "lens"
+    "word": "ARMEL",
+    "gloss": "widower",
+    "root": "r-m-l"
   },
   {
     "day": 211,
-    "word": "ĦANUT",
-    "gloss": "shop; store"
+    "word": "TIBEN",
+    "gloss": "straw",
+    "root": "t-b-n"
   },
   {
     "day": 212,
-    "word": "ĦASRA",
-    "gloss": "pity; shame",
-    "root": "ħ-s-r"
+    "word": "ĦADID",
+    "gloss": "iron"
   },
   {
     "day": 213,
-    "word": "SADID",
-    "gloss": "rust",
-    "root": "s-d-d"
+    "word": "FELES",
+    "gloss": "a wedge",
+    "root": "f-l-s"
   },
   {
     "day": 214,
-    "word": "SUFAN",
-    "gloss": "couch; sofa"
+    "word": "ORFNI",
+    "gloss": "orphan"
   },
   {
     "day": 215,
-    "word": "ĠILDA",
-    "gloss": "leather; skin",
-    "root": "ġ-l-d"
+    "word": "LINFA",
+    "gloss": "chandelier"
   },
   {
     "day": 216,
-    "word": "KITLA",
-    "gloss": "kettle"
+    "word": "TORBA",
+    "gloss": "layer of dust or earth used in the laying of roofs (stone-masonry); a quantity of dust",
+    "root": "t-r-b"
   },
   {
     "day": 217,
-    "word": "DANIŻ",
-    "gloss": "Danish; hailing from or related to Denmark"
+    "word": "KROAT",
+    "gloss": "Croatian; hailing from or pertaining to Croatia"
   },
   {
     "day": 218,
-    "word": "ĦABTA",
-    "gloss": "bump; coup",
-    "root": "ħ-b-t"
+    "word": "KARTA",
+    "gloss": "paper",
+    "root": "k-r-t"
   },
   {
     "day": 219,
-    "word": "APERT",
-    "gloss": "open; forthright"
+    "word": "REBĦA",
+    "gloss": "triumph; victory",
+    "root": "r-b-ħ"
   },
   {
     "day": 220,
-    "word": "ISWED",
-    "gloss": "black",
-    "root": "s-w-d"
+    "word": "GIDEB",
+    "gloss": "lies; untruths",
+    "root": "g-d-b"
   },
   {
     "day": 221,
-    "word": "SĦANA",
-    "gloss": "warmth; high temperature",
-    "root": "s-ħ-n"
+    "word": "BRUDA",
+    "gloss": "chill; lack of enthusiasm",
+    "root": "b-r-d"
   },
   {
     "day": 222,
-    "word": "LINFA",
-    "gloss": "chandelier"
+    "word": "ĦMIRA",
+    "gloss": "yeast",
+    "root": "ħ-m-r"
   },
   {
     "day": 223,
@@ -1214,13 +1219,13 @@
   },
   {
     "day": 224,
-    "word": "BRIKS",
-    "gloss": "bricks"
+    "word": "ARMEN",
+    "gloss": "Armenian; coming from or related to Armenia"
   },
   {
     "day": 225,
-    "word": "KALMA",
-    "gloss": "calm; calmness"
+    "word": "ĊIFRA",
+    "gloss": "estimate; quantity"
   },
   {
     "day": 226,
@@ -1229,26 +1234,26 @@
   },
   {
     "day": 227,
-    "word": "KREMA",
-    "gloss": "cream"
+    "word": "KBURI",
+    "gloss": "proud; haughty",
+    "root": "k-b-r"
   },
   {
     "day": 228,
-    "word": "FINTA",
-    "gloss": "fake; counterfeit",
-    "root": "f-n-ġ-j"
+    "word": "BRIKS",
+    "gloss": "bricks"
   },
   {
     "day": 229,
-    "word": "ĦARBA",
-    "gloss": "escape; getaway",
-    "root": "ħ-r-b"
+    "word": "ĠLIED",
+    "gloss": "fight; quarrel",
+    "root": "ġ-l-d"
   },
   {
     "day": 230,
-    "word": "RAĠEL",
-    "gloss": "man; husband",
-    "root": "r-ġ-l"
+    "word": "BAĦRI",
+    "gloss": "a sailor; a mariner",
+    "root": "b-ħ-r"
   },
   {
     "day": 231,
@@ -1258,13 +1263,15 @@
   },
   {
     "day": 232,
-    "word": "RITMU",
-    "gloss": "rhythm"
+    "word": "ISWED",
+    "gloss": "black",
+    "root": "s-w-d"
   },
   {
     "day": 233,
-    "word": "QORTI",
-    "gloss": "lawcourt; court house"
+    "word": "BLATA",
+    "gloss": "rock; boulder",
+    "root": "b-l-t"
   },
   {
     "day": 234,
@@ -1279,68 +1286,68 @@
   },
   {
     "day": 236,
-    "word": "FUTUR",
-    "gloss": "future; future"
+    "word": "SĦANA",
+    "gloss": "warmth; high temperature",
+    "root": "s-ħ-n"
   },
   {
     "day": 237,
-    "word": "DINJA",
-    "gloss": "earth; world",
-    "root": "d-n-j"
+    "word": "SODDA",
+    "gloss": "bed",
+    "root": "s-d-d"
   },
   {
     "day": 238,
-    "word": "TMIEM",
-    "gloss": "end; termination",
-    "root": "t-m-m"
+    "word": "ĦODON",
+    "gloss": "breast; bosom",
+    "root": "ħ-d-n"
   },
   {
     "day": 239,
-    "word": "SEKLU",
-    "gloss": "century"
+    "word": "REALI",
+    "gloss": "real"
   },
   {
     "day": 240,
-    "word": "VAPUR",
-    "gloss": "ship; vessel"
+    "word": "ĦOLQA",
+    "gloss": "link; thimble",
+    "root": "ħ-l-q"
   },
   {
     "day": 241,
-    "word": "ĦSARA",
-    "gloss": "damage; harm",
-    "root": "ħ-s-r"
+    "word": "ATTUR",
+    "gloss": "actor; player"
   },
   {
     "day": 242,
-    "word": "RENTA",
-    "gloss": "rent; income"
+    "word": "MENTA",
+    "gloss": "mint"
   },
   {
     "day": 243,
-    "word": "LIŻAR",
-    "gloss": "sheet"
+    "word": "BAĊIR",
+    "gloss": "dock"
   },
   {
     "day": 244,
-    "word": "KLABB",
-    "gloss": "club"
+    "word": "SUFRA",
+    "gloss": "cork"
   },
   {
     "day": 245,
-    "word": "MUTUR",
-    "gloss": "motor; engine"
+    "word": "SKUNA",
+    "gloss": "schooner"
   },
   {
     "day": 246,
-    "word": "GĦOTI",
-    "gloss": "covering",
-    "root": "għ-t-j"
+    "word": "SEHEM",
+    "gloss": "share; the part one plays in sth.",
+    "root": "s-h-m"
   },
   {
     "day": 247,
-    "word": "ROKNA",
-    "gloss": "corner",
-    "root": "r-k-n"
+    "word": "KOSTA",
+    "gloss": "coast"
   },
   {
     "day": 248,
@@ -1349,49 +1356,53 @@
   },
   {
     "day": 249,
-    "word": "BRIMB",
-    "gloss": "spiders"
+    "word": "BARRI",
+    "gloss": "bull; ox",
+    "root": "b-r-r"
   },
   {
     "day": 250,
-    "word": "INJAM",
-    "gloss": "timber; wood"
+    "word": "ĦTIJA",
+    "gloss": "guilt; fault",
+    "root": "ħ-t-j"
   },
   {
     "day": 251,
-    "word": "SPIŻA",
-    "gloss": "expense; cost"
+    "word": "MORMI",
+    "gloss": "thrown away; discarded",
+    "root": "r-m-j"
   },
   {
     "day": 252,
-    "word": "REALI",
-    "gloss": "real"
+    "word": "PULIT",
+    "gloss": "polite; tidy"
   },
   {
     "day": 253,
-    "word": "NĦAWI",
-    "gloss": "whereabouts"
+    "word": "BOLLA",
+    "gloss": "stamp"
   },
   {
     "day": 254,
-    "word": "NUMRU",
-    "gloss": "number"
+    "word": "RENTA",
+    "gloss": "rent; income"
   },
   {
     "day": 255,
-    "word": "MEDJA",
-    "gloss": "average"
+    "word": "ĦAFIF",
+    "gloss": "light; agile",
+    "root": "ħ-f-f"
   },
   {
     "day": 256,
-    "word": "SOKIT",
-    "gloss": "socket"
+    "word": "MOĦBA",
+    "gloss": "hiding place",
+    "root": "ħ-b-j"
   },
   {
     "day": 257,
-    "word": "FTIRA",
-    "gloss": "a flat loaf",
-    "root": "f-t-r"
+    "word": "APERT",
+    "gloss": "open; forthright"
   },
   {
     "day": 258,
@@ -1400,9 +1411,8 @@
   },
   {
     "day": 259,
-    "word": "SIĠRA",
-    "gloss": "tree",
-    "root": "s-ġ-r"
+    "word": "PLATT",
+    "gloss": "dish; plate"
   },
   {
     "day": 260,
@@ -1412,46 +1422,46 @@
   },
   {
     "day": 261,
-    "word": "MENTA",
-    "gloss": "mint"
+    "word": "BREJK",
+    "gloss": "brake"
   },
   {
     "day": 262,
-    "word": "ĦMURA",
-    "gloss": "redness",
-    "root": "ħ-m-r"
+    "word": "RENJU",
+    "gloss": "reign"
   },
   {
     "day": 263,
-    "word": "XITAN",
-    "gloss": "devil; demon",
-    "root": "x-j-t-n"
+    "word": "SLIEM",
+    "gloss": "peace",
+    "root": "s-l-m"
   },
   {
     "day": 264,
-    "word": "XORTI",
-    "gloss": "destiny; fate"
+    "word": "TOQOL",
+    "gloss": "weight; heaviness",
+    "root": "t-q-l"
   },
   {
     "day": 265,
-    "word": "SFERA",
-    "gloss": "sphere"
+    "word": "KUTRA",
+    "gloss": "blanket"
   },
   {
     "day": 266,
-    "word": "PRUNA",
-    "gloss": "prune"
+    "word": "MANKU",
+    "gloss": "handle"
   },
   {
     "day": 267,
-    "word": "SODDA",
-    "gloss": "bed",
-    "root": "s-d-d"
+    "word": "TIRMA",
+    "gloss": "anus"
   },
   {
     "day": 268,
-    "word": "IDOLU",
-    "gloss": "idol"
+    "word": "KITBA",
+    "gloss": "writing; writing",
+    "root": "k-t-b"
   },
   {
     "day": 269,
@@ -1461,35 +1471,35 @@
   },
   {
     "day": 270,
-    "word": "FENEK",
-    "gloss": "rabbit"
+    "word": "SKEDA",
+    "gloss": "schedule; programme"
   },
   {
     "day": 271,
-    "word": "POTER",
-    "gloss": "power"
+    "word": "PERIT",
+    "gloss": "architect"
   },
   {
     "day": 272,
-    "word": "PONTA",
-    "gloss": "tip; pimple"
+    "word": "LSIEN",
+    "gloss": "tongue; language",
+    "root": "l-s-n"
   },
   {
     "day": 273,
-    "word": "IKĦAL",
-    "gloss": "blue",
-    "root": "k-ħ-l"
+    "word": "DEKAN",
+    "gloss": "dean"
   },
   {
     "day": 274,
-    "word": "ABBON",
-    "gloss": "abatement; release"
+    "word": "ALTAR",
+    "gloss": "altar"
   },
   {
     "day": 275,
-    "word": "KSIEĦ",
-    "gloss": "cold; chill",
-    "root": "k-s-ħ"
+    "word": "ĦARUF",
+    "gloss": "lamb",
+    "root": "ħ-r-f"
   },
   {
     "day": 276,
@@ -1504,44 +1514,42 @@
   },
   {
     "day": 278,
-    "word": "GĦIRA",
-    "gloss": "envy; jealousy",
-    "root": "għ-j-r"
+    "word": "ĦAFUR",
+    "gloss": "oats",
+    "root": "ħ-f-r"
   },
   {
     "day": 279,
-    "word": "ARMAR",
-    "gloss": "equipment; street decorations",
-    "root": "r-m-j"
+    "word": "PLOTT",
+    "gloss": "plot"
   },
   {
     "day": 280,
-    "word": "SALIB",
-    "gloss": "crucifix; cross",
-    "root": "s-l-b"
+    "word": "RITMU",
+    "gloss": "rhythm"
   },
   {
     "day": 281,
-    "word": "DMUGĦ",
-    "gloss": "tears",
-    "root": "d-m-għ"
+    "word": "SADID",
+    "gloss": "rust",
+    "root": "s-d-d"
   },
   {
     "day": 282,
-    "word": "LAPES",
-    "gloss": "pencil"
+    "word": "FTIRA",
+    "gloss": "a flat loaf",
+    "root": "f-t-r"
   },
   {
     "day": 283,
-    "word": "SEMEN",
-    "gloss": "butter",
-    "root": "s-m-n"
+    "word": "ARTAB",
+    "gloss": "soft; slack",
+    "root": "r-t-b"
   },
   {
     "day": 284,
-    "word": "ĦAFIF",
-    "gloss": "light; agile",
-    "root": "ħ-f-f"
+    "word": "TAPIT",
+    "gloss": "carpet; rug"
   },
   {
     "day": 285,
@@ -1550,43 +1558,41 @@
   },
   {
     "day": 286,
-    "word": "SEDQA",
-    "gloss": "righteousness",
-    "root": "s-d-q"
+    "word": "POSTA",
+    "gloss": "mail; post office"
   },
   {
     "day": 287,
-    "word": "VAGUN",
-    "gloss": "wagon; carriage (of a train)"
+    "word": "DROGA",
+    "gloss": "drug; illicit substance"
   },
   {
     "day": 288,
-    "word": "FETĦA",
-    "gloss": "opening; breach",
-    "root": "f-t-ħ"
+    "word": "DĦULI",
+    "gloss": "friendly; courteous",
+    "root": "d-ħ-l"
   },
   {
     "day": 289,
-    "word": "BHIMA",
-    "gloss": "a beast; a brute (figurative, used of rough or uncouth persons)",
-    "root": "b-h-m"
+    "word": "RAĦAL",
+    "gloss": "village",
+    "root": "r-ħ-l"
   },
   {
     "day": 290,
-    "word": "LIBSA",
-    "gloss": "dress; suit",
-    "root": "l-b-s"
+    "word": "IDOLU",
+    "gloss": "idol"
   },
   {
     "day": 291,
-    "word": "ĦABSI",
-    "gloss": "prisoner",
-    "root": "ħ-b-s"
+    "word": "AĦBAR",
+    "gloss": "a piece of news",
+    "root": "ħ-b-r"
   },
   {
     "day": 292,
-    "word": "DITTA",
-    "gloss": "brand; company"
+    "word": "ARENA",
+    "gloss": "arena; stadium"
   },
   {
     "day": 293,
@@ -1595,9 +1601,9 @@
   },
   {
     "day": 294,
-    "word": "RABTA",
-    "gloss": "bond; tie",
-    "root": "r-b-t"
+    "word": "TFULI",
+    "gloss": "puerile; typical of children",
+    "root": "t-f-l"
   },
   {
     "day": 295,
@@ -1606,14 +1612,13 @@
   },
   {
     "day": 296,
-    "word": "ĦARUF",
-    "gloss": "lamb",
-    "root": "ħ-r-f"
+    "word": "EPOKA",
+    "gloss": "epoch"
   },
   {
     "day": 297,
-    "word": "DISKA",
-    "gloss": "disk; record"
+    "word": "STESS",
+    "gloss": "same; self"
   },
   {
     "day": 298,
@@ -1623,35 +1628,35 @@
   },
   {
     "day": 299,
-    "word": "SLIEM",
-    "gloss": "peace",
-    "root": "s-l-m"
+    "word": "OPERA",
+    "gloss": "opera"
   },
   {
     "day": 300,
-    "word": "BERĠA",
-    "gloss": "auberge"
+    "word": "BRIMB",
+    "gloss": "spiders"
   },
   {
     "day": 301,
-    "word": "MANKU",
-    "gloss": "handle"
+    "word": "ĦDURA",
+    "gloss": "green colour; greenery",
+    "root": "ħ-d-r"
   },
   {
     "day": 302,
-    "word": "SKEMA",
-    "gloss": "scheme; schema"
+    "word": "EŻATT",
+    "gloss": "exact; precise"
   },
   {
     "day": 303,
-    "word": "VISTA",
-    "gloss": "eyesight; sight"
+    "word": "STIMA",
+    "gloss": "estimate"
   },
   {
     "day": 304,
-    "word": "BANDU",
-    "gloss": "a proclamation; banns",
-    "root": "b-n-d-j"
+    "word": "ĦEFFA",
+    "gloss": "haste; speed",
+    "root": "ħ-f-f"
   },
   {
     "day": 305,
@@ -1661,26 +1666,24 @@
   },
   {
     "day": 306,
-    "word": "GĦOLI",
-    "gloss": "aloud; high",
-    "root": "għ-l-j"
+    "word": "BOMBA",
+    "gloss": "bomb"
   },
   {
     "day": 307,
-    "word": "OPERA",
-    "gloss": "opera"
+    "word": "LITRU",
+    "gloss": "litre"
   },
   {
     "day": 308,
-    "word": "KITBA",
-    "gloss": "writing; writing",
-    "root": "k-t-b"
+    "word": "PUDUR",
+    "gloss": "modesty; shame"
   },
   {
     "day": 309,
-    "word": "BERAĦ",
-    "gloss": "to open wide; open space",
-    "root": "b-r-ħ"
+    "word": "FEHIM",
+    "gloss": "understanding; one's viewpoint",
+    "root": "f-h-m"
   },
   {
     "day": 310,
@@ -1690,48 +1693,48 @@
   },
   {
     "day": 311,
-    "word": "IMEJL",
-    "gloss": "email"
+    "word": "FIRDA",
+    "gloss": "separation",
+    "root": "f-r-d"
   },
   {
     "day": 312,
-    "word": "EŻAMI",
-    "gloss": "examination; test"
-  },
-  {
-    "day": 313,
-    "word": "IDEAL",
-    "gloss": "ideal"
-  },
-  {
-    "day": 314,
-    "word": "ISQOF",
-    "gloss": "bishop",
-    "root": "s-q-f"
-  },
-  {
-    "day": 315,
-    "word": "IEBES",
-    "gloss": "hard; strict",
-    "root": "j-b-s"
-  },
-  {
-    "day": 316,
-    "word": "QADIM",
-    "gloss": "old; aged",
-    "root": "q-d-m"
-  },
-  {
-    "day": 317,
     "word": "SILTA",
     "gloss": "excerpt",
     "root": "s-l-t"
   },
   {
+    "day": 313,
+    "word": "TALBA",
+    "gloss": "prayer; request",
+    "root": "t-l-b"
+  },
+  {
+    "day": 314,
+    "word": "ĦARES",
+    "gloss": "to look; to watch",
+    "root": "ħ-r-s"
+  },
+  {
+    "day": 315,
+    "word": "FORMA",
+    "gloss": "shape; mould"
+  },
+  {
+    "day": 316,
+    "word": "DISKA",
+    "gloss": "disk; record"
+  },
+  {
+    "day": 317,
+    "word": "RIGAL",
+    "gloss": "present; gift"
+  },
+  {
     "day": 318,
-    "word": "LSIEN",
-    "gloss": "tongue; language",
-    "root": "l-s-n"
+    "word": "LIBSA",
+    "gloss": "dress; suit",
+    "root": "l-b-s"
   },
   {
     "day": 319,
@@ -1740,153 +1743,150 @@
   },
   {
     "day": 320,
-    "word": "KĊINA",
-    "gloss": "kitchen; cuisine",
-    "root": "k-ċ-n-r"
+    "word": "ĦERBA",
+    "gloss": "ruins; grievous damage",
+    "root": "ħ-r-b"
   },
   {
     "day": 321,
-    "word": "FELES",
-    "gloss": "a wedge",
-    "root": "f-l-s"
+    "word": "POPLU",
+    "gloss": "people (collective of people comprising a nation)"
   },
   {
     "day": 322,
-    "word": "KROAT",
-    "gloss": "Croatian; hailing from or pertaining to Croatia"
-  },
-  {
-    "day": 323,
-    "word": "POMPA",
-    "gloss": "pump"
-  },
-  {
-    "day": 324,
-    "word": "BAĦRI",
-    "gloss": "a sailor; a mariner",
-    "root": "b-ħ-r"
-  },
-  {
-    "day": 325,
-    "word": "TALBA",
-    "gloss": "prayer; request",
-    "root": "t-l-b"
-  },
-  {
-    "day": 326,
-    "word": "STOKK",
-    "gloss": "putty; stock"
-  },
-  {
-    "day": 327,
-    "word": "FEHMA",
-    "gloss": "opinion; standpoint",
-    "root": "f-h-m"
-  },
-  {
-    "day": 328,
-    "word": "TEBUT",
-    "gloss": "coffin; casket"
-  },
-  {
-    "day": 329,
-    "word": "MULTA",
-    "gloss": "fine"
-  },
-  {
-    "day": 330,
-    "word": "KORSA",
-    "gloss": "racing track (often in the context of horse racing)"
-  },
-  {
-    "day": 331,
-    "word": "XRIEK",
-    "gloss": "stone slab",
-    "root": "x-r-k"
-  },
-  {
-    "day": 332,
-    "word": "ROTTA",
-    "gloss": "course; route"
-  },
-  {
-    "day": 333,
-    "word": "ITTRA",
-    "gloss": "letter"
-  },
-  {
-    "day": 334,
-    "word": "ĦEFFA",
-    "gloss": "haste; speed",
-    "root": "ħ-f-f"
-  },
-  {
-    "day": 335,
-    "word": "ĦOLQA",
-    "gloss": "link; thimble",
-    "root": "ħ-l-q"
-  },
-  {
-    "day": 336,
-    "word": "RAMEL",
-    "gloss": "sand",
-    "root": "r-m-l"
-  },
-  {
-    "day": 337,
-    "word": "TRAVU",
-    "gloss": "beam"
-  },
-  {
-    "day": 338,
     "word": "ISMAR",
     "gloss": "suntanned; dark",
     "root": "s-m-r"
   },
   {
+    "day": 323,
+    "word": "FOSSA",
+    "gloss": "cesspit; ditch"
+  },
+  {
+    "day": 324,
+    "word": "VAPUR",
+    "gloss": "ship; vessel"
+  },
+  {
+    "day": 325,
+    "word": "FROTT",
+    "gloss": "fruit"
+  },
+  {
+    "day": 326,
+    "word": "ABBON",
+    "gloss": "abatement; release"
+  },
+  {
+    "day": 327,
+    "word": "DINJA",
+    "gloss": "earth; world",
+    "root": "d-n-j"
+  },
+  {
+    "day": 328,
+    "word": "MULTA",
+    "gloss": "fine"
+  },
+  {
+    "day": 329,
+    "word": "LEĦEN",
+    "gloss": "voice; tone of voice",
+    "root": "l-ħ-n"
+  },
+  {
+    "day": 330,
+    "word": "FRODI",
+    "gloss": "fraudulent activity; swindle"
+  },
+  {
+    "day": 331,
+    "word": "ANĠLU",
+    "gloss": "angel"
+  },
+  {
+    "day": 332,
+    "word": "NISEL",
+    "gloss": "lineage; offspring",
+    "root": "n-s-l"
+  },
+  {
+    "day": 333,
+    "word": "FAĊLI",
+    "gloss": "easy"
+  },
+  {
+    "day": 334,
+    "word": "ĦARBA",
+    "gloss": "escape; getaway",
+    "root": "ħ-r-b"
+  },
+  {
+    "day": 335,
+    "word": "STOKK",
+    "gloss": "putty; stock"
+  },
+  {
+    "day": 336,
+    "word": "LVANT",
+    "gloss": "east"
+  },
+  {
+    "day": 337,
+    "word": "OMBRA",
+    "gloss": "shadow"
+  },
+  {
+    "day": 338,
+    "word": "TRABA",
+    "gloss": "a speck of dust",
+    "root": "t-r-b"
+  },
+  {
     "day": 339,
-    "word": "KRUHA",
-    "gloss": "ugliness",
-    "root": "k-r-h"
+    "word": "TINSA",
+    "gloss": "a whimper",
+    "root": "t-n-s"
   },
   {
     "day": 340,
-    "word": "ĦAFUR",
-    "gloss": "oats",
-    "root": "ħ-f-r"
+    "word": "UTENT",
+    "gloss": "user"
   },
   {
     "day": 341,
-    "word": "FIDIL",
-    "gloss": "faithful; loyal",
-    "root": "f-d-l"
+    "word": "BATUT",
+    "gloss": "ailing; unhealthy",
+    "root": "b-t-j"
   },
   {
     "day": 342,
-    "word": "BIKRI",
-    "gloss": "early; belonging to an earlier era",
-    "root": "b-k-r"
+    "word": "ŻIBEL",
+    "gloss": "garbage; rubbish",
+    "root": "ż-b-l"
   },
   {
     "day": 343,
+    "word": "XRIEK",
+    "gloss": "stone slab",
+    "root": "x-r-k"
+  },
+  {
+    "day": 344,
     "word": "GRUPP",
     "gloss": "group; troupe"
   },
   {
-    "day": 344,
-    "word": "VIĊIN",
-    "gloss": "close; near"
-  },
-  {
     "day": 345,
-    "word": "FIRMA",
-    "gloss": "signature"
+    "word": "FAMUŻ",
+    "gloss": "famous; superb (when used as an interjection)"
   },
   {
     "day": 346,
-    "word": "ĦODON",
-    "gloss": "breast; bosom",
-    "root": "ħ-d-n"
+    "word": "NITFA",
+    "gloss": "a very small amount; a smidgeon",
+    "root": "n-t-f"
   },
   {
     "day": 347,
@@ -1895,56 +1895,57 @@
   },
   {
     "day": 348,
-    "word": "PINTA",
-    "gloss": "pint"
+    "word": "SĦABA",
+    "gloss": "cloud",
+    "root": "s-ħ-b"
   },
   {
     "day": 349,
-    "word": "DRAPP",
-    "gloss": "cloth; fabric"
+    "word": "VISTA",
+    "gloss": "eyesight; sight"
   },
   {
     "day": 350,
-    "word": "ĦABEL",
-    "gloss": "rope",
-    "root": "ħ-b-l"
+    "word": "ARBLU",
+    "gloss": "mast; pole"
   },
   {
     "day": 351,
-    "word": "SFORZ",
-    "gloss": "strain; endeavour"
+    "word": "INJAM",
+    "gloss": "timber; wood"
   },
   {
     "day": 352,
-    "word": "ANĠLU",
-    "gloss": "angel"
+    "word": "BANDU",
+    "gloss": "a proclamation; banns",
+    "root": "b-n-d-j"
   },
   {
     "day": 353,
-    "word": "SKUNA",
-    "gloss": "schooner"
+    "word": "NIKTA",
+    "gloss": "a dot",
+    "root": "n-k-t"
   },
   {
     "day": 354,
-    "word": "ALTAR",
-    "gloss": "altar"
+    "word": "LUSSU",
+    "gloss": "luxury"
   },
   {
     "day": 355,
-    "word": "TFULI",
-    "gloss": "puerile; typical of children",
-    "root": "t-f-l"
+    "word": "SOKIT",
+    "gloss": "socket"
   },
   {
     "day": 356,
-    "word": "NVJAR",
-    "gloss": "smoothing of stone; levelling of a stone surface or wall"
+    "word": "DANIŻ",
+    "gloss": "Danish; hailing from or related to Denmark"
   },
   {
     "day": 357,
-    "word": "ĦLUSI",
-    "gloss": "easy; natural",
-    "root": "ħ-l-s"
+    "word": "ĦADIT",
+    "gloss": "talk, speech",
+    "root": "ħ-d-t"
   },
   {
     "day": 358,
@@ -1959,30 +1960,30 @@
   },
   {
     "day": 360,
-    "word": "BUTIR",
-    "gloss": "butter"
+    "word": "ADULT",
+    "gloss": "an adult"
   },
   {
     "day": 361,
-    "word": "ĦAMRI",
-    "gloss": "red soil; reddish",
-    "root": "ħ-m-r"
+    "word": "FIRMA",
+    "gloss": "signature"
   },
   {
     "day": 362,
-    "word": "SĦABA",
-    "gloss": "cloud",
-    "root": "s-ħ-b"
+    "word": "ĦASRA",
+    "gloss": "pity; shame",
+    "root": "ħ-s-r"
   },
   {
     "day": 363,
-    "word": "ĠELAT",
-    "gloss": "ice cream"
-  },
-  {
-    "day": 364,
     "word": "ĦEMDA",
     "gloss": "silence",
     "root": "ħ-m-d"
+  },
+  {
+    "day": 364,
+    "word": "FINTA",
+    "gloss": "fake; counterfeit",
+    "root": "f-n-ġ-j"
   }
 ]

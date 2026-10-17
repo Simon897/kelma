@@ -10,3 +10,4 @@ next-env.d.ts
 # Working copy of the Għerq root review (answers are saved to data/source/root-review.json)
 /gherq-root-review.xlsx
 /gherq-puzzles.xlsx
+/words-without-meaning.xlsx

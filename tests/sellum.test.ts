@@ -138,7 +138,7 @@ describe("puzzle validator", () => {
   });
   it("rejects too few routes, a wrong route count, and repeated or skipped days", () => {
     const tiny = buildGraph(["AAAAA", "BAAAA", "BBAAA", "BBBAA", "BBBBA"]);
-    expect(validateSellum([{ ...good, routes: 1, example: good.example }], [], tiny).join()).toMatch(/at least 3/);
+    expect(validateSellum([{ ...good, routes: 1, example: good.example }], [], tiny).join()).toMatch(/at least 2/);
     expect(check([{ ...good, routes: 5 }])).toMatch(/there are 3/);
     expect(check([good, { ...good, day: 0 }])).toMatch(/no repeats or gaps/);
     expect(check([good, { ...good, day: 2 }])).toMatch(/no repeats or gaps/);
@@ -206,6 +206,13 @@ describe("home carousel", () => {
   it("counts Sellum's days from its own epoch", () => {
     expect(sellumDayIndex(new Date(`${SELLUM_EPOCH}T12:00:00+02:00`))).toBe(0);
     expect(daysSince(SELLUM_EPOCH, new Date(`${SELLUM_EPOCH}T23:30:00Z`))).toBe(1); // 01:30 in Malta
+  });
+});
+
+describe("direct ladders", () => {
+  it("from day 18 on, start and target differ in all 4 changing places (no detour letters)", () => {
+    const puzzles: SellumPuzzle[] = JSON.parse(readFileSync(new URL("../data/sellum/puzzles.json", import.meta.url), "utf8"));
+    for (const p of puzzles.filter((x) => x.day >= 18)) expect(diffCount(p.start, p.target), `day ${p.day}`).toBe(4);
   });
 });
 

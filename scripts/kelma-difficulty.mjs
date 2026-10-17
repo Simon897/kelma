@@ -79,8 +79,8 @@ if (process.argv[1]?.endsWith("kelma-difficulty.mjs")) {
   };
   const traps = (answer) => guesses.filter((w) => w.reduce((d, l, i) => d + (l !== answer[i]), 0) === 1).length;
 
-  const out = read("source/answer-candidates.json")
-    .filter((c) => tiles(c.word).length === 5)
+  const out = [...read("source/answer-candidates.json"), ...read("source/kelma-approved.json")]
+    .filter((c, i, all) => tiles(c.word).length === 5 && all.findIndex((x) => x.word === c.word) === i)
     .map((c) => {
       const t = tiles(c.word);
       return { word: c.word, steps: solve(t), traps: traps(t) };

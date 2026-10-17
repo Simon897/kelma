@@ -46,7 +46,10 @@ function shuffle(list, rand) {
   return out;
 }
 
-const candidates = read("source/answer-candidates.json");
+// Words you've approved by hand (data/source/kelma-approved.json) join the candidates with your
+// spelling and meaning, and skip the flag and part-of-speech checks; GAHAN's row becomes ĠAĦAN.
+const approved = read("source/kelma-approved.json").map((a) => ({ word: a.word, tier: a.tier, gloss: a.gloss, flags: [], approved: true }));
+const candidates = [...read("source/answer-candidates.json").filter((c) => !approved.some((a) => a.word === c.word)), ...approved];
 const difficulty = new Map(read("source/kelma-difficulty.json").map((d) => [d.word, d]));
 const lexemes = read("source/lexemes.json");
 const guesses = new Set(read("kelma/valid-guesses.json"));
@@ -74,7 +77,7 @@ const usable = candidates
       Array.from(c.word).length === 5 &&
       !used.has(c.word) &&
       !wordOfDay.has(c.word) &&
-      [...(posOf.get(c.word) ?? [])].some((p) => p === "NOUN" || p === "ADJ"),
+      (c.approved || [...(posOf.get(c.word) ?? [])].some((p) => p === "NOUN" || p === "ADJ")),
   )
   .map((c) => {
     const d = difficulty.get(c.word);

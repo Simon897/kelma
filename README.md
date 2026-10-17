@@ -24,7 +24,7 @@ data/kelma/valid-guesses.json  every accepted guess (flat uppercase array)
 
 Each answer entry is `{ day, word, gloss, root?, note? }`. `word` is exactly 5 Unicode characters, uppercase (GĦ and IE are two tiles). No difficulty tiers ship to the client.
 
-The lists are built by how hard each word is to solve, not just how common it is. `scripts/kelma-difficulty.mjs` (about 5 minutes) has a solver play every candidate and writes `data/source/kelma-difficulty.json`; `scripts/build-kelma.mjs --from N` then fills days N–364. Normali takes the easiest familiar words (few repeats, few unusual letters such as X, Ż or Q, few one-letter-off traps); Diffiċli takes the hardest that the solver still gets in 6 guesses. Days before N are never changed, so pass tomorrow's day index.
+The lists are built by how hard each word is to solve, not just how common it is. `scripts/kelma-difficulty.mjs` (about 5 minutes) has a solver play every candidate and writes `data/source/kelma-difficulty.json`; `scripts/build-kelma.mjs --from N` then fills days N–364. Normali takes the easiest familiar words (few repeats, few unusual letters such as X, Ż or Q, few one-letter-off traps); Diffiċli takes the hardest that the solver still gets in 6 guesses. Days before N are never changed, so pass tomorrow's day index. Words you approve by hand go in `data/source/kelma-approved.json` (`{ word, tier, gloss, note }`): they join the candidates with that spelling and meaning even if the sheet flags them or has no meaning, and must also be in `valid-guesses.json`.
 
 ```bash
 node scripts/kelma-difficulty.mjs
@@ -58,11 +58,11 @@ data/source/answer-candidates.json   generator input: [{ word, tier, gloss, flag
 Regenerate the schedule (365 days) and the glosses:
 
 ```bash
-node scripts/build-sellum.ts
+node scripts/build-sellum.ts --from 18   # tomorrow's day index
 node scripts/build-sellum-glosses.mjs path/to/Kelma-word-tiers.xlsx
 ```
 
-A pair qualifies when start and target are tier 1–3 with no flags, they're exactly 4 steps apart, there are at least 3 shortest routes in total, and at least 2 of those use only dictionary words (tier 1–5, no flags). The bar of 3 dictionary routes gave only 115 days. Start and target words rest for 60 days, pairs never repeat, and consecutive days don't share a start or target first letter. The build checks every puzzle (words in the list, distance exactly 4, a legal example, the route count, and no gaps in the days).
+A pair qualifies when start and target are tier 1–3 with no flags, they differ in exactly 4 places and are 4 steps apart (so every step puts one of the target's letters in place, never a detour through a letter the target doesn't have), there are at least 2 shortest routes in total, and at least 1 of those uses only dictionary words (tier 1–5, no flags). That gives 418 pairs; until day 17 ladders could detour. `--from N` keeps days before N. Start and target words rest for 45 days, pairs never repeat, and consecutive days don't share a start or target first letter. The build checks every puzzle (words in the list, distance exactly 4, a legal example, the route count, and no gaps in the days).
 
 Sellum has its own epoch, `SELLUM_EPOCH` in `lib/day-index.ts` (provisional), and its own storage keys: `kelma:sellum:state` and `kelma:sellum:stats`.
 

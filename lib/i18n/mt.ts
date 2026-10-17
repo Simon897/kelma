@@ -32,8 +32,8 @@ export const mt = {
   notInList: "Mhux fil-lista", // REVIEW
   winToasts: ["Prosit!", "Prosit!", "Prosit!", "Prosit!", "Prosit!", "Prosit!"], // REVIEW
   lostToast: "Għal darb'oħra", // REVIEW
-  enterKey: "DAĦĦAL", // REVIEW
-  enterAria: "Daħħal it-tentattiv", // REVIEW
+  enterKey: "IKTEB", // REVIEW
+  enterAria: "Ikteb it-tentattiv", // REVIEW
   backspaceAria: "Ħassar ittra", // REVIEW
   boardAria: "Il-bord", // REVIEW
   keyboardAria: "Tastiera", // REVIEW
@@ -89,7 +89,7 @@ export const mt = {
   helpAbsent: "Griż: l-ittra mhix fil-kelma.", // REVIEW
   helpMore: "Aktar dwar kif taħdem", // REVIEW
   gherqIntroTitle: (root: string) => `Sib il-kliem li jikber minn ${root}.`, // REVIEW
-  gherqIntroBody: "Kull tifsira hawn taħt hija kelma: iktibha u agħfas DAĦĦAL.", // REVIEW
+  gherqIntroBody: "Kull tifsira hawn taħt hija kelma: iktibha u agħfas IKTEB.", // REVIEW
   gherqIntroDismiss: "Aħbi din in-nota", // REVIEW
 
   // --- how it works page ---
@@ -140,22 +140,22 @@ export const mt = {
   playKelma: "Ilgħab Kelma", // REVIEW
   livesDist: "Riżultati", // REVIEW
   livesLost: "Tlift", // REVIEW
-  sellumHelpIntro: "Mill-kelma ta' fuq sal-kelma t'isfel f'4 tarġiet. F'kull tarġa biddel ittra waħda, u kull kelma trid tkun Maltija.", // REVIEW
-  sellumHelpEdit: "Ikteb il-kelma sħiħa, li tibdel ittra waħda biss mill-kelma ta' fuqha, u agħfas DAĦĦAL.", // REVIEW
+  sellumHelpIntro: "Mill-kelma ta' fuq sal-kelma t'isfel f'4 tarġiet. F'kull tarġa biddel ittra waħda għall-ittra tal-kelma t'isfel f'dak il-post, u kull kelma trid tkun Maltija.", // REVIEW
+  sellumHelpEdit: "Ikteb il-kelma sħiħa, li tibdel ittra waħda biss mill-kelma ta' fuqha, u agħfas IKTEB.", // REVIEW
   sellumHelpLives: "Għandek 3 ħajjiet. Kelma li mhix fil-lista, jew kelma tajba li ma twasslekx, tieħdok ħajja.", // REVIEW
   sellumHelpGreen: "Ittra ħadra tfisser li diġà qiegħda f'postha fil-kelma t'isfel.", // REVIEW
   sellumHowTitle: "Kif taħdem Sellum", // REVIEW
-  sellumHowIntro: "Kuljum ikollok kelma fuq nett u kelma isfel nett. Mur minn waħda għall-oħra f'4 tarġiet eżatt, u f'kull tarġa biddel ittra waħda biss. Kull kelma li tuża trid tkun kelma Maltija.", // REVIEW
+  sellumHowIntro: "Kuljum ikollok kelma fuq nett u kelma isfel nett. Mur minn waħda għall-oħra f'4 tarġiet eżatt, u f'kull tarġa biddel ittra waħda biss. Iż-żewġ kelmiet huma differenti f'4 postijiet, allura kull tarġa tqiegħed waħda mill-ittri tal-kelma t'isfel f'postha: qatt m'għandek bżonn ittra li m'għandhiex. Kull kelma li tuża trid tkun kelma Maltija.", // REVIEW
   sellumHowExample: "Eżempju: kull ringiela tibdel ittra waħda minn ta' fuqha.", // REVIEW
   sellumHowEditTitle: "Kif tikteb kelma", // REVIEW
-  sellumHowEdit: "Kull ringiela tibda vojta. Ikteb il-kelma sħiħa, bl-istess ittri tal-kelma ta' fuqha ħlief waħda, u agħfas DAĦĦAL. ⌫ tħassar l-aħħar ittra. Jekk tbiddel l-ebda ittra jew aktar minn waħda, il-ringiela titħawwad u ma titlifx ħajja.", // REVIEW
+  sellumHowEdit: "Kull ringiela tibda vojta. Ikteb il-kelma sħiħa, bl-istess ittri tal-kelma ta' fuqha ħlief waħda, u agħfas IKTEB. ⌫ tħassar l-aħħar ittra. Jekk tbiddel l-ebda ittra jew aktar minn waħda, il-ringiela titħawwad u ma titlifx ħajja.", // REVIEW
   sellumHowLivesTitle: "Il-ħajjiet", // REVIEW
   sellumHowLivesSlip: "Tbiddel l-ebda ittra, jew aktar minn waħda, jew terġa' tuża kelma: ma titlifx ħajja, erġa' pprova.", // REVIEW
   sellumHowLivesWord: "Kelma li mhix fil-lista: titlef ħajja.", // REVIEW
   sellumHowLivesDead: "Kelma tajba imma li minnha ma tistax tasal fit-tarġiet li fadal: titlef ħajja.", // REVIEW
   sellumHowLivesEnd: "Jekk titlef it-3 ħajjiet, il-logħba tispiċċa u naraw rotta sħiħa.", // REVIEW
   sellumHowRoutesTitle: "Aktar minn triq waħda", // REVIEW
-  sellumHowRoutes: "Ma hemmx tweġiba waħda. Kull puzzle għandu mill-inqas 3 rotot, u kull rotta li taħdem tgħodd. Fl-aħħar naraw kemm kien hemm rotot.", // REVIEW
+  sellumHowRoutes: "Ma hemmx tweġiba waħda. Kull puzzle għandu mill-inqas 2 rotot, u kull rotta li taħdem tgħodd. Fl-aħħar naraw kemm kien hemm rotot.", // REVIEW
   sellumHowGreen: "Wara kull kelma, l-ittri li diġà qegħdin f'posthom fil-kelma t'isfel isiru ħodor, b'linja taħthom.", // REVIEW
 
   // --- Għerq (root words) ---
