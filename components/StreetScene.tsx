@@ -247,7 +247,7 @@ function apply(c: Cfg, el: Els, t: number, loop: number, asleep = false) {
   // laundry
   ["l1", "l2", "l3", "l4"].forEach((k, i) => S(k, "transform", `rotate(${(3.2 * wave(30 / 8, i * 1.1) + 1.4 * wave(30 / 13, i * 2.3) + 1).toFixed(2)})`));
   // the cat: blinks, ears, tail
-  // Once the day's games are done she keeps her eyes shut, and paper z's drift up.
+  // Once the day's games are done she keeps her eyes shut.
   let lid = asleep ? 1 : 0;
   [3.2, 11.6, 11.98, 20.8, 27.4].forEach((b) => {
     const k = t - b;
@@ -266,13 +266,6 @@ function apply(c: Cfg, el: Els, t: number, loop: number, asleep = false) {
     S(la, "transform", `translate(0,${(lid * ls - 1.6).toFixed(2)})`);
     S(la, "opacity", lid > 0.02 ? "1" : "0");
   });
-  S("zzz", "opacity", asleep ? "1" : "0");
-  if (asleep)
-    ["z1", "z2", "z3"].forEach((k, i) => {
-      const u = (t / 3 + i / 3) % 1; // each z rises and fades over 3s, a third apart
-      S(k, "transform", `translate(${(6 * u + 4 * Math.sin(TAU * u)).toFixed(1)},${(-34 * u).toFixed(1)}) scale(${(0.6 + 0.6 * u).toFixed(2)})`);
-      S(k, "opacity", (u < 0.15 ? u / 0.15 : 1 - (u - 0.15) / 0.85).toFixed(2));
-    });
   const twitch = (times: number[]) => {
     let a = 0;
     times.forEach((x) => {
@@ -341,7 +334,10 @@ export function StreetScene({
   asleep = false,
   className = "",
 }: {
-  /** Fill the parent (absolute), cropped from the bottom so the pavement and Daisy always show. */
+  /**
+   * Fill the parent (absolute), cropped from the bottom so the pavement and Daisy always show; the
+   * pavement then fades into the page, so the cards standing on it sit on plain beige.
+   */
   fill?: boolean;
   /** All of today's games are done: Daisy naps. */
   asleep?: boolean;
@@ -447,7 +443,7 @@ export function StreetScene({
     <div
       ref={wrap}
       aria-hidden="true"
-      className={`${fill ? "absolute inset-0" : "relative aspect-square w-full md:aspect-[1920/720]"} overflow-hidden bg-bg [mask-image:linear-gradient(to_bottom,transparent,black_9%)] ${className}`}
+      className={`${fill ? "absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_9%,black_80%,transparent)]" : "relative aspect-square w-full md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_9%)]"} overflow-hidden bg-bg ${className}`}
     >
       {c && near && (
         <svg key={fmt} viewBox={`0 0 ${c.W} ${c.H}`} preserveAspectRatio={fill ? "xMidYMax slice" : "xMidYMid slice"} className="absolute inset-0 block size-full">
@@ -644,13 +640,6 @@ export function StreetScene({
             );
           })}
 
-          <g ref={r("zzz")} opacity="0" filter={url("paper")} fontFamily="Archivo, 'Arial Black', sans-serif" fontWeight={900} fill="#2e2618">
-            {(["z1", "z2", "z3"] as const).map((k, i) => (
-              <text key={k} ref={r(k)} x={c.eyeR[0] + 22 + i * 6} y={c.eyeR[1] - 26} fontSize={fmt === "mobile" ? 44 : 34} opacity="0">
-                z
-              </text>
-            ))}
-          </g>
           <g ref={r("lamp")} opacity="0">
             <circle cx={c.lamp[0]} cy={c.lamp[1]} r={44 * c.lamp[2]} fill="#ffd66b" opacity="0.14" />
             <circle cx={c.lamp[0]} cy={c.lamp[1]} r={24 * c.lamp[2]} fill="#ffd66b" opacity="0.22" />
