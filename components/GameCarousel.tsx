@@ -19,6 +19,12 @@ const NAMES: Record<GameKey, string> = { gherq: "Għerq", kelma: "Kelma", sellum
  * Għerq's soil (its root tiles), Kelma's green (a right letter), Sellum's Grotto blue.
  */
 const RAIL: Record<GameKey, string> = { gherq: "border-t-soil", kelma: "border-t-tile-correct", sellum: "border-t-sea" };
+/** Each game's dot in its rail colour: an outline, filled while its card is showing. */
+const DOT: Record<GameKey, { on: string; off: string }> = {
+  gherq: { on: "border-soil bg-soil", off: "border-soil bg-transparent" },
+  kelma: { on: "border-tile-correct bg-tile-correct", off: "border-tile-correct bg-transparent" },
+  sellum: { on: "border-sea bg-sea", off: "border-sea bg-transparent" },
+};
 
 /** Sellum's slide mark: three tiny rows of tiles, one letter changing each row, the last one green. */
 function MiniLadder() {
@@ -222,8 +228,8 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         <Mark play={played.gherq}>
           <MiniFamily />
         </Mark>
-        <p className="mt-1 text-balance text-base font-medium leading-snug">{d.gherqTagline}</p>
-        {gherqPreview && <p className="mt-1 text-sm font-bold">{d.gherqTodayRoot(gherqPreview)}</p>}
+        <p className="mt-1 text-balance text-center text-base font-medium leading-snug">{d.gherqTagline}</p>
+        {gherqPreview && <p className="mt-1 text-center text-sm font-bold">{d.gherqTodayRoot(gherqPreview)}</p>}
         <div className="mt-auto pt-3">
           <Link href={href("gherq", lang)} className={`${playButton.gherq} w-full`}>
             <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
@@ -237,7 +243,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         <Mark play={played.kelma}>
           <MiniBoard />
         </Mark>
-        <p className="mt-1 text-balance text-base font-medium leading-snug">{d.tagline}</p>
+        <p className="mt-1 text-balance text-center text-base font-medium leading-snug">{d.tagline}</p>
         <div className="mt-auto flex w-full justify-center pt-3">
           <HomeButtons lang={lang} />
         </div>
@@ -248,7 +254,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         <Mark play={played.sellum}>
           <MiniLadder />
         </Mark>
-        <p className="mt-1 text-balance text-base font-medium leading-snug">{d.sellumTagline}</p>
+        <p className="mt-1 text-balance text-center text-base font-medium leading-snug">{d.sellumTagline}</p>
         <div className="mt-auto pt-3">
           <Link href={href("sellum", lang)} className={`${playButton.sellum} w-full`}>
             <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
@@ -330,7 +336,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
             aria-current={i === active ? "true" : undefined}
             className="inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-tile px-2 text-sm font-semibold text-ink-soft hover:text-ink"
           >
-            <span aria-hidden className={`size-3 rounded-full border-2 ${i === active ? "border-sea bg-sea" : "border-ink-soft bg-transparent"}`} />
+            <span aria-hidden className={`size-3 rounded-full border-2 ${i === active ? DOT[g].on : DOT[g].off}`} />
             <span aria-hidden className={i === active ? "text-ink" : undefined}>
               {NAMES[g]}
             </span>

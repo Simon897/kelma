@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useRef, useState } from "react";
 import { asset } from "@/lib/site";
 
 /**
- * The street scene below the fold: the painted plate with code-drawn sky, bunting, laundry,
+ * The street scene at the top of the home page: the painted plate (4 depth layers on desktop,
+ * one image on phones) with code-drawn sky, bunting, laundry,
  * butterflies, the bell and pigeons, the lantern, the cat's blinks, ears and tail, and (every
  * second loop) the neighbour watering her geraniums. A 30s loop where everything is a pure
  * function of t, written straight to the SVG inside requestAnimationFrame (no React re-renders).
  * Decorative, so aria-hidden. Reduced motion: frame t = 0, still. Off-screen: the clock pauses.
- * Ported from the Claude Design handoff "Kelma street scene".
+ * Ported from the Claude Design handoffs "Kelma street scene" and "Kelma street parallax layers".
  */
 type Fmt = "desktop" | "mobile";
 type Sprite = { href: string; x: number; y: number; w: number; h: number };
@@ -47,6 +48,23 @@ type Cfg = {
 
 const MOBILE_QUERY = "(max-width: 767px)";
 const LOOP = 30;
+/** The scene redraws at most this often (24 fps). */
+const FRAME_MS = 1000 / 24;
+
+/**
+ * Desktop parallax (from the Claude Design handoff "Kelma street parallax layers"): the plate is
+ * re-cut into sky, far, street and near layers, each stacked as its own element and moved with a
+ * CSS transform, so following the mouse costs the compositor, not a repaint. Travel is in artboard
+ * px, horizontal (vertical is half); sky and bunting stay still, pigeons move with the far layer.
+ */
+type LayerName = "sky" | "far" | "bunting" | "pigeons" | "street" | "near";
+const DEPTH: Partial<Record<LayerName, number>> = { far: 4, pigeons: 4, street: 8, near: 12 };
+/** The desktop view is inset 12px (6px top and bottom) so the near layer's travel never shows an edge. */
+const OVERSCAN = 12;
+/** Exponential ease towards the pointer: about 95% of the way in 300ms. */
+const EASE_TAU = 0.1;
+/** Desktop draws the 4 depth layers; phones (no parallax) draw one plate, half the download. */
+const plate = (fmt: Fmt, layer: string) => asset(fmt === "desktop" ? `/media/scene/layers/desktop-${layer}.webp` : "/media/scene/mobile-plate.webp");
 const REWARD_EVERY = 2;
 const TIMES = { water: 4.0, bell: 14.0, lamp: [21.5, 28.0] as const };
 const FLAG_COLOURS = ["#a8402e", "#f3e7cf", "#2f6f58", "#d8a23a", "#2a5a8c"];
@@ -353,6 +371,12 @@ export function StreetScene({
   const [near, setNear] = useState(false);
   const visible = useRef(false);
   const clock = useRef(0);
+  const layers = useRef<Partial<Record<LayerName, SVGSVGElement | null>>>({});
+  const layerRef = (k: LayerName) => (node: SVGSVGElement | null) => {
+    layers.current[k] = node;
+  };
+  /** Pointer target and eased position (each -1…1), and the scene's size on screen. */
+  const parallax = useRef({ tx: 0, ty: 0, x: 0, y: 0, w: 0, h: 0 });
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const url = (k: string) => `url(#${uid}-${k})`;
 
@@ -382,6 +406,41 @@ export function StreetScene({
     };
   }, []);
 
+  // Mouse only, desktop only, and never with reduced motion; touch never moves the scene.
+  const parallaxOn = fmt === "desktop" && !reduced;
+  useEffect(() => {
+    const node = wrap.current;
+    if (!node || !parallaxOn) return;
+    const p = parallax.current;
+    const size = () => {
+      const b = node.getBoundingClientRect();
+      p.w = b.width;
+      p.h = b.height;
+    };
+    size();
+    const ro = new ResizeObserver(size);
+    ro.observe(node);
+    const move = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const b = node.getBoundingClientRect();
+      p.tx = Math.max(-1, Math.min(1, ((e.clientX - b.left) / b.width) * 2 - 1));
+      p.ty = Math.max(-1, Math.min(1, ((e.clientY - b.top) / b.height) * 2 - 1));
+    };
+    const leave = () => {
+      p.tx = 0;
+      p.ty = 0;
+    };
+    node.addEventListener("pointermove", move);
+    node.addEventListener("pointerleave", leave);
+    return () => {
+      ro.disconnect();
+      node.removeEventListener("pointermove", move);
+      node.removeEventListener("pointerleave", leave);
+      Object.assign(p, { tx: 0, ty: 0, x: 0, y: 0 });
+      for (const el of Object.values(layers.current)) if (el) el.style.transform = "";
+    };
+  }, [parallaxOn]);
+
   useEffect(() => {
     if (!fmt || !near) return;
     const c = cfg(fmt);
@@ -389,13 +448,32 @@ export function StreetScene({
       apply(c, els.current, 0, 0, asleep);
       return;
     }
+    // Drawn at 24 fps, and not at all off screen: every moving part carries the paper filter,
+    // which the browser re-renders each time it moves, so 60 fps kept phones busy (and warm).
     let raf = 0;
     let last: number | null = null;
+    let drawn = -Infinity;
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
       const dt = last == null ? 0 : Math.min(0.1, (now - last) / 1000);
       last = now;
-      if (visible.current) clock.current += dt;
+      if (!visible.current) return;
+      clock.current += dt;
+      // The parallax eases every frame while it's moving (a transform only, so it's cheap); the
+      // drawing itself stays at 24 fps.
+      const p = parallax.current;
+      if (fmt === "desktop" && (Math.abs(p.tx - p.x) > 1e-4 || Math.abs(p.ty - p.y) > 1e-4)) {
+        const k = 1 - Math.exp(-dt / EASE_TAU);
+        p.x += (p.tx - p.x) * k;
+        p.y += (p.ty - p.y) * k;
+        const scale = Math.max(p.w / (c.W - 2 * OVERSCAN), p.h / (c.H - OVERSCAN)); // artboard px -> screen px (slice)
+        for (const [name, d] of Object.entries(DEPTH)) {
+          const el = layers.current[name as LayerName];
+          if (el) el.style.transform = `translate3d(${(-p.x * d * scale).toFixed(2)}px,${(-p.y * d * 0.5 * scale).toFixed(2)}px,0)`;
+        }
+      }
+      if (now - drawn < FRAME_MS) return;
+      drawn = now;
       const T = clock.current;
       apply(c, els.current, T % LOOP, Math.floor(T / LOOP), asleep);
     };
@@ -405,6 +483,13 @@ export function StreetScene({
 
   const c = fmt ? cfg(fmt) : null;
   const er = c ? c.eyeRad + 1 : 0;
+  const layerHref = (layer: string) => (fmt ? plate(fmt, layer) : "");
+  // Every layer shares one view of the artboard, so they stay in register.
+  const svgProps = c && {
+    viewBox: fmt === "desktop" ? `${OVERSCAN} ${OVERSCAN / 2} ${c.W - 2 * OVERSCAN} ${c.H - OVERSCAN}` : `0 0 ${c.W} ${c.H}`,
+    preserveAspectRatio: fill ? "xMidYMax slice" : "xMidYMid slice",
+    className: `absolute inset-0 block size-full${parallaxOn ? " will-change-transform" : ""}`,
+  };
   const lid = (e: [number, number]) => ({ x: e[0] - er, y: e[1] - er, s: er * 2 });
   const img = (k: string, s: Sprite) => (
     <g ref={r(k)}>
@@ -446,206 +531,222 @@ export function StreetScene({
       className={`${fill ? "absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_9%,black_80%,transparent)]" : "relative aspect-square w-full md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_9%)]"} overflow-hidden bg-bg ${className}`}
     >
       {c && near && (
-        <svg key={fmt} viewBox={`0 0 ${c.W} ${c.H}`} preserveAspectRatio={fill ? "xMidYMax slice" : "xMidYMid slice"} className="absolute inset-0 block size-full">
-          <defs>
-            <filter id={`${uid}-paper`} x="-15%" y="-15%" width="130%" height="140%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves={2} seed={4} result="n" />
-              <feDisplacementMap in="SourceGraphic" in2="n" scale={1.6} xChannelSelector="R" yChannelSelector="G" result="d" />
-              <feColorMatrix in="d" type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.15  0 0 0 0 0.09  0 0 0 0.3 0" result="sa" />
-              <feGaussianBlur in="sa" stdDeviation={1.3} result="sb" />
-              <feOffset in="sb" dx={1.5} dy={2.2} result="so" />
-              <feTurbulence type="fractalNoise" baseFrequency="1.7" numOctaves={1} seed={9} result="g" />
-              <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.14  0 0 0 0 0.08  -0.7 0 0 0 0.42" result="g2" />
-              <feComposite in="g2" in2="d" operator="in" result="g3" />
-              <feMerge>
-                <feMergeNode in="so" />
-                <feMergeNode in="d" />
-                <feMergeNode in="g3" />
-              </feMerge>
-            </filter>
-            <filter id={`${uid}-dist`} x="-10%" y="-10%" width="120%" height="120%">
-              <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves={1} seed={2} result="g" />
-              <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.12  0 0 0 0 0.08  -0.6 0 0 0 0.36" result="g2" />
-              <feComposite in="g2" in2="SourceGraphic" operator="in" result="g3" />
-              <feMerge>
-                <feMergeNode in="SourceGraphic" />
-                <feMergeNode in="g3" />
-              </feMerge>
-            </filter>
-            <clipPath id={`${uid}-eyeL`}>
-              <circle cx={c.eyeL[0]} cy={c.eyeL[1]} r={er} />
-            </clipPath>
-            <clipPath id={`${uid}-eyeR`}>
-              <circle cx={c.eyeR[0]} cy={c.eyeR[1]} r={er} />
-            </clipPath>
-          </defs>
+        <Fragment key={fmt}>
+          <svg ref={layerRef("sky")} {...svgProps}>
+            <defs>
+              <filter id={`${uid}-paper`} x="-15%" y="-15%" width="130%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves={2} seed={4} result="n" />
+                <feDisplacementMap in="SourceGraphic" in2="n" scale={1.6} xChannelSelector="R" yChannelSelector="G" result="d" />
+                <feColorMatrix in="d" type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.15  0 0 0 0 0.09  0 0 0 0.3 0" result="sa" />
+                <feGaussianBlur in="sa" stdDeviation={1.3} result="sb" />
+                <feOffset in="sb" dx={1.5} dy={2.2} result="so" />
+                <feTurbulence type="fractalNoise" baseFrequency="1.7" numOctaves={1} seed={9} result="g" />
+                <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.14  0 0 0 0 0.08  -0.7 0 0 0 0.42" result="g2" />
+                <feComposite in="g2" in2="d" operator="in" result="g3" />
+                <feMerge>
+                  <feMergeNode in="so" />
+                  <feMergeNode in="d" />
+                  <feMergeNode in="g3" />
+                </feMerge>
+              </filter>
+              <filter id={`${uid}-dist`} x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves={1} seed={2} result="g" />
+                <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.12  0 0 0 0 0.08  -0.6 0 0 0 0.36" result="g2" />
+                <feComposite in="g2" in2="SourceGraphic" operator="in" result="g3" />
+                <feMerge>
+                  <feMergeNode in="SourceGraphic" />
+                  <feMergeNode in="g3" />
+                </feMerge>
+              </filter>
+              <clipPath id={`${uid}-eyeL`}>
+                <circle cx={c.eyeL[0]} cy={c.eyeL[1]} r={er} />
+              </clipPath>
+              <clipPath id={`${uid}-eyeR`}>
+                <circle cx={c.eyeR[0]} cy={c.eyeR[1]} r={er} />
+              </clipPath>
+            </defs>
 
-          <image href={asset(`/media/scene/${fmt}-plate.jpg`)} x="0" y="0" width={c.W} height={c.H} />
+            {/* desktop: the sky layer of the re-cut; phones: the whole plate in one image (nothing moves there) */}
+            <image href={layerHref("1-sky")} x="0" y="0" width={c.W} height={c.H} />
 
-          <g transform={`translate(${c.sun[0]},${c.sun[1]}) scale(${c.sun[2]})`} filter={url("paper")}>
-            <g ref={r("sunRays")}>
-              <path d={SUN_RAYS} fill="#f4b44a" />
-            </g>
-            <g ref={r("sunCore")}>
-              <circle r="39" fill="#f0a03c" />
-              <circle r="30" fill="#f8c55a" />
-            </g>
-          </g>
-
-          <g filter={url("paper")}>
-            {c.clouds.map((k, i) => (
-              <g key={i} ref={r(`cloud${i}`)} transform={`translate(${k[0]},${k[1]}) scale(${k[2]})`}>
-                <path d={CLOUD} fill="#fbf2e1" />
+            <g transform={`translate(${c.sun[0]},${c.sun[1]}) scale(${c.sun[2]})`} filter={url("paper")}>
+              <g ref={r("sunRays")}>
+                <path d={SUN_RAYS} fill="#f4b44a" />
               </g>
-            ))}
-          </g>
-
-          {c.tower && (
-            <g transform={`translate(${c.tower[0]},${c.tower[1]})`} filter={url("dist")}>
-              <rect x="-21" y="-116" width="42" height="116" fill="#d6a088" />
-              <rect x="-24" y="-121" width="48" height="6" fill="#c98f76" />
-              <polygon points="-22,-121 0,-150 22,-121" fill="#cf957c" />
-              <circle cx="0" cy="-153" r="3" fill="#cf957c" />
-              <path d="M-9 -64 L-9 -88 A9 9 0 0 1 9 -88 L9 -64 Z" fill="#a8785f" />
-            </g>
-          )}
-          <g transform={`translate(${c.bell[0]},${c.bell[1]}) scale(${c.bell[2]})`} filter={url("dist")}>
-            <rect x="-6" y="-2" width="12" height="2.5" fill="#7d5a45" />
-            <g ref={r("bell")}>
-              <path d="M-1 0 L1 0 L1 1.5 C4 2 4.5 5 4.6 8 C4.8 10 6 11 6.5 12 L-6.5 12 C-6 11 -4.8 10 -4.6 8 C-4.5 5 -4 2 -1 1.5 Z" fill="#8f6247" />
-              <circle cx="0" cy="12.6" r="1.4" fill="#6d4a36" />
-            </g>
-          </g>
-
-          <g filter={url("paper")}>
-            {c.swags.map((_, i) => (
-              <path key={`s${i}`} ref={r(`str${i}`)} d="" fill="none" stroke="#3b3024" strokeWidth={c.strW} />
-            ))}
-            {c.flags.map((f) => (
-              <g key={`f${f.i}`} ref={r(`flag${f.i}`)} transform="translate(-100,-100)">
-                <polygon points={`${-c.fw / 2},0 ${c.fw / 2},0 0,${c.fh}`} fill={f.color} />
+              <g ref={r("sunCore")}>
+                <circle r="39" fill="#f0a03c" />
+                <circle r="30" fill="#f8c55a" />
               </g>
-            ))}
-          </g>
+            </g>
 
-          <g filter={url("paper")}>
-            {pigeon("pig1", "#8e8a92", "#7d7982", "#a8a4ac")}
-            {pigeon("pig2", "#9a96a0", "#87838c", "#b3afb6")}
-          </g>
-
-          <g transform={`translate(${c.laundry[0]},${c.laundry[1]}) scale(${c.laundry[2]})`}>
-            <path d="M0 0 Q67.5 10 135 0" fill="none" stroke="#3b3024" strokeWidth={1.2} />
             <g filter={url("paper")}>
-              <g transform="translate(27,3.2)">
-                <g ref={r("l1")}>
-                  <path d="M-13 0 L13 0 L19 7 L14 11 L12 9 L12 30 L-12 30 L-12 9 L-14 11 L-19 7 Z" fill="#f1ead9" />
-                  <rect x="-0.6" y="2" width="1.2" height="26" fill="#d6ccb6" />
-                  <rect x="-10" y="-2" width="2.5" height="5" fill="#8a6a44" />
-                  <rect x="7.5" y="-2" width="2.5" height="5" fill="#8a6a44" />
+              {c.clouds.map((k, i) => (
+                <g key={i} ref={r(`cloud${i}`)} transform={`translate(${k[0]},${k[1]}) scale(${k[2]})`}>
+                  <path d={CLOUD} fill="#fbf2e1" />
                 </g>
-              </g>
-              <g transform="translate(64.8,5)">
-                <g ref={r("l2")}>
-                  <rect x="-12" y="0" width="24" height="34" fill="#d8a23a" />
-                  <rect x="-12" y="24" width="24" height="3" fill="#a8402e" />
-                  <rect x="-12" y="29" width="24" height="2" fill="#a8402e" />
-                  <rect x="-9" y="-2" width="2.5" height="5" fill="#8a6a44" />
-                  <rect x="6.5" y="-2" width="2.5" height="5" fill="#8a6a44" />
-                </g>
-              </g>
-              <g transform="translate(99.9,3.9)">
-                <g ref={r("l3")}>
-                  <path d="M-9 0 L9 0 L13 5 L9 8 L8 7 L8 20 L-8 20 L-8 7 L-9 8 L-13 5 Z" fill="#2f6f58" />
-                  <rect x="-7" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
-                  <rect x="4.8" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
-                </g>
-              </g>
-              <g transform="translate(121.5,1.8)">
-                <g ref={r("l4")}>
-                  <path d="M-7 0 L-3 0 L-3 11 L0 13 L0 16 L-7 16 Z" fill="#a8402e" />
-                  <path d="M1 0 L5 0 L5 11 L8 13 L8 16 L1 16 Z" fill="#a8402e" />
-                  <rect x="-2" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
-                </g>
-              </g>
-            </g>
-          </g>
-
-          <g filter={url("paper")}>
-            {butterfly("bf1", "#f3d36b")}
-            {butterfly("bf2", "#f6efe0")}
-          </g>
-
-          <g ref={r("winIn")} transform={`translate(${c.win[0]},${c.win[1]}) scale(${c.win[2]},${c.win[3]})`} style={{ display: "none" }}>
-            <rect x="0" y="0" width="76" height="119" fill="#33251a" />
-            <rect x="6" y="10" width="64" height="109" fill="#3d2d20" />
-            <path d="M0 0H76V8Q72 13 68 8Q64 13 60 8Q56 13 52 8Q48 13 44 8Q40 13 36 8Q32 13 28 8Q24 13 20 8Q16 13 12 8Q8 13 4 8Q2 11 0 8Z" fill="#efe2c6" />
-            <g ref={r("nanna")} filter={url("paper")}>
-              <path d="M12 119 C12 92 16 70 26 64 Q38 58 50 64 C60 70 64 92 64 119 Z" fill="#2c5f8a" />
-              {[
-                [22, 82],
-                [32, 94],
-                [46, 80],
-                [55, 98],
-                [27, 108],
-                [44, 106],
-                [37, 76],
-              ].map(([x, y]) => (
-                <circle key={`${x}-${y}`} cx={x} cy={y} r="1.4" fill="#f3e9d6" />
-              ))}
-              <rect x="34" y="51" width="8" height="11" fill="#d9a07d" />
-              <path d="M30 62 L38 70 L46 62 Q38 58 30 62 Z" fill="#f3e9d6" />
-              <circle cx="38" cy="26" r="6" fill="#cbc4b7" />
-              <circle cx="38" cy="42" r="12" fill="#e7b18d" />
-              <path d="M26 42 C25 30 32 28 38 28 C45 28 51 30 50 42 C48 36 44 33 38 33 C32 33 28 36 26 42 Z" fill="#d6d0c5" />
-              <circle cx="33.5" cy="43" r="1.2" fill="#2e2618" />
-              <circle cx="42.5" cy="43" r="1.2" fill="#2e2618" />
-              <circle cx="30.5" cy="47.5" r="2" fill="#de927c" />
-              <circle cx="45.5" cy="47.5" r="2" fill="#de927c" />
-              <path d="M35.5 49.5 Q38 51.5 40.5 49.5" fill="none" stroke="#2e2618" strokeWidth={1} />
-            </g>
-          </g>
-
-          {shutter("leafL", c.leafL)}
-          {shutter("leafR", c.leafR)}
-          <image href={c.pot.href} x={c.pot.x} y={c.pot.y} width={c.pot.w} height={c.pot.h} />
-
-          <g transform={`translate(${c.win[0]},${c.win[1]}) scale(${c.win[2]},${c.win[3]})`}>
-            <g ref={r("canArm")} opacity="0" filter={url("paper")}>
-              <path d="M60 80 Q64 68 56 62 L50 66 Q56 70 54 80 Z" fill="#2c5f8a" />
-              <g ref={r("can")}>
-                <path d="M-2 -2 L-18 -11 L-17.5 -13 L-1 -6 Z" fill="#86a29a" />
-                <circle cx="-18" cy="-12" r="2.4" fill="#6f8b83" />
-                <rect x="-2" y="-8" width="18" height="12" rx="2" fill="#86a29a" />
-                <path d="M2 -8 Q8 -17 14 -8" fill="none" stroke="#5f7b73" strokeWidth={2} />
-                <circle cx="1" cy="-1" r="3" fill="#e7b18d" />
-              </g>
-            </g>
-            <g ref={r("drops")} opacity="0">
-              {["d1", "d2", "d3", "d4", "d5"].map((k) => (
-                <ellipse key={k} ref={r(k)} cx="0" cy="0" rx="0.9" ry="1.8" fill="#8cc3d8" />
               ))}
             </g>
-          </g>
 
-          {img("earL", c.earL)}
-          {img("earR", c.earR)}
-          {img("tail", c.tail)}
-          {(["L", "R"] as const).map((s) => {
-            const l = lid(s === "L" ? c.eyeL : c.eyeR);
-            return (
-              <g key={s} clipPath={url(`eye${s}`)}>
-                <rect ref={r(`lid${s}`)} x={l.x} y={l.y} width={l.s} height={l.s} fill="#665c4f" transform="scale(1,0)" />
-                <rect ref={r(`lash${s}`)} x={l.x} y={l.y} width={l.s} height="1.6" fill="#2e2618" opacity="0" />
+          </svg>
+          <svg ref={layerRef("far")} {...svgProps}>
+            {fmt === "desktop" && <image href={layerHref("2-far")} x="0" y="0" width={c.W} height={c.H} />}
+            {c.tower && (
+              <g transform={`translate(${c.tower[0]},${c.tower[1]})`} filter={url("dist")}>
+                <rect x="-21" y="-116" width="42" height="116" fill="#d6a088" />
+                <rect x="-24" y="-121" width="48" height="6" fill="#c98f76" />
+                <polygon points="-22,-121 0,-150 22,-121" fill="#cf957c" />
+                <circle cx="0" cy="-153" r="3" fill="#cf957c" />
+                <path d="M-9 -64 L-9 -88 A9 9 0 0 1 9 -88 L9 -64 Z" fill="#a8785f" />
               </g>
-            );
-          })}
+            )}
+            <g transform={`translate(${c.bell[0]},${c.bell[1]}) scale(${c.bell[2]})`} filter={url("dist")}>
+              <rect x="-6" y="-2" width="12" height="2.5" fill="#7d5a45" />
+              <g ref={r("bell")}>
+                <path d="M-1 0 L1 0 L1 1.5 C4 2 4.5 5 4.6 8 C4.8 10 6 11 6.5 12 L-6.5 12 C-6 11 -4.8 10 -4.6 8 C-4.5 5 -4 2 -1 1.5 Z" fill="#8f6247" />
+                <circle cx="0" cy="12.6" r="1.4" fill="#6d4a36" />
+              </g>
+            </g>
 
-          <g ref={r("lamp")} opacity="0">
-            <circle cx={c.lamp[0]} cy={c.lamp[1]} r={44 * c.lamp[2]} fill="#ffd66b" opacity="0.14" />
-            <circle cx={c.lamp[0]} cy={c.lamp[1]} r={24 * c.lamp[2]} fill="#ffd66b" opacity="0.22" />
-            <polygon points={c.glass} fill="#ffc94a" style={{ mixBlendMode: "multiply" }} />
-          </g>
-        </svg>
+          </svg>
+          <svg ref={layerRef("bunting")} {...svgProps}>
+            <g filter={url("paper")}>
+              {c.swags.map((_, i) => (
+                <path key={`s${i}`} ref={r(`str${i}`)} d="" fill="none" stroke="#3b3024" strokeWidth={c.strW} />
+              ))}
+              {c.flags.map((f) => (
+                <g key={`f${f.i}`} ref={r(`flag${f.i}`)} transform="translate(-100,-100)">
+                  <polygon points={`${-c.fw / 2},0 ${c.fw / 2},0 0,${c.fh}`} fill={f.color} />
+                </g>
+              ))}
+            </g>
+
+          </svg>
+          <svg ref={layerRef("pigeons")} {...svgProps}>
+            <g filter={url("paper")}>
+              {pigeon("pig1", "#8e8a92", "#7d7982", "#a8a4ac")}
+              {pigeon("pig2", "#9a96a0", "#87838c", "#b3afb6")}
+            </g>
+
+          </svg>
+          <svg ref={layerRef("street")} {...svgProps}>
+            {fmt === "desktop" && <image href={layerHref("3-street")} x="0" y="0" width={c.W} height={c.H} />}
+            <g transform={`translate(${c.laundry[0]},${c.laundry[1]}) scale(${c.laundry[2]})`}>
+              <path d="M0 0 Q67.5 10 135 0" fill="none" stroke="#3b3024" strokeWidth={1.2} />
+              <g filter={url("paper")}>
+                <g transform="translate(27,3.2)">
+                  <g ref={r("l1")}>
+                    <path d="M-13 0 L13 0 L19 7 L14 11 L12 9 L12 30 L-12 30 L-12 9 L-14 11 L-19 7 Z" fill="#f1ead9" />
+                    <rect x="-0.6" y="2" width="1.2" height="26" fill="#d6ccb6" />
+                    <rect x="-10" y="-2" width="2.5" height="5" fill="#8a6a44" />
+                    <rect x="7.5" y="-2" width="2.5" height="5" fill="#8a6a44" />
+                  </g>
+                </g>
+                <g transform="translate(64.8,5)">
+                  <g ref={r("l2")}>
+                    <rect x="-12" y="0" width="24" height="34" fill="#d8a23a" />
+                    <rect x="-12" y="24" width="24" height="3" fill="#a8402e" />
+                    <rect x="-12" y="29" width="24" height="2" fill="#a8402e" />
+                    <rect x="-9" y="-2" width="2.5" height="5" fill="#8a6a44" />
+                    <rect x="6.5" y="-2" width="2.5" height="5" fill="#8a6a44" />
+                  </g>
+                </g>
+                <g transform="translate(99.9,3.9)">
+                  <g ref={r("l3")}>
+                    <path d="M-9 0 L9 0 L13 5 L9 8 L8 7 L8 20 L-8 20 L-8 7 L-9 8 L-13 5 Z" fill="#2f6f58" />
+                    <rect x="-7" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
+                    <rect x="4.8" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
+                  </g>
+                </g>
+                <g transform="translate(121.5,1.8)">
+                  <g ref={r("l4")}>
+                    <path d="M-7 0 L-3 0 L-3 11 L0 13 L0 16 L-7 16 Z" fill="#a8402e" />
+                    <path d="M1 0 L5 0 L5 11 L8 13 L8 16 L1 16 Z" fill="#a8402e" />
+                    <rect x="-2" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
+                  </g>
+                </g>
+              </g>
+            </g>
+
+            <g ref={r("winIn")} transform={`translate(${c.win[0]},${c.win[1]}) scale(${c.win[2]},${c.win[3]})`} style={{ display: "none" }}>
+              <rect x="0" y="0" width="76" height="119" fill="#33251a" />
+              <rect x="6" y="10" width="64" height="109" fill="#3d2d20" />
+              <path d="M0 0H76V8Q72 13 68 8Q64 13 60 8Q56 13 52 8Q48 13 44 8Q40 13 36 8Q32 13 28 8Q24 13 20 8Q16 13 12 8Q8 13 4 8Q2 11 0 8Z" fill="#efe2c6" />
+              <g ref={r("nanna")} filter={url("paper")}>
+                <path d="M12 119 C12 92 16 70 26 64 Q38 58 50 64 C60 70 64 92 64 119 Z" fill="#2c5f8a" />
+                {[
+                  [22, 82],
+                  [32, 94],
+                  [46, 80],
+                  [55, 98],
+                  [27, 108],
+                  [44, 106],
+                  [37, 76],
+                ].map(([x, y]) => (
+                  <circle key={`${x}-${y}`} cx={x} cy={y} r="1.4" fill="#f3e9d6" />
+                ))}
+                <rect x="34" y="51" width="8" height="11" fill="#d9a07d" />
+                <path d="M30 62 L38 70 L46 62 Q38 58 30 62 Z" fill="#f3e9d6" />
+                <circle cx="38" cy="26" r="6" fill="#cbc4b7" />
+                <circle cx="38" cy="42" r="12" fill="#e7b18d" />
+                <path d="M26 42 C25 30 32 28 38 28 C45 28 51 30 50 42 C48 36 44 33 38 33 C32 33 28 36 26 42 Z" fill="#d6d0c5" />
+                <circle cx="33.5" cy="43" r="1.2" fill="#2e2618" />
+                <circle cx="42.5" cy="43" r="1.2" fill="#2e2618" />
+                <circle cx="30.5" cy="47.5" r="2" fill="#de927c" />
+                <circle cx="45.5" cy="47.5" r="2" fill="#de927c" />
+                <path d="M35.5 49.5 Q38 51.5 40.5 49.5" fill="none" stroke="#2e2618" strokeWidth={1} />
+              </g>
+            </g>
+
+            {shutter("leafL", c.leafL)}
+            {shutter("leafR", c.leafR)}
+            <image href={c.pot.href} x={c.pot.x} y={c.pot.y} width={c.pot.w} height={c.pot.h} />
+
+            <g transform={`translate(${c.win[0]},${c.win[1]}) scale(${c.win[2]},${c.win[3]})`}>
+              <g ref={r("canArm")} opacity="0" filter={url("paper")}>
+                <path d="M60 80 Q64 68 56 62 L50 66 Q56 70 54 80 Z" fill="#2c5f8a" />
+                <g ref={r("can")}>
+                  <path d="M-2 -2 L-18 -11 L-17.5 -13 L-1 -6 Z" fill="#86a29a" />
+                  <circle cx="-18" cy="-12" r="2.4" fill="#6f8b83" />
+                  <rect x="-2" y="-8" width="18" height="12" rx="2" fill="#86a29a" />
+                  <path d="M2 -8 Q8 -17 14 -8" fill="none" stroke="#5f7b73" strokeWidth={2} />
+                  <circle cx="1" cy="-1" r="3" fill="#e7b18d" />
+                </g>
+              </g>
+              <g ref={r("drops")} opacity="0">
+                {["d1", "d2", "d3", "d4", "d5"].map((k) => (
+                  <ellipse key={k} ref={r(k)} cx="0" cy="0" rx="0.9" ry="1.8" fill="#8cc3d8" />
+                ))}
+              </g>
+            </g>
+
+            <g ref={r("lamp")} opacity="0">
+              <circle cx={c.lamp[0]} cy={c.lamp[1]} r={44 * c.lamp[2]} fill="#ffd66b" opacity="0.14" />
+              <circle cx={c.lamp[0]} cy={c.lamp[1]} r={24 * c.lamp[2]} fill="#ffd66b" opacity="0.22" />
+              <polygon points={c.glass} fill="#ffc94a" style={{ mixBlendMode: "multiply" }} />
+            </g>
+          </svg>
+          <svg ref={layerRef("near")} {...svgProps}>
+            {fmt === "desktop" && <image href={layerHref("4-near")} x="0" y="0" width={c.W} height={c.H} />}
+            <g filter={url("paper")}>
+              {butterfly("bf1", "#f3d36b")}
+              {butterfly("bf2", "#f6efe0")}
+            </g>
+
+            {img("earL", c.earL)}
+            {img("earR", c.earR)}
+            {img("tail", c.tail)}
+            {(["L", "R"] as const).map((s) => {
+              const l = lid(s === "L" ? c.eyeL : c.eyeR);
+              return (
+                <g key={s} clipPath={url(`eye${s}`)}>
+                  <rect ref={r(`lid${s}`)} x={l.x} y={l.y} width={l.s} height={l.s} fill="#665c4f" transform="scale(1,0)" />
+                  <rect ref={r(`lash${s}`)} x={l.x} y={l.y} width={l.s} height="1.6" fill="#2e2618" opacity="0" />
+                </g>
+              );
+            })}
+
+          </svg>
+        </Fragment>
       )}
     </div>
   );

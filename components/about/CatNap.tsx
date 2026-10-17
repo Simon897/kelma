@@ -243,10 +243,16 @@ function useLoopTime(host: React.RefObject<HTMLElement | null>, still: boolean) 
     let onScreen = true;
     let last = performance.now();
     let t = 0;
+    let shown = -Infinity;
+    // Re-render at most 24 times a second: the motion is slow, and 60 renders a second of the
+    // whole drawing kept phones busy (and warm).
     const tick = (now: number) => {
       t = (t + Math.min(0.1, (now - last) / 1000)) % LOOP;
       last = now;
-      setT(t);
+      if (now - shown >= 1000 / 24) {
+        shown = now;
+        setT(t);
+      }
       raf = requestAnimationFrame(tick);
     };
     const run = () => {
