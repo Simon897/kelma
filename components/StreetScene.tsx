@@ -487,7 +487,9 @@ export function StreetScene({
   // Every layer shares one view of the artboard, so they stay in register.
   const svgProps = c && {
     viewBox: fmt === "desktop" ? `${OVERSCAN} ${OVERSCAN / 2} ${c.W - 2 * OVERSCAN} ${c.H - OVERSCAN}` : `0 0 ${c.W} ${c.H}`,
-    preserveAspectRatio: fill ? "xMidYMax slice" : "xMidYMid slice",
+    // Phones show the whole square street, scaled down to the strip's height (the home page fades its
+    // sides); desktop fills the width and crops from the top.
+    preserveAspectRatio: fill ? (fmt === "mobile" ? "xMidYMax meet" : "xMidYMax slice") : "xMidYMid slice",
     className: `absolute inset-0 block size-full${parallaxOn ? " will-change-transform" : ""}`,
   };
   const lid = (e: [number, number]) => ({ x: e[0] - er, y: e[1] - er, s: er * 2 });
@@ -528,7 +530,7 @@ export function StreetScene({
     <div
       ref={wrap}
       aria-hidden="true"
-      className={`${fill ? "absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_9%,black_80%,transparent)]" : "relative aspect-square w-full md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_9%)]"} overflow-hidden bg-bg ${className}`}
+      className={`${fill ? `absolute inset-0 ${fmt === "mobile" ? "[mask-image:linear-gradient(to_bottom,transparent,black_9%,black_90%,transparent)]" : "[mask-image:linear-gradient(to_bottom,transparent,black_9%,black_80%,transparent)]"}` : "relative aspect-square w-full md:aspect-[1920/720] [mask-image:linear-gradient(to_bottom,transparent,black_9%)]"} overflow-hidden bg-bg ${className}`}
     >
       {c && near && (
         <Fragment key={fmt}>

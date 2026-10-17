@@ -30,11 +30,15 @@ export function HomePage({ lang }: { lang: Lang }) {
         </div>
         {/* Up to 1600px wide, so ultrawide screens see the street, not a zoomed band of it; wider than
             that, its sides fade into the page like the pavement does. */}
-        <div className="relative mx-auto mt-1 h-[clamp(230px,38svh,300px)] w-full max-w-[1600px] md:h-[clamp(260px,40svh,380px)] min-[1600px]:[mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+        {/* Phones: the whole square street, as tall as the strip (--strip), its sides fading into the page. */}
+        <div
+          style={{ "--strip": "clamp(220px,36svh,300px)" } as React.CSSProperties}
+          className="relative mx-auto mt-1 h-[var(--strip)] w-full max-w-[1600px] max-md:[mask-image:linear-gradient(to_right,transparent_calc(50%-var(--strip)/2),black_calc(50%-var(--strip)/2+32px),black_calc(50%+var(--strip)/2-32px),transparent_calc(50%+var(--strip)/2))] md:h-[clamp(260px,40svh,380px)] min-[1600px]:[mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]"
+        >
           <HomeStreet />
         </div>
         {/* One slide per game, edge to edge so the next slide peeks in; the cards stand on the pavement. */}
-        <div className="relative z-10 -mt-12 flex w-full justify-center md:-mt-16">
+        <div className="relative z-10 -mt-3 flex w-full justify-center md:-mt-16">
           <GameCarousel lang={lang} solid />
         </div>
         <div className="flex flex-col items-center px-4 pb-6 text-center">
