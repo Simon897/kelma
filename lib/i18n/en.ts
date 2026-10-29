@@ -222,4 +222,14 @@ export const en: Dict = {
 
   notFoundTitle: "This page doesn't exist",
   notFoundHome: "Back home",
+
+  dictTitle: "Dizzjunarju",
+  dictIntro:
+    "Lots of everyday things have a Maltese name, yet we often use the English word instead. Here you'll find the Maltese words for them, grouped by theme: pick a category and see each Maltese word with the English beneath it.",
+  dictCategories: "Categories",
+  dictCategory: { "herbs-spices": "Herbs & spices" },
+  dictCarousel: (name: string) => `${name}: all the words`,
+  dictPause: "Stop the movement",
+  dictPlay: "Let it move again",
+  dictSourceBody: "Most of the words come from Ġabra, the University of Malta's open Maltese lexicon (CC BY 4.0). The rest were checked against other sources.",
 };

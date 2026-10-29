@@ -15,9 +15,18 @@ export function HomePage({ lang }: { lang: Lang }) {
     <>
       <HomeLangRedirect lang={lang} />
       {/* The hero stops short of the full screen so the top of the idle animation peeks in,
-          a hint that there's more below. Spacing is tighter on phones to make room. */}
-      <main className="relative flex min-h-[calc(100svh-5.5rem)] flex-col items-center justify-center px-4 pb-4 pt-10 text-center sm:pb-8 sm:pt-16">
-        <LangToggle lang={lang} page="home" className="absolute right-4 top-4" />
+          a hint that there's more below. The top padding clears the buttons in the corner. */}
+      <main className="relative flex min-h-[calc(100svh-5.5rem)] flex-col items-center justify-center px-4 pb-4 pt-16 text-center sm:pb-8 sm:pt-16">
+        <div className="absolute right-4 top-4 flex items-center gap-2">
+          <Link
+            href={href("dizzjunarju", lang)}
+            lang="mt"
+            className="inline-flex h-11 items-center justify-center rounded-tile border-2 border-ink px-3 text-sm font-bold tracking-wide text-ink hover:bg-ink hover:text-limestone-50"
+          >
+            {d.dictTitle}
+          </Link>
+          <LangToggle lang={lang} page="home" />
+        </div>
         <div className="flex flex-col items-center">
           <HomeCat className="size-16 sm:size-28" />
           <h1 className="display-caps mt-1 text-[2.75rem] leading-none sm:text-7xl">Kelma</h1>
