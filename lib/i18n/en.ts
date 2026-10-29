@@ -228,8 +228,10 @@ export const en: Dict = {
   notFoundHome: "Back home",
 
   dictTitle: "Dizzjunarju",
-  dictIntro:
-    "Lots of everyday things have a Maltese name, yet we often use the English word instead. Here you'll find the Maltese words for them, grouped by theme: pick a category and see each Maltese word with the English beneath it.",
+  dictIntro: [
+    "“Tkellem bil-Malti” (speak Maltese) is a phrase often used on social media these days, or when someone speaking Maltese drops an English word into the middle of a sentence.",
+    "This page gathers everyday things we have more and more taken to calling by their English name, even though the Maltese words exist.",
+  ],
   dictCategories: "Categories",
   dictCategory: { "herbs-spices": "Herbs & spices" },
   dictCarousel: (name: string) => `${name}: all the words`,

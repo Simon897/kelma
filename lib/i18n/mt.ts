@@ -243,8 +243,10 @@ export const mt = {
 
   // --- dizzjunarju ---
   dictTitle: "Dizzjunarju",
-  dictIntro:
-    "Ħafna affarijiet ta' kuljum għandhom isem Malti, imma ħafna drabi nużaw il-kelma Ingliża minfloku. Hawn issib il-kliem Malti għalihom, miġbur skont is-suġġett: agħżel kategorija u ara l-kelma Maltija bl-Ingliż taħtha.", // REVIEW
+  dictIntro: [
+    "“Tkellem bil-Malti” hija frażi li dan iż-żmien ta' spiss tintuża fuq il-midja soċjali, jew meta xi ħadd ikun qed jitkellem bil-Malti u jdaħħal kelma bl-Ingliż f'nofs sentenza.",
+    "Din il-paġna hija ġabra ta' affarijiet li niltaqgħu magħhom fil-ħajja ta' kuljum, li però sar iktar frekwenti li tintuża l-kelma bl-Ingliż biex nirreferu għalihom, avolja jeżisti l-kliem bil-Malti.",
+  ],
   dictCategories: "Kategoriji", // REVIEW
   dictCategory: { "herbs-spices": "Ħwawar" }, // REVIEW
   dictCarousel: (name: string) => `${name}: il-kliem kollu`, // REVIEW

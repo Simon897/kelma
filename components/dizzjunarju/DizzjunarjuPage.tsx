@@ -29,11 +29,16 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
       </header>
 
       <main className="mx-auto max-w-[60rem] pb-16 pt-4">
-        <div className="px-4">
+        <div className="flex flex-col items-center px-4 text-center">
           <h1 lang="mt" className="display-caps text-4xl">
             {d.dictTitle}
           </h1>
-          <p className="mt-3 max-w-[60ch] text-pretty text-lg leading-relaxed">{d.dictIntro}</p>
+          {d.dictIntro.map((p) => (
+            <p key={p} className="mt-3 max-w-[60ch] text-pretty text-lg leading-relaxed">
+              {p}
+            </p>
+          ))}
+          <hr className="mt-8 w-24 border-t-2 border-ink/15" />
         </div>
 
         <section aria-labelledby="dict-categories" className="mt-8">
@@ -41,7 +46,7 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
             {d.dictCategories}
           </h2>
           <WordCarousel words={words} label={d.dictCarousel(name)}>
-            <div className="flex flex-wrap gap-2" role="group" aria-labelledby="dict-categories">
+            <div className="flex flex-wrap justify-center gap-2" role="group" aria-labelledby="dict-categories">
               {CATEGORY_KEYS.map((key) => (
                 <button
                   key={key}
@@ -59,7 +64,7 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
           </WordCarousel>
         </section>
 
-        <footer className="mt-10 border-t-2 border-ink/15 px-4 pt-4 text-sm leading-relaxed text-ink-soft">
+        <footer className="mt-10 flex flex-col items-center border-t-2 border-ink/15 px-4 pt-4 text-center text-sm leading-relaxed text-ink-soft">
           <p className="max-w-[60ch]">{d.dictSourceBody}</p>
           <a href={GABRA_URL} target="_blank" rel="noopener" className="inline-flex min-h-11 items-center gap-2 font-bold text-sea-deep underline underline-offset-2">
             {d.howSourceLink}
