@@ -233,7 +233,5 @@ export const en: Dict = {
   dictCategories: "Categories",
   dictCategory: { "herbs-spices": "Herbs & spices" },
   dictCarousel: (name: string) => `${name}: all the words`,
-  dictPause: "Stop the movement",
-  dictPlay: "Let it move again",
   dictSourceBody: "Most of the words come from Ġabra, the University of Malta's open Maltese lexicon (CC BY 4.0). The rest were checked against other sources.",
 };

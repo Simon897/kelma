@@ -248,7 +248,5 @@ export const mt = {
   dictCategories: "Kategoriji", // REVIEW
   dictCategory: { "herbs-spices": "Ħwawar" }, // REVIEW
   dictCarousel: (name: string) => `${name}: il-kliem kollu`, // REVIEW
-  dictPause: "Waqqaf iċ-ċaqliq", // REVIEW
-  dictPlay: "Erġa' ħalli jiċċaqlaq", // REVIEW
   dictSourceBody: "Il-biċċa l-kbira tal-kliem ġej minn Ġabra, il-lessiku Malti miftuħ tal-Università ta' Malta (CC BY 4.0). Il-bqija ġie ċċekkjat minn sorsi oħra.", // REVIEW
 };

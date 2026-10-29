@@ -40,7 +40,7 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
           <h2 id="dict-categories" className="sr-only">
             {d.dictCategories}
           </h2>
-          <WordCarousel words={words} label={d.dictCarousel(name)} d={d}>
+          <WordCarousel words={words} label={d.dictCarousel(name)}>
             <div className="flex flex-wrap gap-2" role="group" aria-labelledby="dict-categories">
               {CATEGORY_KEYS.map((key) => (
                 <button
