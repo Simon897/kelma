@@ -1,6 +1,6 @@
 import type { Lang } from "./i18n";
 
-export type PageKey = "home" | "normali" | "tqila" | "how" | "sellum" | "sellumHow" | "gherq" | "gherqHow" | "about";
+export type PageKey = "home" | "normali" | "tqila" | "how" | "sellum" | "sellumHow" | "gherq" | "gherqHow" | "dizzjunarju" | "about";
 
 const PATHS: Record<PageKey, Record<Lang, string>> = {
   home: { mt: "/", en: "/en" },
@@ -11,6 +11,7 @@ const PATHS: Record<PageKey, Record<Lang, string>> = {
   sellumHow: { mt: "/sellum/kif-tahdem", en: "/en/sellum/how-it-works" },
   gherq: { mt: "/gherq", en: "/en/gherq" },
   gherqHow: { mt: "/gherq/kif-tahdem", en: "/en/gherq/how-it-works" },
+  dizzjunarju: { mt: "/dizzjunarju", en: "/en/dizzjunarju" },
   // one version, in English, for both languages
   about: { mt: "/about", en: "/about" },
 };

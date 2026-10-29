@@ -22,8 +22,18 @@ export function HomePage({ lang }: { lang: Lang }) {
       <HomeLangRedirect lang={lang} />
       {/* spare height (tall or ultrawide screens) goes above and below, so the page sits in the middle */}
       <main className="relative flex flex-1 flex-col justify-center">
-        <LangToggle lang={lang} page="home" className="absolute right-4 top-4 z-20 bg-limestone-50" />
-        <div className="flex flex-col items-center px-4 pt-7 text-center sm:pt-14">
+        <div className="absolute right-4 top-4 z-20 flex items-center gap-2">
+          <Link
+            href={href("dizzjunarju", lang)}
+            lang="mt"
+            className="inline-flex h-11 items-center justify-center rounded-tile border-2 border-ink bg-limestone-50 px-3 text-sm font-bold tracking-wide text-ink hover:bg-ink hover:text-limestone-50"
+          >
+            {d.dictTitle}
+          </Link>
+          <LangToggle lang={lang} page="home" className="bg-limestone-50" />
+        </div>
+        {/* phones: the top padding clears the buttons in the corner, which are as wide as the wordmark */}
+        <div className="flex flex-col items-center px-4 pt-16 text-center sm:pt-14">
           <h1 className="display-caps text-[2.75rem] leading-none sm:text-7xl">Kelma</h1>
           {/* Says what the site is, so the site's name and the Kelma game aren't confused. */}
           <p className="mt-1 text-sm font-semibold text-ink-soft sm:mt-2 sm:text-lg">{d.siteTagline}</p>
