@@ -232,7 +232,7 @@ export const en: Dict = {
     "“Tkellem bil-Malti” (speak Maltese) is a phrase often used on social media these days, or when someone speaking Maltese drops an English word into the middle of a sentence.",
     "This page gathers everyday things we have more and more taken to calling by their English name, even though the Maltese words exist.",
   ],
-  dictCategory: { "herbs-spices": "Herbs & spices", "fruit-vegetables": "Fruit & vegetables" },
+  dictCategory: { "herbs-spices": "Herbs & spices", "fruit-vegetables": "Fruit & vegetables", "around-the-house": "Around the house" },
   dictCarousel: (name: string) => `${name}: all the words`,
   dictSourceBody: "Most of the words come from Ġabra, the University of Malta's open Maltese lexicon (CC BY 4.0). The rest were checked against other sources.",
 };

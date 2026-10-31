@@ -1,0 +1,365 @@
+{
+  "category": "around-the-house",
+  "title": {
+    "mt": "Id-dar",
+    "en": "Around the house"
+  },
+  "note": "source: gabra = Ġabra lexicon (CC BY 4.0); external = a published source, cited; editor = chosen by the site editor. Only entries with checked: true appear on the site. alts are shown after the main word.",
+  "words": [
+    {
+      "key": "shutter",
+      "en": "shutter",
+      "kind": "building",
+      "mt": "persjana",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "drawer",
+      "en": "drawer",
+      "kind": "furniture",
+      "mt": "kexxun",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "chest-of-drawers",
+      "en": "chest of drawers",
+      "kind": "furniture",
+      "mt": "gradenza",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "shelf",
+      "en": "shelf",
+      "kind": "furniture",
+      "mt": "xkaffa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "armchair",
+      "en": "armchair",
+      "kind": "furniture",
+      "mt": "pultruna",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary, under armchair; confirmed by the editor",
+      "url": "https://en.wiktionary.org/wiki/armchair",
+      "checked": true
+    },
+    {
+      "key": "bedside-table",
+      "en": "bedside table",
+      "kind": "furniture",
+      "mt": "komodina",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/kommodina/",
+      "note": "Not in Ġabra. Il-Miklem's headword is kommodina; the spelling komodina was chosen by the editor.",
+      "checked": true
+    },
+    {
+      "key": "display-cabinet",
+      "en": "display cabinet",
+      "kind": "furniture",
+      "mt": "vetrina",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem, article on household furniture",
+      "url": "https://www.ilmiklem.com/ismijiet-barranin-ta-ghamara-komuni-fid-dar-ta-tfulitna-dresser-sideboard-tallboy-sotta-specchio-u-pozaplatti/",
+      "note": "Ġabra has vetrina only as show-window.",
+      "checked": true
+    },
+    {
+      "key": "dressing-table",
+      "en": "dressing table",
+      "kind": "furniture",
+      "mt": "twaletta",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem, article on household furniture",
+      "url": "https://www.ilmiklem.com/ismijiet-barranin-ta-ghamara-komuni-fid-dar-ta-tfulitna-dresser-sideboard-tallboy-sotta-specchio-u-pozaplatti/",
+      "note": "Not in Ġabra.",
+      "checked": true
+    },
+    {
+      "key": "chest",
+      "en": "chest",
+      "kind": "furniture",
+      "mt": "senduq",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "stool",
+      "en": "stool",
+      "kind": "furniture",
+      "mt": "banketta",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "desk",
+      "en": "desk",
+      "kind": "furniture",
+      "mt": "skrivanija",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "bread-shelf",
+      "en": "bread shelf",
+      "kind": "furniture",
+      "mt": "farxa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Ġabra: wooden shelf, traditionally for bread.",
+      "checked": true
+    },
+    {
+      "key": "plate-rack",
+      "en": "plate rack",
+      "kind": "furniture",
+      "mt": "xtilliera",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "note": "Ġabra has rack; the plate rack sense is from Il-Miklem's article on household furniture, which spells it xtelliera.",
+      "checked": true
+    },
+    {
+      "key": "curtain",
+      "en": "curtain",
+      "kind": "soft",
+      "mt": "purtiera",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "pillow",
+      "en": "pillow",
+      "kind": "soft",
+      "mt": "mħadda",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "blanket",
+      "en": "blanket",
+      "kind": "soft",
+      "mt": "kutra",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "bed-sheet",
+      "en": "bed sheet",
+      "kind": "soft",
+      "mt": "liżar",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "mattress",
+      "en": "mattress",
+      "kind": "soft",
+      "mt": "saqqu",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "candle",
+      "en": "candle",
+      "kind": "decoration",
+      "mt": "xemgħa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "alarm-clock",
+      "en": "alarm clock",
+      "kind": "decoration",
+      "mt": "żveljarin",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "vase",
+      "en": "vase",
+      "kind": "decoration",
+      "mt": "vażun",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "tap",
+      "en": "tap",
+      "kind": "bathroom",
+      "mt": "vit",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "towel",
+      "en": "towel",
+      "kind": "bathroom",
+      "mt": "xugaman",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "comb",
+      "en": "comb",
+      "kind": "bathroom",
+      "mt": "moxt",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "toothbrush",
+      "en": "toothbrush",
+      "kind": "bathroom",
+      "mt": "xkupilja tas-snien",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "bucket",
+      "en": "bucket",
+      "kind": "chores",
+      "mt": "barmil",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "clothes-iron",
+      "en": "clothes iron",
+      "kind": "chores",
+      "mt": "ħadida tal-mogħdija",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "scissors",
+      "en": "scissors",
+      "kind": "chores",
+      "mt": "mqass",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "needle",
+      "en": "needle",
+      "kind": "chores",
+      "mt": "labra",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "dustpan",
+      "en": "dustpan",
+      "kind": "chores",
+      "mt": "pala",
+      "alts": [],
+      "source": "editor",
+      "tier": 3,
+      "note": "Dustpan sense given by the editor; Ġabra has shovel, spade.",
+      "checked": true
+    },
+    {
+      "key": "doorbell",
+      "en": "doorbell",
+      "kind": "chores",
+      "mt": "qanpiena",
+      "alts": [],
+      "source": "editor",
+      "tier": 2,
+      "note": "Doorbell sense given by the editor; Ġabra has bell.",
+      "checked": true
+    },
+    {
+      "key": "coat-hanger",
+      "en": "coat hanger",
+      "kind": "chores",
+      "mt": "spalliera",
+      "alts": [],
+      "source": "editor",
+      "ref": "TechDico, supplied by the editor (behind a bot check, not read when added)",
+      "url": "https://techdico.com/translation/english-maltese/clothes+hangers.html",
+      "note": "Not in Ġabra. Il-Miklem has spalliera only in the sense of a boat's bench back.",
+      "checked": true
+    },
+    {
+      "key": "clothes-peg",
+      "en": "clothes peg",
+      "kind": "chores",
+      "mt": "labra tal-inxir",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/labra-tal-inxir/",
+      "checked": true
+    },
+    {
+      "key": "washing-line",
+      "en": "washing line",
+      "kind": "chores",
+      "mt": "manxar",
+      "alts": [
+        "manxra"
+      ],
+      "source": "gabra",
+      "tier": 5,
+      "note": "Rare in Ġabra (tier 5). Hidden until the editor confirms it is in use.",
+      "checked": false
+    }
+  ]
+}
