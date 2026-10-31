@@ -247,8 +247,7 @@ export const mt = {
     "“Tkellem bil-Malti” hija frażi li dan iż-żmien ta' spiss tintuża fuq il-midja soċjali, jew meta xi ħadd ikun qed jitkellem bil-Malti u jdaħħal kelma bl-Ingliż f'nofs sentenza.",
     "Din il-paġna hija ġabra ta' affarijiet li niltaqgħu magħhom fil-ħajja ta' kuljum, li però sar iktar frekwenti li tintuża l-kelma bl-Ingliż biex nirreferu għalihom, avolja jeżisti l-kliem bil-Malti.",
   ],
-  dictCategories: "Kategoriji", // REVIEW
-  dictCategory: { "herbs-spices": "Ħwawar" }, // REVIEW
+  dictCategory: { "herbs-spices": "Ħwawar", "fruit-vegetables": "Frott u ħaxix" }, // REVIEW
   dictCarousel: (name: string) => `${name}: il-kliem kollu`, // REVIEW
   dictSourceBody: "Il-biċċa l-kbira tal-kliem ġej minn Ġabra, il-lessiku Malti miftuħ tal-Università ta' Malta (CC BY 4.0). Il-bqija ġie ċċekkjat minn sorsi oħra.", // REVIEW
 };

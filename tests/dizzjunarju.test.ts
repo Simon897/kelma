@@ -1,5 +1,6 @@
 import { existsSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import produce from "../data/words/fruit-vegetables.json";
 import list from "../data/words/herbs-spices.json";
 import { capitalise, categoryWords } from "../lib/dizzjunarju";
 
@@ -45,5 +46,31 @@ describe("dizzjunarju: herbs and spices", () => {
     expect(capitalise("ħabaq")).toBe("Ħabaq");
     expect(capitalise("ġulġlien")).toBe("Ġulġlien");
     expect(capitalise("żagħfran")).toBe("Żagħfran");
+  });
+});
+
+describe("dizzjunarju: fruit and vegetables", () => {
+  const shown = categoryWords("fruit-vegetables");
+  const drawings = readdirSync(new URL("../public/frott-u-haxix/", import.meta.url)).filter((f) => f.endsWith(".svg"));
+
+  it("shows only checked words, each with a Maltese word", () => {
+    expect(shown).toHaveLength(55);
+    expect(shown.find((w) => w.key === "pineapple")).toBeUndefined();
+    for (const w of shown) expect(w.mt.trim()).not.toBe("");
+  });
+
+  it("has exactly one drawing per word", () => {
+    expect(drawings.sort()).toEqual(shown.map((w) => `${w.key}.svg`).sort());
+  });
+
+  it("keys are unique and match the English name", () => {
+    const keys = produce.words.map((w) => w.key);
+    expect(new Set(keys).size).toBe(keys.length);
+    for (const w of produce.words) expect(w.key).toBe(w.en.replace(/ /g, "-"));
+  });
+
+  it("keeps the editor's choices", () => {
+    const mt = Object.fromEntries(shown.map((w) => [w.key, w.mt]));
+    expect(mt).toMatchObject({ apple: "tuffieħ", blackberry: "għollieq", corn: "qamħirrun", "bell-pepper": "bżar aħdar", pea: "piżelli", chickpea: "ċiċri" });
   });
 });

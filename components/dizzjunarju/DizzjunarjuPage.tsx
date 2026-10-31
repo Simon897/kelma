@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { CATEGORY_KEYS, categoryWords, type CategoryKey } from "@/lib/dizzjunarju";
+import { CATEGORY_KEYS, categoryWords } from "@/lib/dizzjunarju";
 import { t, type Lang } from "@/lib/i18n";
 import { href } from "@/lib/routes";
 import { GABRA_URL } from "@/lib/site";
@@ -11,12 +10,9 @@ import { ArrowIcon } from "../Icons";
 import { LangToggle } from "../LangToggle";
 import { WordCarousel } from "./WordCarousel";
 
-/** Dizzjunarju: Maltese words for everyday things, a category at a time. */
+/** Dizzjunarju: Maltese words for everyday things, one row per category. */
 export function DizzjunarjuPage({ lang }: { lang: Lang }) {
   const d = t(lang);
-  const [category, setCategory] = useState<CategoryKey>(CATEGORY_KEYS[0]);
-  const words = useMemo(() => categoryWords(category), [category]);
-  const name = d.dictCategory[category];
 
   return (
     <div className="min-h-svh">
@@ -41,28 +37,14 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
           <hr className="mt-8 w-24 border-t-2 border-ink/15" />
         </div>
 
-        <section aria-labelledby="dict-categories" className="mt-8">
-          <h2 id="dict-categories" className="sr-only">
-            {d.dictCategories}
-          </h2>
-          <WordCarousel words={words} label={d.dictCarousel(name)}>
-            <div className="flex flex-wrap justify-center gap-2" role="group" aria-labelledby="dict-categories">
-              {CATEGORY_KEYS.map((key) => (
-                <button
-                  key={key}
-                  type="button"
-                  aria-pressed={key === category}
-                  onClick={() => setCategory(key)}
-                  className={`inline-flex h-11 items-center rounded-tile border-2 border-ink px-4 font-bold shadow-block-sm active:translate-y-px ${
-                    key === category ? "bg-ink text-limestone-50" : "bg-limestone-50 text-ink hover:bg-limestone-200"
-                  }`}
-                >
-                  {d.dictCategory[key]}
-                </button>
-              ))}
-            </div>
-          </WordCarousel>
-        </section>
+        {CATEGORY_KEYS.map((key, i) => (
+          <section key={key} aria-labelledby={`dict-${key}`} className="mt-8">
+            <h2 id={`dict-${key}`} className="display-caps px-4 text-2xl">
+              {d.dictCategory[key]}
+            </h2>
+            <WordCarousel words={categoryWords(key)} label={d.dictCarousel(d.dictCategory[key])} first={i === 0} />
+          </section>
+        ))}
 
         <footer className="mt-10 flex flex-col items-center border-t-2 border-ink/15 px-4 pt-4 text-center text-sm leading-relaxed text-ink-soft">
           <p className="max-w-[60ch]">{d.dictSourceBody}</p>

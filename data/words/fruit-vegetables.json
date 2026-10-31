@@ -1,0 +1,602 @@
+{
+  "category": "fruit-vegetables",
+  "title": {
+    "mt": "Frott u ħaxix",
+    "en": "Fruit and vegetables"
+  },
+  "note": "source: gabra = Ġabra lexicon (CC BY 4.0); external = a published source, cited; editor = chosen by the site editor. Collective forms are shown where one exists, otherwise the singular. Only entries with checked: true appear on the site. alts are shown after the main word.",
+  "words": [
+    {
+      "key": "apple",
+      "en": "apple",
+      "kind": "fruit",
+      "mt": "tuffieħ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "note": "Collective form; Ġabra's headword is tuffieħa.",
+      "checked": true
+    },
+    {
+      "key": "pear",
+      "en": "pear",
+      "kind": "fruit",
+      "mt": "lanġas",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is lanġasa.",
+      "checked": true
+    },
+    {
+      "key": "orange",
+      "en": "orange",
+      "kind": "fruit",
+      "mt": "larinġ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is larinġa.",
+      "checked": true
+    },
+    {
+      "key": "lemon",
+      "en": "lemon",
+      "kind": "fruit",
+      "mt": "lumi",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is lumija.",
+      "checked": true
+    },
+    {
+      "key": "tangerine",
+      "en": "tangerine",
+      "kind": "fruit",
+      "mt": "mandolin",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is mandolina.",
+      "checked": true
+    },
+    {
+      "key": "grapefruit",
+      "en": "grapefruit",
+      "kind": "fruit",
+      "mt": "tronġa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "grapes",
+      "en": "grapes",
+      "kind": "fruit",
+      "mt": "għeneb",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "fig",
+      "en": "fig",
+      "kind": "fruit",
+      "mt": "tin",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is tina.",
+      "checked": true
+    },
+    {
+      "key": "prickly-pear",
+      "en": "prickly pear",
+      "kind": "fruit",
+      "mt": "bajtar tax-xewk",
+      "alts": [],
+      "source": "gabra",
+      "tier": null,
+      "checked": true
+    },
+    {
+      "key": "peach",
+      "en": "peach",
+      "kind": "fruit",
+      "mt": "ħawħ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "nectarine",
+      "en": "nectarine",
+      "kind": "fruit",
+      "mt": "nuċiprisk",
+      "alts": [
+        "ċiprisk"
+      ],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "apricot",
+      "en": "apricot",
+      "kind": "fruit",
+      "mt": "berquq",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "plum",
+      "en": "plum",
+      "kind": "fruit",
+      "mt": "għajnbaqar",
+      "alts": [
+        "għanbaqar"
+      ],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "cherry",
+      "en": "cherry",
+      "kind": "fruit",
+      "mt": "ċirasa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "strawberry",
+      "en": "strawberry",
+      "kind": "fruit",
+      "mt": "frawli",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "watermelon",
+      "en": "watermelon",
+      "kind": "fruit",
+      "mt": "dulliegħ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "note": "Collective form; Ġabra's headword is dulliegħa.",
+      "checked": true
+    },
+    {
+      "key": "melon",
+      "en": "melon",
+      "kind": "fruit",
+      "mt": "bettieħ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "pomegranate",
+      "en": "pomegranate",
+      "kind": "fruit",
+      "mt": "rummien",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is rummiena.",
+      "checked": true
+    },
+    {
+      "key": "pineapple",
+      "en": "pineapple",
+      "kind": "fruit",
+      "mt": "ananas",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Left out by the editor: ananas is not a Maltese word.",
+      "checked": false
+    },
+    {
+      "key": "date",
+      "en": "date",
+      "kind": "fruit",
+      "mt": "tamal",
+      "alts": [],
+      "source": "editor",
+      "tier": 3,
+      "note": "Collective given by the editor; Ġabra's headword is tamla.",
+      "checked": true
+    },
+    {
+      "key": "loquat",
+      "en": "loquat",
+      "kind": "fruit",
+      "mt": "naspli",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "mulberry",
+      "en": "mulberry",
+      "kind": "fruit",
+      "mt": "ċawsli",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Pending in Ġabra.",
+      "checked": true
+    },
+    {
+      "key": "olive",
+      "en": "olive",
+      "kind": "fruit",
+      "mt": "żebbuġ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "note": "Collective form; Ġabra's headword is żebbuġa.",
+      "checked": true
+    },
+    {
+      "key": "carob",
+      "en": "carob",
+      "kind": "fruit",
+      "mt": "ħarrub",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "quince",
+      "en": "quince",
+      "kind": "fruit",
+      "mt": "sfarġel",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary; MaltaWildPlants (Cydonia oblonga)",
+      "url": "https://en.wiktionary.org/wiki/sfar%C4%A1el",
+      "checked": true
+    },
+    {
+      "key": "raspberry",
+      "en": "raspberry",
+      "kind": "fruit",
+      "mt": "lampun",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary",
+      "url": "https://en.wiktionary.org/wiki/lampun",
+      "checked": true
+    },
+    {
+      "key": "blackberry",
+      "en": "blackberry",
+      "kind": "fruit",
+      "mt": "għollieq",
+      "alts": [],
+      "source": "external",
+      "ref": "MaltaWildPlants (Rubus ulmifolius); Wiktionary",
+      "url": "https://maltawildplants.com/ROSA/Rubus_ulmifolius.php",
+      "checked": true
+    },
+    {
+      "key": "potato",
+      "en": "potato",
+      "kind": "vegetable",
+      "mt": "patata",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "tomato",
+      "en": "tomato",
+      "kind": "vegetable",
+      "mt": "tadam",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "onion",
+      "en": "onion",
+      "kind": "vegetable",
+      "mt": "basal",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "garlic",
+      "en": "garlic",
+      "kind": "vegetable",
+      "mt": "tewm",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is tewma.",
+      "checked": true
+    },
+    {
+      "key": "carrot",
+      "en": "carrot",
+      "kind": "vegetable",
+      "mt": "zunnarija",
+      "alts": [
+        "karrotta"
+      ],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "cabbage",
+      "en": "cabbage",
+      "kind": "vegetable",
+      "mt": "kaboċċa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "cauliflower",
+      "en": "cauliflower",
+      "kind": "vegetable",
+      "mt": "pastard",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is pastarda.",
+      "checked": true
+    },
+    {
+      "key": "lettuce",
+      "en": "lettuce",
+      "kind": "vegetable",
+      "mt": "ħass",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "spinach",
+      "en": "spinach",
+      "kind": "vegetable",
+      "mt": "spinaċi",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "pumpkin",
+      "en": "pumpkin",
+      "kind": "vegetable",
+      "mt": "qargħa ħamra",
+      "alts": [],
+      "source": "gabra",
+      "tier": null,
+      "checked": true
+    },
+    {
+      "key": "courgette",
+      "en": "courgette",
+      "kind": "vegetable",
+      "mt": "qarabagħli",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "aubergine",
+      "en": "aubergine",
+      "kind": "vegetable",
+      "mt": "brunġiel",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "cucumber",
+      "en": "cucumber",
+      "kind": "vegetable",
+      "mt": "ħjar",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "note": "Collective form; Ġabra's headword is ħjara.",
+      "checked": true
+    },
+    {
+      "key": "artichoke",
+      "en": "artichoke",
+      "kind": "vegetable",
+      "mt": "qaqoċċ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "green-bean",
+      "en": "green bean",
+      "kind": "vegetable",
+      "mt": "fażola",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "broad-bean",
+      "en": "broad bean",
+      "kind": "vegetable",
+      "mt": "ful",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Collective form; Ġabra's headword is fula.",
+      "checked": true
+    },
+    {
+      "key": "pea",
+      "en": "pea",
+      "kind": "vegetable",
+      "mt": "piżelli",
+      "alts": [],
+      "source": "editor",
+      "tier": 4,
+      "note": "Collective given by the editor; Ġabra's headword is piżella.",
+      "checked": true
+    },
+    {
+      "key": "lentils",
+      "en": "lentils",
+      "kind": "vegetable",
+      "mt": "għads",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "chickpea",
+      "en": "chickpea",
+      "kind": "vegetable",
+      "mt": "ċiċri",
+      "alts": [],
+      "source": "editor",
+      "tier": 4,
+      "note": "Collective given by the editor; Ġabra's headword is ċiċra.",
+      "checked": true
+    },
+    {
+      "key": "celery",
+      "en": "celery",
+      "kind": "vegetable",
+      "mt": "karfus",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "note": "Collective form; Ġabra's headword is karfusa.",
+      "checked": true
+    },
+    {
+      "key": "radish",
+      "en": "radish",
+      "kind": "vegetable",
+      "mt": "ravanella",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "turnip",
+      "en": "turnip",
+      "kind": "vegetable",
+      "mt": "ġidra",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "mushroom",
+      "en": "mushroom",
+      "kind": "vegetable",
+      "mt": "faqqiegħ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "asparagus",
+      "en": "asparagus",
+      "kind": "vegetable",
+      "mt": "spraġ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "leek",
+      "en": "leek",
+      "kind": "vegetable",
+      "mt": "kurrat",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary",
+      "url": "https://en.wiktionary.org/wiki/kurrat",
+      "checked": true
+    },
+    {
+      "key": "beetroot",
+      "en": "beetroot",
+      "kind": "vegetable",
+      "mt": "pitravi",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary (pitrava, plural pitravi)",
+      "url": "https://en.wiktionary.org/wiki/pitrava",
+      "checked": true
+    },
+    {
+      "key": "chard",
+      "en": "chard",
+      "kind": "vegetable",
+      "mt": "selq",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary; MaltaWildPlants (Beta vulgaris). Pending in Ġabra, no definition.",
+      "url": "https://en.wiktionary.org/wiki/selq",
+      "checked": true
+    },
+    {
+      "key": "corn",
+      "en": "corn",
+      "kind": "vegetable",
+      "mt": "qamħirrun",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary; spelling chosen by the editor",
+      "url": "https://en.wiktionary.org/wiki/qam%C4%A7irrun",
+      "checked": true
+    },
+    {
+      "key": "bell-pepper",
+      "en": "bell pepper",
+      "kind": "vegetable",
+      "mt": "bżar aħdar",
+      "alts": [],
+      "source": "editor",
+      "note": "The editor: bell peppers are called bżar + colour, e.g. bżar aħdar. Wiktionary also lists bżar as sweet pepper.",
+      "checked": true
+    }
+  ]
+}

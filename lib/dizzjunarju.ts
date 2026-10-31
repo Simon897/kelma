@@ -1,3 +1,4 @@
+import fruitVegetables from "../data/words/fruit-vegetables.json";
 import herbsSpices from "../data/words/herbs-spices.json";
 import { asset } from "./site";
 
@@ -5,7 +6,7 @@ import { asset } from "./site";
  * The Dizzjunarju: everyday things whose Maltese names lose out to the English word, one list per
  * category. Only entries the editor has checked are shown; each has a drawing at public/<dir>/<key>.svg.
  */
-export type CategoryKey = "herbs-spices";
+export type CategoryKey = "herbs-spices" | "fruit-vegetables";
 
 export interface DictWord {
   key: string;
@@ -25,7 +26,10 @@ interface Entry {
 }
 
 /** Categories in picker order, each with the folder its drawings live in. */
-const CATEGORIES: { key: CategoryKey; dir: string; words: Entry[] }[] = [{ key: "herbs-spices", dir: "hwawar", words: herbsSpices.words as Entry[] }];
+const CATEGORIES: { key: CategoryKey; dir: string; words: Entry[] }[] = [
+  { key: "herbs-spices", dir: "hwawar", words: herbsSpices.words as Entry[] },
+  { key: "fruit-vegetables", dir: "frott-u-haxix", words: fruitVegetables.words as Entry[] },
+];
 
 export const CATEGORY_KEYS: CategoryKey[] = CATEGORIES.map((c) => c.key);
 
