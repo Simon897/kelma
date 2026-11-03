@@ -1,0 +1,391 @@
+{
+  "category": "animals-birds",
+  "title": {
+    "mt": "Annimali u għasafar",
+    "en": "Animals and birds"
+  },
+  "note": "source: gabra = Ġabra lexicon (CC BY 4.0); external = a published source, cited; editor = chosen by the site editor. Singular forms, since each drawing shows one animal. Only entries with checked: true appear on the site. alts are shown after the main word.",
+  "words": [
+    {
+      "key": "hedgehog",
+      "en": "hedgehog",
+      "kind": "animal",
+      "mt": "qanfud",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "weasel",
+      "en": "weasel",
+      "kind": "animal",
+      "mt": "ballottra",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "bat",
+      "en": "bat",
+      "kind": "animal",
+      "mt": "farfett il-lejl",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "ferret",
+      "en": "ferret",
+      "kind": "animal",
+      "mt": "nemes",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "lizard",
+      "en": "lizard",
+      "kind": "animal",
+      "mt": "gremxula",
+      "alts": [],
+      "source": "external",
+      "ref": "Schembri, The Maltese wall lizard (University of Malta)",
+      "url": "https://www.um.edu.mt/library/oar/bitstream/123456789/41807/1/Maltese%20wall%20lizard.pdf",
+      "note": "Singular; Ġabra's headword is gremxul.",
+      "checked": true
+    },
+    {
+      "key": "gecko",
+      "en": "gecko",
+      "kind": "animal",
+      "mt": "wiżgħa",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "note": "Ġabra has lizard; Wiktionary has especially a gecko.",
+      "checked": true
+    },
+    {
+      "key": "skink",
+      "en": "skink",
+      "kind": "animal",
+      "mt": "xaħmet l-art",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/xahmet-l-art/",
+      "checked": true
+    },
+    {
+      "key": "black-snake",
+      "en": "black snake",
+      "kind": "animal",
+      "mt": "serp iswed",
+      "alts": [],
+      "source": "external",
+      "ref": "Schembri, Maltese snakes (University of Malta)",
+      "url": "https://www.um.edu.mt/library/oar/bitstream/123456789/42340/1/Maltese%20snakes.pdf",
+      "note": "The black whip snake.",
+      "checked": true
+    },
+    {
+      "key": "leopard-snake",
+      "en": "leopard snake",
+      "kind": "animal",
+      "mt": "lifgħa",
+      "alts": [],
+      "source": "external",
+      "ref": "Schembri, Maltese snakes (University of Malta)",
+      "url": "https://www.um.edu.mt/library/oar/bitstream/123456789/42340/1/Maltese%20snakes.pdf",
+      "note": "Ġabra has viper; Malta's lifgħa is the leopard snake.",
+      "checked": true
+    },
+    {
+      "key": "frog",
+      "en": "frog",
+      "kind": "animal",
+      "mt": "żrinġ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "turtle",
+      "en": "turtle",
+      "kind": "animal",
+      "mt": "fekruna",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "lamb",
+      "en": "lamb",
+      "kind": "animal",
+      "mt": "ħaruf",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "ram",
+      "en": "ram",
+      "kind": "animal",
+      "mt": "muntun",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "billy-goat",
+      "en": "billy goat",
+      "kind": "animal",
+      "mt": "bodbod",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "calf",
+      "en": "calf",
+      "kind": "animal",
+      "mt": "għoġol",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "mule",
+      "en": "mule",
+      "kind": "animal",
+      "mt": "bagħal",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "swallow",
+      "en": "swallow",
+      "kind": "bird",
+      "mt": "ħuttafa",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "note": "Singular; Ġabra's headword is ħuttaf.",
+      "checked": true
+    },
+    {
+      "key": "swift",
+      "en": "swift",
+      "kind": "bird",
+      "mt": "rundun",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "checked": true
+    },
+    {
+      "key": "quail",
+      "en": "quail",
+      "kind": "bird",
+      "mt": "summiena",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "note": "Singular; Ġabra's headword is summien.",
+      "checked": true
+    },
+    {
+      "key": "turtle-dove",
+      "en": "turtle dove",
+      "kind": "bird",
+      "mt": "gamiema",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "checked": true
+    },
+    {
+      "key": "kingfisher",
+      "en": "kingfisher",
+      "kind": "bird",
+      "mt": "għasfur ta' San Martin",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "robin",
+      "en": "robin",
+      "kind": "bird",
+      "mt": "pitirross",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "checked": true
+    },
+    {
+      "key": "nightingale",
+      "en": "nightingale",
+      "kind": "bird",
+      "mt": "rożinjol",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "note": "Ġabra spells it ruzinjol.",
+      "checked": true
+    },
+    {
+      "key": "sparrow",
+      "en": "sparrow",
+      "kind": "bird",
+      "mt": "għasfur tal-bejt",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "blackbird",
+      "en": "blackbird",
+      "kind": "bird",
+      "mt": "malvizz iswed",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "checked": true
+    },
+    {
+      "key": "thrush",
+      "en": "thrush",
+      "kind": "bird",
+      "mt": "malvizz",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "starling",
+      "en": "starling",
+      "kind": "bird",
+      "mt": "sturnell",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "goldfinch",
+      "en": "goldfinch",
+      "kind": "bird",
+      "mt": "gardell",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "owl",
+      "en": "owl",
+      "kind": "bird",
+      "mt": "kokka",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "barn-owl",
+      "en": "barn owl",
+      "kind": "bird",
+      "mt": "barbaġann",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "seagull",
+      "en": "seagull",
+      "kind": "bird",
+      "mt": "gawwija",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "note": "BirdLife has gawwija prima for the yellow-legged gull; Ġabra's headword is gawwi.",
+      "checked": true
+    },
+    {
+      "key": "falcon",
+      "en": "falcon",
+      "kind": "bird",
+      "mt": "seqer",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Ġabra: falcon; hawk. BirdLife has bies for the peregrine falcon.",
+      "checked": true
+    },
+    {
+      "key": "kestrel",
+      "en": "kestrel",
+      "kind": "bird",
+      "mt": "spanjulett",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "note": "Ġabra has a type of bird; BirdLife has spanjulett for the common kestrel.",
+      "checked": true
+    },
+    {
+      "key": "heron",
+      "en": "heron",
+      "kind": "bird",
+      "mt": "russett",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "hoopoe",
+      "en": "hoopoe",
+      "kind": "bird",
+      "mt": "daqquqa tat-toppu",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "checked": true
+    },
+    {
+      "key": "cuckoo",
+      "en": "cuckoo",
+      "kind": "bird",
+      "mt": "daqquqa kaħla",
+      "alts": [],
+      "source": "external",
+      "ref": "BirdLife Malta, Malta Bird Checklist (Jan 2026)",
+      "url": "https://birdlifemalta.org/wp-content/uploads/2026/02/MALTA-BIRD-CHECKLIST-full-03.02.2026.pdf",
+      "checked": true
+    }
+  ]
+}

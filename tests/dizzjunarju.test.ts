@@ -1,5 +1,6 @@
 import { existsSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import creatures from "../data/words/animals-birds.json";
 import house from "../data/words/around-the-house.json";
 import produce from "../data/words/fruit-vegetables.json";
 import list from "../data/words/herbs-spices.json";
@@ -99,5 +100,31 @@ describe("dizzjunarju: around the house", () => {
   it("keeps the editor's choices", () => {
     const mt = Object.fromEntries(shown.map((w) => [w.key, w.mt]));
     expect(mt).toMatchObject({ "coat-hanger": "spalliera", "clothes-peg": "labra tal-inxir", dustpan: "pala", doorbell: "qanpiena", armchair: "pultruna", tap: "vit", "bedside-table": "komodina", "plate-rack": "xtilliera", "bread-shelf": "farxa" });
+  });
+});
+
+describe("dizzjunarju: animals and birds", () => {
+  const shown = categoryWords("animals-birds");
+  const drawings = readdirSync(new URL("../public/annimali/", import.meta.url)).filter((f) => f.endsWith(".svg"));
+
+  it("shows every word, each with a Maltese word", () => {
+    expect(shown).toHaveLength(36);
+    for (const w of shown) expect(w.mt.trim()).not.toBe("");
+  });
+
+  it("has exactly one drawing per word", () => {
+    expect(drawings.sort()).toEqual(shown.map((w) => `${w.key}.svg`).sort());
+  });
+
+  it("keys are unique and match the English name", () => {
+    const keys = creatures.words.map((w) => w.key);
+    expect(new Set(keys).size).toBe(keys.length);
+    for (const w of creatures.words) expect(w.key).toBe(w.en.replace(/ /g, "-"));
+  });
+
+  it("keeps the editor's choices", () => {
+    const mt = Object.fromEntries(shown.map((w) => [w.key, w.mt]));
+    expect(mt).toMatchObject({ hedgehog: "qanfud", kingfisher: "għasfur ta' San Martin", falcon: "seqer", nightingale: "rożinjol", "leopard-snake": "lifgħa" });
+    expect(mt.merill).toBeUndefined();
   });
 });
