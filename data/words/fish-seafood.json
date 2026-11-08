@@ -1,0 +1,334 @@
+{
+  "category": "fish-seafood",
+  "title": {
+    "mt": "Ħut u frott tal-baħar",
+    "en": "Fish and seafood"
+  },
+  "note": "source: gabra = Ġabra lexicon (CC BY 4.0); external = a published source, cited; editor = chosen by the site editor. Collective forms are shown where one exists, otherwise the singular. Only entries with checked: true appear on the site. alts are shown after the main word.",
+  "words": [
+    {
+      "key": "tuna",
+      "en": "tuna",
+      "kind": "fish",
+      "mt": "tonn",
+      "alts": [],
+      "source": "gabra",
+      "tier": 2,
+      "checked": true
+    },
+    {
+      "key": "swordfish",
+      "en": "swordfish",
+      "kind": "fish",
+      "mt": "pixxispad",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "sardine",
+      "en": "sardine",
+      "kind": "fish",
+      "mt": "sardin",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary",
+      "url": "https://en.wiktionary.org/wiki/sardin",
+      "note": "Collective; Ġabra's headword is sardina.",
+      "checked": true
+    },
+    {
+      "key": "anchovy",
+      "en": "anchovy",
+      "kind": "fish",
+      "mt": "inċova",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "mackerel",
+      "en": "mackerel",
+      "kind": "fish",
+      "mt": "kavall",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "sea-bream",
+      "en": "sea bream",
+      "kind": "fish",
+      "mt": "awrata",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "The gilt-head bream.",
+      "checked": true
+    },
+    {
+      "key": "grouper",
+      "en": "grouper",
+      "kind": "fish",
+      "mt": "ċerna",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "amberjack",
+      "en": "amberjack",
+      "kind": "fish",
+      "mt": "aċċola",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "eel",
+      "en": "eel",
+      "kind": "fish",
+      "mt": "sallur",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "shark",
+      "en": "shark",
+      "kind": "fish",
+      "mt": "kelb il-baħar",
+      "alts": [],
+      "source": "gabra",
+      "checked": true
+    },
+    {
+      "key": "cod",
+      "en": "cod",
+      "kind": "fish",
+      "mt": "merluzz",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "note": "Ġabra has cod; Il-Miklem has European hake. Cod chosen by the editor.",
+      "checked": true
+    },
+    {
+      "key": "mullet",
+      "en": "mullet",
+      "kind": "fish",
+      "mt": "mulett",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "red-mullet",
+      "en": "red mullet",
+      "kind": "fish",
+      "mt": "trilja",
+      "alts": [],
+      "source": "editor",
+      "note": "Not in Ġabra; given by the editor.",
+      "checked": true
+    },
+    {
+      "key": "sea-bass",
+      "en": "sea bass",
+      "kind": "fish",
+      "mt": "spnott",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary",
+      "url": "https://en.wiktionary.org/wiki/spnott",
+      "note": "Collective; the editor gave the singular spnotta. Not in Ġabra.",
+      "checked": true
+    },
+    {
+      "key": "dolphin-fish",
+      "en": "dolphin fish",
+      "kind": "fish",
+      "mt": "lampuka",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "stingray",
+      "en": "stingray",
+      "kind": "fish",
+      "mt": "boll",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/boll-huta/",
+      "note": "Not in Ġabra.",
+      "checked": true
+    },
+    {
+      "key": "seahorse",
+      "en": "seahorse",
+      "kind": "fish",
+      "mt": "żiemel il-baħar",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/ziemel-il-bahar/",
+      "note": "Not in Ġabra.",
+      "checked": true
+    },
+    {
+      "key": "octopus",
+      "en": "octopus",
+      "kind": "seafood",
+      "mt": "qarnit",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "squid",
+      "en": "squid",
+      "kind": "seafood",
+      "mt": "klamar",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "cuttlefish",
+      "en": "cuttlefish",
+      "kind": "seafood",
+      "mt": "siċċ",
+      "alts": [],
+      "source": "editor",
+      "note": "Collective, given by the editor; not in Ġabra.",
+      "checked": true
+    },
+    {
+      "key": "prawn",
+      "en": "prawn",
+      "kind": "seafood",
+      "mt": "gamblu",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "crab",
+      "en": "crab",
+      "kind": "seafood",
+      "mt": "granċ",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "lobster",
+      "en": "lobster",
+      "kind": "seafood",
+      "mt": "awwista",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "mussel",
+      "en": "mussel",
+      "kind": "seafood",
+      "mt": "masklu",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "oyster",
+      "en": "oyster",
+      "kind": "seafood",
+      "mt": "gajdra",
+      "alts": [],
+      "source": "gabra",
+      "tier": 4,
+      "checked": true
+    },
+    {
+      "key": "clam",
+      "en": "clam",
+      "kind": "seafood",
+      "mt": "arzell",
+      "alts": [],
+      "source": "external",
+      "ref": "Wiktionary",
+      "url": "https://en.wiktionary.org/wiki/arzell",
+      "note": "Collective; Ġabra's headword is arzella.",
+      "checked": true
+    },
+    {
+      "key": "salt-cod",
+      "en": "salt cod",
+      "kind": "seafood",
+      "mt": "bakkaljaw",
+      "alts": [],
+      "source": "editor",
+      "note": "Salted or dried cod, given by the editor. Il-Miklem has bakkaljaw for the poor cod and bakkaljaw abjad for the Atlantic cod.",
+      "checked": true
+    },
+    {
+      "key": "sea-urchin",
+      "en": "sea urchin",
+      "kind": "seafood",
+      "mt": "rizza",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/rizza/",
+      "note": "Not in Ġabra. Il-Miklem also gives qanfud il-baħar.",
+      "checked": true
+    },
+    {
+      "key": "jellyfish",
+      "en": "jellyfish",
+      "kind": "seafood",
+      "mt": "bram",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    },
+    {
+      "key": "starfish",
+      "en": "starfish",
+      "kind": "seafood",
+      "mt": "kewkba tal-baħar",
+      "alts": [],
+      "source": "external",
+      "ref": "Il-Miklem",
+      "url": "https://www.ilmiklem.com/encyclopedia/kewkba-tal-bahar/",
+      "note": "Not in Ġabra. Il-Miklem also has salib il-baħar and stilla tal-baħar.",
+      "checked": true
+    },
+    {
+      "key": "dolphin",
+      "en": "dolphin",
+      "kind": "seafood",
+      "mt": "denfil",
+      "alts": [],
+      "source": "gabra",
+      "tier": 3,
+      "checked": true
+    }
+  ]
+}
