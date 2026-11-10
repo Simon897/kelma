@@ -1,17 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type Ref } from "react";
+import { asset } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { Cat, type CatHandle, type CatPose } from "./Cat";
-import { CLUMP_SLOTS, DEFS, GROUND, POD_SLOTS, SCENE_BG, TREE, VIEWBOX } from "./carobSvg";
+import { CLUMP_H, CLUMP_SLOTS, CLUMP_W, DEFS, GROUND, POD_SLOTS, SCENE_BG, TREE, VIEWBOX } from "./carobSvg";
 import { RootTiles } from "./Parts";
 
 /**
- * Għerq's scene, from the Claude Design files "Gherq Scene" and "Gherq Carob Tree": a paper-cut
- * carob tree in a rubble-walled field, its roots running into the soil. The canopy fills in as a
+ * Għerq's scene: a carob tree in a rubble-walled field, its roots running into the soil. The canopy fills in as a
  * share of the core words found (all of them = a full tree, whatever the puzzle's size) and every
  * bonus word hangs a green carob pod. In the result panel a short finale plays once: a breeze,
- * the pods ripen to gold, two leaflets fall and the cat bats a pod; then the scene holds still.
+ * the pods ripen to dark brown, two leaflets fall and the cat bats a pod; then the scene holds still.
  * Growth and the finale are written straight to the SVG in requestAnimationFrame. Decorative
  * (aria-hidden); the found-words list is the accessible record.
  */
@@ -25,16 +25,14 @@ const RESULT_VIEWBOX = "20 -28 320 264";
 const MAX_PODS = 12;
 /** The finale starts this long after the panel opens. */
 const FINALE_DELAY_MS = 450;
-const POD_D = "M-1,4 C5,9 7,22 4,34 C3,38 -2,38 -2,34 C0,24 -2,12 -4,6 Z";
-const SEEDS: [number, number, number, number][] = [
-  [1, 13, 1.4, 2],
-  [2, 21, 1.4, 2],
-  [1.5, 29, 1.3, 1.9],
-];
+const LEAVES = asset("/gherq/leaves.webp");
+/** The pod pictures (public/gherq/) in viewBox units, placed so the stalk's tip is the origin. */
+const POD_GREEN = { href: asset("/gherq/pod-green.webp"), x: -5.76, y: -0.33, w: 6.63, h: 42.8 };
+const POD_RIPE = { href: asset("/gherq/pod-ripe.webp"), x: -4.62, y: -0.33, w: 6.15, h: 43.2 };
 /** Falling leaflets: from (x0, y0) to (x1, y1) on the grass, starting at `at` seconds. */
 const LEAFLETS = [
-  { x0: 132, y0: 72, x1: 110, y1: 167, at: 0.35, fill: "#4f7a3a" },
-  { x0: 236, y0: 80, x1: 204, y1: 170, at: 0.7, fill: "#5d8a44" },
+  { x0: 132, y0: 86, x1: 110, y1: 167, at: 0.35, fill: "#688c39" },
+  { x0: 236, y0: 88, x1: 204, y1: 170, at: 0.7, fill: "#839f36" },
 ];
 
 /** The site's ease, cubic-bezier(0.45, 0, 0.2, 1), as a function of progress. */
@@ -68,7 +66,7 @@ const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
 function podSlot(i: number) {
   const b = POD_SLOTS[i % 4],
     k = Math.floor(i / 4);
-  const dx = k === 0 ? 0 : (k % 2 ? 4.5 : -4.5) * Math.ceil(k / 2);
+  const dx = k === 0 ? 0 : (k % 2 ? 6.5 : -6.5) * Math.ceil(k / 2);
   return { x: b[0] + dx, y: b[1] + (k ? 1.5 : 0), r: b[2] + (k === 0 ? 0 : k % 2 ? 11 : -11), s: b[3] * (k ? 0.88 : 1) };
 }
 /** The pod the cat can bat: the lowest one hanging, nearest her on a tie. */
@@ -263,39 +261,29 @@ export function CarobScene({
       <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
       <Raw html={GROUND} />
       <Raw html={TREE} />
-      <g filter="url(#gq-paper)">
-        {CLUMP_SLOTS.map(([x, y, r, s], i) => (
-          <g key={i} transform={`translate(${x},${y}) rotate(${r}) scale(${s})`}>
-            <g ref={(el) => void (leafEls.current[i] = el)} transform="scale(0)">
-              <use href="#gq-clump" />
-            </g>
+      {CLUMP_SLOTS.map(([x, y, r, s], i) => (
+        <g key={i} transform={`translate(${x},${y}) rotate(${r}) scale(${s})`}>
+          <g ref={(el) => void (leafEls.current[i] = el)} transform="scale(0)">
+            <image href={LEAVES} x={-CLUMP_W / 2} y={-CLUMP_H / 2} width={CLUMP_W} height={CLUMP_H} />
           </g>
-        ))}
-      </g>
+        </g>
+      ))}
       {finale &&
         LEAFLETS.map((l, i) => (
           <g key={i} ref={(el) => void (leafletEls.current[i] = el)} opacity="0">
-            <ellipse cx="0" cy="0" rx="6.6" ry="4.6" fill={l.fill} />
-            <path d="M-5.5 0L5.5 0" stroke="#34522a" strokeWidth={0.8} />
+            <ellipse cx="0" cy="0" rx="4.2" ry="2.7" fill={l.fill} />
           </g>
         ))}
-      <g filter="url(#gq-paper)">
+      <g>
         {Array.from({ length: pods }, (_, i) => {
           const p = podSlot(i);
           return (
             <g key={i} transform={`translate(${p.x},${p.y}) rotate(${p.r}) scale(${p.s.toFixed(3)})`}>
               <g ref={(el) => void (podSwing.current[i] = el)} transform="scale(0)">
-                <path d="M0,0 L0,4" stroke="#5b3f27" strokeWidth={1.6} />
-                <path d={POD_D} fill="#c9921e" stroke="#7d5810" strokeWidth={1} />
-                {SEEDS.map(([cx, cy, rx, ry]) => (
-                  <ellipse key={cy} cx={cx} cy={cy} rx={rx} ry={ry} fill="#e6b84c" />
-                ))}
+                <image href={POD_RIPE.href} x={POD_RIPE.x} y={POD_RIPE.y} width={POD_RIPE.w} height={POD_RIPE.h} />
                 {/* green until the finale ripens it */}
                 <g ref={(el) => void (podGreen.current[i] = el)}>
-                  <path d={POD_D} fill="#86a046" stroke="#56702c" strokeWidth={1} />
-                  {SEEDS.map(([cx, cy, rx, ry]) => (
-                    <ellipse key={cy} cx={cx} cy={cy} rx={rx} ry={ry} fill="#a9c070" />
-                  ))}
+                  <image href={POD_GREEN.href} x={POD_GREEN.x} y={POD_GREEN.y} width={POD_GREEN.w} height={POD_GREEN.h} />
                 </g>
               </g>
             </g>
