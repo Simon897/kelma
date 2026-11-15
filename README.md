@@ -104,7 +104,7 @@ The cat in the scene has idles and reactions (`components/gherq/Cat.tsx`, schedu
 
 ## Dizzjunarju (the dictionary)
 
-`/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen.
+`/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen. Each visit starts with the closed book opening (about 2 seconds; searching or jumping to a letter skips it, and with reduced motion it is a short cross-fade). The timings are `OPENING` at the top of `components/dizzjunarju/DictionaryBook.tsx`.
 
 ```
 data/dizzjunarju/words.json          one row per entry: [word, label, meaning, root, tier, number]
