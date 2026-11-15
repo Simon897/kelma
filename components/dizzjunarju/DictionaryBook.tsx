@@ -845,7 +845,8 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
         <div aria-hidden style={{ ...board, left: W, width: W + 44, borderLeft: 0, borderRadius: "0 2px 2px 0", boxShadow: `6px 6px 0 0 ${ink(0.18)}` }} />
         <div aria-hidden style={{ position: "absolute", left: W, top: 0, width: 2, height: H + 20, background: INK, opacity: ph.reduced ? 1 - ph.fade : 1 - clamp01((ph.landT * OPENING.land) / 120) }} />
         <div aria-hidden style={{ position: "absolute", top: 14, left: 2 * W + 22, width: 16, height: H - 8, background: PAGE_EDGES }} />
-        <div style={{ position: "absolute", left: 22, top: 10, width: 2 * W, height: H }}>{this.sheet(page(1, W, true, ph.reduced ? ph.fade : ph.land), now)}</div>
+        {/* isolate: a page carries its own z-index, which must not lift it above the cover */}
+        <div style={{ position: "absolute", left: 22, top: 10, width: 2 * W, height: H, isolation: "isolate" }}>{this.sheet(page(1, W, true, ph.reduced ? ph.fade : ph.land), now)}</div>
         {/* and onto the first page */}
         <div aria-hidden style={{ position: "absolute", left: hinge, top: 10, width: 300, height: H, background: `linear-gradient(to right, ${ink(0.34)}, ${ink(0)})`, opacity: peak(ph.swing), pointerEvents: "none" }} />
 
@@ -853,7 +854,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
           <div aria-hidden style={{ ...board, left: 0, width: W, borderRight: 0, borderRadius: "2px 0 0 2px" }} />
           <div aria-hidden style={{ position: "absolute", left: 6, top: H + 20, width: W, height: 6, background: ink(0.18) }} />
           <div aria-hidden style={{ position: "absolute", top: 14, left: 19, width: 3, height: H - 8, background: PAGE_EDGES }} />
-          <div style={{ position: "absolute", left: 22, top: 10, width: W, height: H }}>{this.sheet(page(0, 0, false, 1), now)}</div>
+          <div style={{ position: "absolute", left: 22, top: 10, width: W, height: H, isolation: "isolate" }}>{this.sheet(page(0, 0, false, 1), now)}</div>
           <div aria-hidden style={{ position: "absolute", inset: 0, background: INK, opacity: 0.42 * (1 - ph.land), pointerEvents: "none" }} />
         </div>
 
