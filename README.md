@@ -102,6 +102,31 @@ Għerq has its own epoch, `GHERQ_EPOCH` in `lib/day-index.ts` (provisional), and
 
 The cat in the scene has idles and reactions (`components/gherq/Cat.tsx`, scheduled by `lib/gherq/cat-scheduler.ts`). In `npm run dev`, add `?catdebug` to `/gherq` for a panel that forces each pose and plays each idle and reaction.
 
+## Dizzjunarju (the dictionary)
+
+`/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen.
+
+```
+data/dizzjunarju/words.json          one row per entry: [word, label, meaning, root, tier, number]
+public/dizzjunarju-search/embeddings.bin    vectors for the "related words" search (6.9 MB, loaded on demand)
+```
+
+```bash
+node scripts/build-dizzjunarju.mjs path/to/gabra     # the unpacked dump folder
+npm install --no-save @huggingface/transformers       # once, for the next step only
+node scripts/build-dizzjunarju-embeddings.mjs
+```
+
+Only clean sheet rows go in (`data/source/word-sheet.json`: no flags, with a meaning), and each must match a verified Ġabra entry exactly or the build stops. No proper nouns and no English-only words: the few that the sheet doesn't flag are listed, with reasons, in `EXCLUDE` at the top of the build script. The word is spelt as Ġabra spells it (Malti, Ingliż). Nouns get their gender from Ġabra (the entry's own, or the word form spelt like the headword); where Ġabra gives none or both, the label is plain "n.". Words spelt the same are numbered, most common first. Meanings are the sheet's, word for word.
+
+Rebuild the vectors whenever `words.json` changes: they are indexed by row, and the page ignores a file whose counts don't match. A test checks the two agree.
+
+The search gives direct matches at once (Maltese words, typed with or without ġ ħ ż ċ, and English meanings), then "related words": entries whose meaning is close to the query even with no word in common. That part runs in the browser with the model `all-MiniLM-L6-v2`. The first related search downloads the model (about 25 MB) from Hugging Face and its library from jsDelivr (`lib/dizzjunarju-related.ts`); if either fails, the search just has no related words. It is skipped for queries that are Maltese words.
+
+Unverified ("pending") sheet words are not in the dictionary. `node scripts/make-dictionary-review.mjs` writes `dizzjunarju-review.xlsx` to approve, correct or reject them; the step that applies the answers isn't written yet.
+
+The page used to show Maltese words for everyday things, one carousel per category. That is kept but not shown: `data/words/`, the drawings in `public/{hwawar,frott-u-haxix,id-dar,annimali,hut}/`, `lib/dizzjunarju.ts` and `components/dizzjunarju/WordCarousel.tsx`.
+
 ## Permanent things (don't change after launch)
 
 - `EPOCH` in `lib/day-index.ts` (day 0). Changing it shifts every saved game and streak.

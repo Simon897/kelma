@@ -174,3 +174,39 @@ html[data-contrast] {
     mini-flip 420ms var(--ease-flip) var(--d, 0ms) backwards,
     mini-paint 210ms step-end var(--d, 0ms) backwards;
 }
+
+/* Dizzjunarju book: hover and focus states for its controls (the rest is laid out in the component). */
+.dict-root :is(button, a, input):focus-visible {
+  outline: 3px solid var(--color-sea);
+  outline-offset: 2px;
+}
+.dict-root .dict-input::placeholder {
+  color: var(--color-ink-soft);
+  opacity: 1;
+}
+.dict-btn {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.dict-btn:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-block-lift) !important;
+}
+.dict-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: none !important;
+}
+.dict-tab {
+  transition: width 0.15s;
+}
+.dict-tab:is(:hover, :focus-visible) {
+  width: 52px !important;
+}
+.dict-sug:hover {
+  background: var(--color-limestone-200) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dict-btn,
+  .dict-tab {
+    transition: none;
+  }
+}

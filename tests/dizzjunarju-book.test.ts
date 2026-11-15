@@ -1,0 +1,171 @@
+import { existsSync, readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
+import rows from "../data/dizzjunarju/words.json";
+import sheet from "../data/source/word-sheet.json";
+import { ALPHABET, buildEntries, letters, MAX_LINES, normalise, paginate, searchExact, wantsRelated, wrapMeaning, type WordRow } from "../lib/dizzjunarju-book";
+
+const words = rows as WordRow[];
+const ents = buildEntries(words);
+// Every character 8px wide: enough to exercise the page breaks without a browser.
+const measure = (s: string) => s.length * 8;
+
+describe("dizzjunarju book: the word list", () => {
+  it("has well-formed rows", () => {
+    expect(words.length).toBeGreaterThan(10000);
+    const labels = new Set(["", "n.", "n.m.", "n.f.", "n.pl.", "v.", "aġġ.", "avv.", "num.", "pron.", "prep.", "konġ.", "interj."]);
+    for (const [w, label, gloss, root, tier, hn] of words) {
+      expect(w.trim(), w).toBe(w);
+      expect(w).not.toBe("");
+      expect(gloss.trim(), w).not.toBe("");
+      expect(labels.has(label), `${w}: ${label}`).toBe(true);
+      expect(root === "" || /^[a-zċġħż'-]+$/.test(root), `${w}: ${root}`).toBe(true);
+      expect([1, 2, 3, 4, 5]).toContain(tier);
+      expect(Number.isInteger(hn) && hn >= 0, w).toBe(true);
+      expect(letters(w).length, w).toBeGreaterThan(0);
+    }
+  });
+
+  it("only has words from clean sheet rows: no flags, and a meaning", () => {
+    const clean = new Set((sheet as { word: string; gloss: string; flags: string[] }[]).filter((l) => !l.flags.length && l.gloss.trim()).map((l) => l.word));
+    for (const [w] of words) expect(clean.has(w.toLocaleUpperCase("mt")), w).toBe(true);
+  });
+
+  it("has no English-only spellings and none of the words left out by hand", () => {
+    const all = new Set(words.map((r) => r[0].toLowerCase()));
+    for (const w of ["july", "positive", "merchandising", "barcode", "incoterms", "upstream", "downstream", "timeshare", "netting", "dumping", "forfaiting", "beige", "april", "żvizzera", "mediterran", "stigma"]) expect(all.has(w), w).toBe(false);
+    // c without a dot and y are not Maltese letters
+    for (const [w] of words) expect(/[cy]/i.test(w), w).toBe(false);
+  });
+
+  it("numbers words spelt the same 1, 2, 3 and leaves the rest unnumbered", () => {
+    const by = new Map<string, number[]>();
+    for (const [w, , , , , hn] of words) by.set(w.toLowerCase(), [...(by.get(w.toLowerCase()) ?? []), hn]);
+    for (const [w, ns] of by) expect([...ns].sort(), w).toEqual(ns.length === 1 ? [0] : ns.map((_, k) => k + 1));
+    expect(ents.filter((e) => e.w === "dar").map((e) => [e.hn, e.pos])).toEqual([
+      [1, "n.f."],
+      [2, "v."],
+      [3, "v."],
+    ]);
+  });
+
+  it("has search vectors built from this exact list", () => {
+    const url = new URL("../public/dizzjunarju-search/embeddings.bin", import.meta.url);
+    expect(existsSync(url)).toBe(true);
+    const buf = readFileSync(url);
+    const senses = words.reduce((n, r) => n + Math.min(6, r[2].split(";").filter((s) => s.trim()).length), 0);
+    expect(buf.readUInt32LE(0)).toBe(words.length);
+    expect(buf.readUInt32LE(4)).toBe(senses);
+    expect(buf.length).toBe(8 + senses * 2 + senses * 384);
+    // each meaning points at its entry, in order
+    let k = 0;
+    words.forEach((r, i) => {
+      const n = Math.min(6, r[2].split(";").filter((s) => s.trim()).length);
+      for (let j = 0; j < n; j++) expect(buf.readUInt16LE(8 + (k + j) * 2)).toBe(i);
+      k += n;
+    });
+  });
+});
+
+describe("dizzjunarju book: alphabetical order", () => {
+  it("splits words into Maltese letters", () => {
+    expect(letters("għajn")).toEqual(["għ", "a", "j", "n"]);
+    expect(letters("bieb")).toEqual(["b", "ie", "b"]);
+    expect(letters("ta'")).toEqual(["t", "a"]);
+    expect(letters("il-")).toEqual(["i", "l"]);
+    expect(letters("università")).toEqual(["u", "n", "i", "v", "e", "r", "s", "i", "t", "a"]);
+    expect(normalise("Għażiż")).toBe("ghaziz");
+  });
+
+  it("sorts by the Maltese alphabet: ċ after b, ġ before g, għ after g, ħ after h, ie after i, ż before z", () => {
+    const order = ents.map((e) => e.letter).filter((l, i, a) => l !== a[i - 1]);
+    expect(order).toEqual(ALPHABET.filter((l) => order.includes(l)));
+    for (let i = 1; i < ents.length; i++) expect(ents[i - 1].key <= ents[i].key, `${ents[i - 1].w} before ${ents[i].w}`).toBe(true);
+    const at = (w: string) => ents.findIndex((e) => e.w === w);
+    expect(at("ċavetta")).toBeGreaterThan(at("bżar"));
+    expect(at("ġobon")).toBeLessThan(at("gallarija"));
+    expect(at("għajn")).toBeGreaterThan(at("gżira"));
+    expect(at("ħobż")).toBeGreaterThan(at("hemm"));
+    expect(at("żarbun")).toBeLessThan(at("zalzett"));
+  });
+});
+
+describe("dizzjunarju book: pages", () => {
+  const size = { lineWidth: 440, rowsHeight: 660, perView: 2 as const };
+  const layout = paginate(ents, size, measure);
+
+  it("puts every entry on exactly one page, in order, and never overfills a page", () => {
+    const seen: number[] = [];
+    layout.pages.forEach((p, idx) => {
+      let used = 0;
+      for (const r of p.rows) {
+        used += (r.kind === "opener" ? 100 : r.h) + 10;
+        if (r.kind === "entry") {
+          seen.push(r.i);
+          expect(layout.wordPage[r.i]).toBe(idx);
+          expect(r.lines.length).toBeLessThanOrEqual(MAX_LINES);
+          for (const line of r.lines) expect(measure(line)).toBeLessThanOrEqual(size.lineWidth);
+        }
+      }
+      expect(used, `page ${idx}`).toBeLessThanOrEqual(size.rowsHeight);
+    });
+    expect(seen).toEqual(ents.map((_, i) => i));
+  });
+
+  it("opens with the front page, makes whole spreads, and opens each letter once", () => {
+    expect(layout.pages[0].kind).toBe("front");
+    expect(layout.pages.length % 2).toBe(0);
+    const openers = layout.pages.flatMap((p) => p.rows.filter((r) => r.kind === "opener").map((r) => (r.kind === "opener" ? r.letter : "")));
+    expect(openers).toEqual([...new Set(ents.map((e) => e.letter))]);
+    for (const l of openers) expect(layout.pages[layout.letterPage[l]].rows.some((r) => r.kind === "opener" && r.letter === l)).toBe(true);
+  });
+
+  it("lays out one page at a time without padding to a spread", () => {
+    const one = paginate(ents, { lineWidth: 300, rowsHeight: 460, perView: 1 }, measure);
+    expect(one.pages.at(-1)!.kind).toBe("dict");
+    expect(one.pages.length).toBeGreaterThan(layout.pages.length);
+    expect(one.wordPage).toHaveLength(ents.length);
+  });
+
+  it("wraps a long meaning and marks one that had to be cut", () => {
+    expect(wrapMeaning("short", 440, measure)).toEqual({ lines: ["short"], full: "" });
+    const two = wrapMeaning("x".repeat(40) + " " + "y".repeat(40), 440, measure);
+    expect(two.lines).toHaveLength(2);
+    expect(two.full).toBe("");
+    const long = Array(40).fill("meaning").join("; ");
+    const cut = wrapMeaning(long, 440, measure);
+    expect(cut.lines).toHaveLength(MAX_LINES);
+    expect(cut.lines[MAX_LINES - 1].endsWith("…")).toBe(true);
+    expect(cut.full).toBe(long);
+  });
+});
+
+describe("dizzjunarju book: search", () => {
+  const top = (q: string) => searchExact(ents, q).hits.map((i) => ents[i].w);
+
+  it("finds a Maltese word, with or without Maltese letters", () => {
+    expect(top("kelb")[0]).toBe("kelb");
+    expect(top("hobz")[0]).toBe("ħobż");
+    expect(top("GĦAJN")[0]).toBe("għajn");
+    expect(searchExact(ents, "kelb").isMaltese).toBe(true);
+  });
+
+  it("puts the word that means the query before words that merely start with it", () => {
+    expect(top("dog")[0]).toBe("kelb");
+    expect(top("to buy").slice(0, 2).sort()).toEqual(["xara", "xtara"]);
+    expect(top("happy")).toContain("ferħan");
+    expect(top("cat")[0]).toBe("qattus");
+  });
+
+  it("returns nothing for nonsense or an empty query", () => {
+    expect(top("wxyzq")).toEqual([]);
+    expect(top("   ")).toEqual([]);
+  });
+
+  it("asks for related words only for English queries of three letters or more", () => {
+    expect(wantsRelated(searchExact(ents, "physician"))).toBe(true);
+    expect(wantsRelated(searchExact(ents, "the room where you cook"))).toBe(true);
+    expect(wantsRelated(searchExact(ents, "kelb"))).toBe(false);
+    expect(wantsRelated(searchExact(ents, "ħobż"))).toBe(false);
+    expect(wantsRelated(searchExact(ents, "ab"))).toBe(false);
+  });
+});

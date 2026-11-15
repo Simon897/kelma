@@ -250,4 +250,48 @@ export const mt = {
   dictCategory: { "herbs-spices": "Ħwawar", "fruit-vegetables": "Frott u ħaxix", "around-the-house": "Id-dar", "animals-birds": "Annimali u għasafar", "fish-seafood": "Ħut u frott tal-baħar" }, // REVIEW
   dictCarousel: (name: string) => `${name}: il-kliem kollu`, // REVIEW
   dictSourceBody: "Il-biċċa l-kbira tal-kliem ġej minn Ġabra, il-lessiku Malti miftuħ tal-Università ta' Malta (CC BY 4.0). Il-bqija ġie ċċekkjat minn sorsi oħra.", // REVIEW
+
+  // --- dizzjunarju: the book ---
+  dictSubtitle: "Aqleb il-paġni jew fittex kelma.", // REVIEW
+  dictSearch: "Fittex kelma", // REVIEW
+  dictRandom: "Kelma bl-addoċċ", // REVIEW
+  dictSoundOn: "Ħoss: mixgħul", // REVIEW
+  dictSoundOff: "Ħoss: mitfi", // REVIEW
+  dictPrev: "Paġna ta' qabel", // REVIEW
+  dictNext: "Paġna li jmiss", // REVIEW
+  dictJump: "Aqbeż għal ittra", // REVIEW
+  dictLetter: (letter: string) => `Ittra ${letter}`, // REVIEW
+  dictLevel: (n: number) => `Livell ${n} minn 5`, // REVIEW
+  dictRoot: "għerq",
+  dictEmptyTitle: "Ma sibniex din il-kelma", // REVIEW
+  dictEmptyBody: "Il-qattus fittex paġna paġna. Ipprova kitba oħra.", // REVIEW
+  dictRelated: "Kliem relatat", // REVIEW
+  dictRelatedLoading: "Qed infittex kliem relatat…", // REVIEW
+  dictLoading: "Qed niftaħ id-dizzjunarju…", // REVIEW
+  dictFrontBlurb: "Il-kliem tal-logħob ta' Kelma, mill-A saż-Z.", // REVIEW
+  dictHowTitle: "Kif taqra kelma", // REVIEW
+  dictSampleWord: "ktieb",
+  dictSampleMeaning: "book; ledger",
+  dictLegend: [
+    ["n.", "nom"],
+    ["n.m.", "nom maskil"],
+    ["n.f.", "nom femminil"],
+    ["n.pl.", "nom fil-plural"],
+    ["v.", "verb"],
+    ["aġġ.", "aġġettiv"],
+    ["avv.", "avverbju"],
+    ["num.", "numru"],
+    ["pron.", "pronom"],
+    ["prep.", "prepożizzjoni"],
+    ["konġ.", "konġunzjoni"],
+    ["interj.", "interjezzjoni"],
+  ], // REVIEW
+  dictLegendNotes: [
+    ["Numru żgħir (1, 2)", "kliem miktub l-istess b'tifsira differenti."],
+    ["għerq", "l-ittri li minnhom tikber il-kelma."],
+    ["Tikek", "minn 1 (kelma ta' kuljum) sa 5 (kelma rari)."],
+  ], // REVIEW
+  dictLegendSource: "It-tifsiriet huma bl-Ingliż, minn Ġabra.", // REVIEW
+  dictCatAlt: "Il-qattus ta' Kelma", // REVIEW
+  dictCredit: "Kliem minn Ġabra, Università ta' Malta (CC BY 4.0).", // REVIEW
 };
