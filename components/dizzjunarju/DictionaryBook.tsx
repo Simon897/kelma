@@ -1,7 +1,7 @@
 "use client";
 
 import { Component, createRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
-import { ALPHABET, loadEntries, paginate, ROW_GAP, OPENER_H, searchExact, wantsRelated, type Entry, type ExactResult, type Layout, type PageRow } from "@/lib/dizzjunarju-book";
+import { ALPHABET, FORM_LABEL, FORMS_H, loadEntries, loadForms, paginate, ROW_GAP, OPENER_H, searchExact, wantsRelated, type Entry, type ExactResult, type Layout, type PageRow } from "@/lib/dizzjunarju-book";
 import { loadRelated } from "@/lib/dizzjunarju-related";
 import type { Dict } from "@/lib/i18n";
 import { CatLogo } from "../CatLogo";
@@ -137,7 +137,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
   private q = "";
   private sugOpen = false;
   private sugIdx = 0;
-  private exact: ExactResult = { raw: "", hits: [], isMaltese: false };
+  private exact: ExactResult = { raw: "", hits: [], isMaltese: false, malteseTop: false, via: {} };
   private related: { q: string; ids: number[] } | null = null;
   private relatedState: "idle" | "loading" | "ready" | "off" = "idle";
   private relatedWait: string | null = null;
@@ -160,6 +160,12 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
       this.ents = ents;
       this.relayout();
       this.open();
+      // Plurals, feminines and verb forms become searchable once their file arrives.
+      loadForms(ents).then(() => {
+        if (!this.mounted || !this.q) return;
+        this.exact = searchExact(ents, this.q);
+        this.redraw();
+      });
     });
     // The page was laid out with whatever font was ready; lay it out again once the real one is.
     const again = () => this.mounted && this.fontWidth() !== this.fontProbe && this.relayout();
@@ -520,7 +526,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     this.q = q;
     this.sugOpen = open;
     this.sugIdx = 0;
-    this.exact = this.ents ? searchExact(this.ents, q) : { raw: "", hits: [], isMaltese: false };
+    this.exact = this.ents ? searchExact(this.ents, q) : { raw: "", hits: [], isMaltese: false, malteseTop: false, via: {} };
     if (open && wantsRelated(this.exact) && this.related?.q !== this.exact.raw && this.relatedState !== "off") this.wantRelated(this.exact.raw);
   }
   private closeSuggestions() {
@@ -750,6 +756,16 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     return (
       <div key={r.i} style={{ height: r.h, marginBottom: ROW_GAP }}>
         {this.entryHead(e.w, e.hn, e.pos, e.root, e.tier, mark)}
+        {e.forms.length > 0 && (
+          <div lang="mt" style={{ height: FORMS_H, fontSize: 14, lineHeight: `${FORMS_H}px`, color: SOFT, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {e.forms.map(([kind, forms], k) => (
+              <span key={kind}>
+                {k > 0 && " · "}
+                <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 13 }}>{FORM_LABEL[kind] ?? kind}</span> <span style={{ fontFamily: SERIF, color: INK }}>{forms}</span>
+              </span>
+            ))}
+          </div>
+        )}
         <div title={r.full || undefined}>
           {r.lines.map((line, n) => (
             <div key={n} style={{ height: 21, fontSize: 15, lineHeight: "21px", color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -960,6 +976,8 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
         <span lang="mt" style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 18, whiteSpace: "nowrap" }}>
           {e.w}
           {e.hn > 0 && <span style={{ position: "relative", top: -6, marginLeft: 1, fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 11, color: SOFT }}>{e.hn}</span>}
+          {/* found through another form of the word: say which, so "kotba" landing on ktieb makes sense */}
+          {this.exact.via[i] && <span style={{ marginLeft: 8, fontWeight: 400, fontStyle: "italic", fontSize: 14, color: SOFT }}>({this.exact.via[i]})</span>}
         </span>
         <span style={{ fontSize: 14, lineHeight: "20px", color: SOFT, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{e.gloss}</span>
       </button>

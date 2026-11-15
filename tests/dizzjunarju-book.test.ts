@@ -1,11 +1,13 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import formRows from "../data/dizzjunarju/forms.json";
 import rows from "../data/dizzjunarju/words.json";
 import sheet from "../data/source/word-sheet.json";
-import { ALPHABET, buildEntries, letters, MAX_LINES, normalise, paginate, searchExact, wantsRelated, wrapMeaning, type WordRow } from "../lib/dizzjunarju-book";
+import { ALPHABET, attachForms, buildEntries, FORM_LABEL, letters, MAX_LINES, normalise, paginate, searchExact, wantsRelated, wrapMeaning, type WordRow } from "../lib/dizzjunarju-book";
 
 const words = rows as WordRow[];
 const ents = buildEntries(words);
+attachForms(ents, formRows as string[]);
 // Every character 8px wide: enough to exercise the page breaks without a browser.
 const measure = (s: string) => s.length * 8;
 
@@ -167,5 +169,94 @@ describe("dizzjunarju book: search", () => {
     expect(wantsRelated(searchExact(ents, "kelb"))).toBe(false);
     expect(wantsRelated(searchExact(ents, "ħobż"))).toBe(false);
     expect(wantsRelated(searchExact(ents, "ab"))).toBe(false);
+    // the start of a Maltese word or form is Maltese too; an English word that some Maltese word starts with is not
+    expect(wantsRelated(searchExact(ents, "bebbuxi"))).toBe(false);
+    expect(wantsRelated(searchExact(ents, "happy"))).toBe(true);
+    expect(wantsRelated(searchExact(ents, "dog"))).toBe(true);
+    expect(wantsRelated(searchExact(ents, "man"))).toBe(true);
+  });
+});
+
+describe("dizzjunarju book: other forms of a word", () => {
+  const entry = (w: string, pos?: string) => ents.find((e) => e.w === w && (!pos || e.pos === pos))!;
+  const top = (q: string) => searchExact(ents, q).hits.map((i) => ents[i].w);
+
+  it("has one line of forms per row, none repeating the headword", () => {
+    expect(formRows).toHaveLength(words.length);
+    words.forEach((r, i) => {
+      const forms = (formRows as string[])[i];
+      expect(typeof forms, r[0]).toBe("string");
+      if (forms) expect(forms.split(" "), r[0]).not.toContain(r[0].toLocaleLowerCase("mt"));
+    });
+  });
+
+  it("shows forms only under nouns and adjectives, with known labels, and every shown form is searchable", () => {
+    for (const e of ents) {
+      if (!e.forms.length) continue;
+      expect(e.pos.startsWith("n.") || e.pos === "aġġ.", `${e.w} ${e.pos}`).toBe(true);
+      for (const [kind, forms] of e.forms) {
+        expect(FORM_LABEL[kind], `${e.w}: ${kind}`).toBeTruthy();
+        for (const f of forms.split(", ")) expect(e.fw, `${e.w}: ${f}`).toContain(f);
+      }
+    }
+  });
+
+  it("prints one plural for a noun, and feminine, plural and comparative for an adjective", () => {
+    expect(entry("ktieb").forms).toEqual([["pl", "kotba"]]);
+    expect(entry("triq").forms).toEqual([["pl", "toroq"]]);
+    expect(entry("ħuta").forms).toEqual([["pl", "ħutiet"]]);
+    expect(entry("kbir").forms).toEqual([
+      ["f", "kbira"],
+      ["pl", "kbar"],
+      ["comp", "akbar"],
+    ]);
+    expect(entry("kiteb", "v.").forms).toEqual([]);
+    for (const e of ents) {
+      if (e.w === "bebbux") continue; // its forms are added by hand
+      const allowed = e.pos === "aġġ." ? ["f", "pl", "comp"] : ["pl"];
+      for (const [kind, forms] of e.forms) {
+        expect(allowed, `${e.w}: ${kind}`).toContain(kind);
+        expect(forms.includes(","), `${e.w}: ${forms}`).toBe(false);
+      }
+    }
+  });
+
+  it("prints nothing from Ġabra under a collective, only forms added by hand", () => {
+    expect(entry("bajd").forms).toEqual([]);
+    expect(entry("ħobż").forms).toEqual([]);
+    expect(entry("bebbux").forms).toEqual([["sing", "bebbuxu, bebbuxa"]]);
+    // still searchable
+    expect(top("bajda")).toContain("bajd"); // abjad (white) comes first: bajda is its feminine too
+    expect(top("ħobża")[0]).toBe("ħobż");
+    expect(top("bebbuxiet")[0]).toBe("bebbux");
+    expect(top("tifla")[0]).toBe("tifel");
+  });
+
+  it("has none of the duals built by rule, shown or searchable", () => {
+    for (const e of ents) expect(e.forms.some(([kind]) => kind === "dual"), e.w).toBe(false);
+    const all = new Set((formRows as string[]).flatMap((f) => f.split(" ")));
+    for (const f of ["badtejn", "wardtajn", "żebbuġtejn", "qmejltejn", "ħsaratejn", "saħħtejn"]) expect(all.has(f), f).toBe(false);
+  });
+
+  it("finds an entry by any of its forms, and says which form matched", () => {
+    expect(top("bebbuxu")[0]).toBe("bebbux");
+    expect(top("bebbuxa")[0]).toBe("bebbux");
+    expect(top("kotba")[0]).toBe("ktieb");
+    expect(top("jikteb")[0]).toBe("kiteb");
+    expect(top("hut")[0]).toBe("ħuta");
+    const r = searchExact(ents, "kotba");
+    expect(r.via[r.hits[0]]).toBe("kotba");
+    expect(r.isMaltese).toBe(true);
+    // a headword still beats a form spelt the same
+    expect(searchExact(ents, "ktieb").via).toEqual({});
+  });
+
+  it("gives an entry with forms an extra line on the page", () => {
+    const layout = paginate(ents, { lineWidth: 440, rowsHeight: 660, perView: 2 }, measure);
+    const row = (w: string) => layout.pages.flatMap((p) => p.rows).find((r) => r.kind === "entry" && ents[r.i] === entry(w))!;
+    const a = row("ktieb");
+    const b = row("kiteb");
+    expect(a.kind === "entry" && b.kind === "entry" && a.lines.length === 1 && b.lines.length === 1).toBe(true);
+    if (a.kind === "entry" && b.kind === "entry") expect(a.h - b.h).toBe(19);
   });
 });

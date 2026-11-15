@@ -5,8 +5,17 @@
  * Data: data/dizzjunarju/words.json, built by scripts/build-dizzjunarju.mjs.
  */
 
-/** One row of words.json: [word, label, meaning, root, tier, number among same-spelt words (0 = none)]. */
-export type WordRow = [string, string, string, string, number, number];
+/** A kind of form shown under an entry, with the forms of that kind: ["pl", "kotba"]. */
+export type ShownForms = [kind: string, forms: string];
+
+/**
+ * One row of words.json: [word, label, meaning, root, tier, number among same-spelt words (0 = none)],
+ * then, for a noun or adjective that has them, its other forms to show.
+ */
+export type WordRow = [string, string, string, string, number, number, ShownForms[]?];
+
+/** How each kind of form is labelled in an entry (Maltese abbreviations, like the part-of-speech labels). */
+export const FORM_LABEL: Record<string, string> = { sing: "sing.", coll: "koll.", f: "f.", m: "m.", pl: "pl.", dual: "dual", comp: "komp." };
 
 export interface Entry {
   w: string;
@@ -27,6 +36,12 @@ export interface Entry {
   ss: string[];
   /** row in words.json (the search vectors are indexed by it) */
   ri: number;
+  /** other forms printed under the headword: plural, feminine, one of a collective... */
+  forms: ShownForms[];
+  /** every other form of the word, reduced to a-z like `n`; empty until forms.json has loaded */
+  fn: string[];
+  /** the same forms as written, in step with `fn` */
+  fw: string[];
 }
 
 /** The Maltese alphabet, in order. */
@@ -82,6 +97,9 @@ export function buildEntries(rows: WordRow[]): Entry[] {
         .map((x) => x.replace(/\s+/g, " ").trim().replace(/^(to|a|an|the) /, ""))
         .filter(Boolean),
       ri,
+      forms: r[6] ?? [],
+      fn: [],
+      fw: [],
     };
   });
   ents.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : a.w < b.w ? -1 : a.w > b.w ? 1 : a.hn - b.hn));
@@ -122,6 +140,7 @@ export interface PageSize {
 }
 
 export const HEAD_H = 24; // the headword line
+export const FORMS_H = 19; // the line of other forms, where an entry has one
 export const LINE_H = 21; // one line of meaning
 export const ROW_GAP = 10;
 export const OPENER_H = 100; // the big letter that opens a section
@@ -174,7 +193,7 @@ export function paginate(ents: Entry[], size: PageSize, measure: (s: string) => 
       letterPage[e.letter] = pages.length - 1;
     }
     const wr = wrapMeaning(e.gloss, size.lineWidth, measure);
-    const h = HEAD_H + LINE_H * wr.lines.length;
+    const h = HEAD_H + (e.forms.length ? FORMS_H : 0) + LINE_H * wr.lines.length;
     if (used + h + ROW_GAP > size.rowsHeight) newPage();
     cur!.rows.push({ kind: "entry", i, lines: wr.lines, full: wr.full, h });
     used += h + ROW_GAP;
@@ -201,26 +220,34 @@ export interface ExactResult {
   raw: string;
   /** best matches first, as entry indexes */
   hits: number[];
-  /** the query is itself a Maltese headword */
+  /** the query is itself a Maltese headword, or a form of one */
   isMaltese: boolean;
+  /** the best hit matched as a Maltese word (or the start of one), not through its English meaning */
+  malteseTop: boolean;
+  /** for a hit found through another form of the word: entry index -> the form that matched ("kotba" for ktieb) */
+  via: Record<number, string>;
 }
 
 /**
  * Maltese headwords and English meanings at once. A reader typing "dog" wants kelb before
  * dogmatiku, so a meaning that is exactly the query outranks a headword that merely starts with it.
  * Between equals, the more common word (lower tier) comes first.
+ *
+ * Other forms count too, once forms.json has loaded: "kotba" finds ktieb, "bebbuxu" finds bebbux,
+ * "jikteb" finds kiteb. A form typed in full ranks just under the headword itself.
  */
 export function searchExact(ents: Entry[], query: string, limit = 5): ExactResult {
   const raw = String(query || "").toLowerCase().replace(/\s+/g, " ").trim();
   const nq = normalise(raw);
-  if (!nq) return { raw, hits: [], isMaltese: false };
+  if (!nq) return { raw, hits: [], isMaltese: false, malteseTop: false, via: {} };
   const eq = raw.replace(/^(to|a|an|the) /, "");
   const words = (s: string) => s.split(" ").length;
   const wholeWord = (s: string) => {
     const k = s.indexOf(eq);
     return k >= 0 && !/[a-z]/.test(s.charAt(k - 1)) && !/[a-z]/.test(s.charAt(k + eq.length));
   };
-  const scored: [number, number][] = [];
+  const scored: [score: number, entry: number, maltese: boolean][] = [];
+  const via: Record<number, string> = {};
   let isMaltese = false;
   ents.forEach((e, i) => {
     let sc = 0;
@@ -229,24 +256,65 @@ export function searchExact(ents: Entry[], query: string, limit = 5): ExactResul
       isMaltese = true;
     } else if (e.n.startsWith(nq)) sc = 90 - 2 * (e.n.length - nq.length);
     else if (nq.length > 2 && e.n.includes(nq)) sc = 25;
+    if (sc < 150) {
+      // another form of the word: typed in full, or (from four letters) its beginning
+      let best = 0;
+      let found = "";
+      for (let k = 0; k < e.fn.length; k++) {
+        const f = e.fn[k];
+        const v = f === nq ? 150 : nq.length > 3 && f.startsWith(nq) ? 70 - 2 * (f.length - nq.length) : 0;
+        if (v > best) {
+          best = v;
+          found = e.fw[k];
+        }
+      }
+      if (best > sc) {
+        sc = best;
+        via[i] = found;
+        if (best === 150) isMaltese = true;
+      }
+    }
+    let maltese = sc > 0;
     if (eq.length > 1) {
       e.ss.forEach((s, k) => {
         let v = 0;
         if (s === eq) v = 100 - 4 * k;
         else if (wholeWord(s)) v = 62 - 4 * k - 2 * Math.max(0, words(s) - words(eq));
         else if (eq.length > 2 && ` ${s}`.includes(` ${eq}`)) v = 30 - 4 * k;
-        if (v > sc) sc = v;
+        if (v > sc) {
+          sc = v;
+          maltese = false;
+          delete via[i];
+        }
       });
     }
-    if (sc > 0) scored.push([sc - 1.5 * e.tier, i]);
+    if (sc > 0) scored.push([sc - 1.5 * e.tier, i, maltese]);
   });
   scored.sort((a, b) => b[0] - a[0] || a[1] - b[1]);
-  return { raw, hits: scored.slice(0, limit).map((x) => x[1]), isMaltese };
+  return { raw, hits: scored.slice(0, limit).map((x) => x[1]), isMaltese, malteseTop: scored.length > 0 && scored[0][2], via };
 }
 
-/** Related-meaning search only makes sense for English: the model doesn't know Maltese. */
+/**
+ * Related-meaning search only makes sense for English: the model doesn't know Maltese. So not when
+ * the query is a Maltese word, or its best match is the start of one ("bebbuxi", on the way to bebbuxiet).
+ */
 export function wantsRelated(r: ExactResult): boolean {
-  return r.raw.length >= 3 && !r.isMaltese && !/[ċġħż]/.test(r.raw);
+  return r.raw.length >= 3 && !r.isMaltese && !r.malteseTop && !/[ċġħż]/.test(r.raw);
+}
+
+/** Gives each entry its searchable forms. `rows` is forms.json: one space-separated string per row of words.json. */
+export function attachForms(ents: Entry[], rows: string[]): void {
+  for (const e of ents) {
+    e.fw = rows[e.ri] ? rows[e.ri].split(" ") : [];
+    e.fn = e.fw.map(normalise);
+  }
+}
+
+let formsPromise: Promise<void> | null = null;
+/** forms.json (~390 KB) loads after the entries; until then only headwords and meanings are searched. */
+export function loadForms(ents: Entry[]): Promise<void> {
+  formsPromise ??= import("../data/dizzjunarju/forms.json").then((m) => attachForms(ents, (m.default ?? m) as string[]));
+  return formsPromise;
 }
 
 let promise: Promise<Entry[]> | null = null;

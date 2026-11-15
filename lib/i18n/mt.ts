@@ -288,6 +288,7 @@ export const mt = {
   ], // REVIEW
   dictLegendNotes: [
     ["Numru żgħir (1, 2)", "kliem miktub l-istess b'tifsira differenti."],
+    ["pl. · f. · komp. · sing.", "forom oħra tal-kelma: plural, femminil, komparattiv, waħda minn kollettiv."],
     ["għerq", "l-ittri li minnhom tikber il-kelma."],
     ["Tikek", "minn 1 (kelma ta' kuljum) sa 5 (kelma rari)."],
   ], // REVIEW

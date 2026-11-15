@@ -107,7 +107,9 @@ The cat in the scene has idles and reactions (`components/gherq/Cat.tsx`, schedu
 `/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen. Each visit starts with the closed book opening (about 2 seconds; searching or jumping to a letter skips it, and with reduced motion it is a short cross-fade). The timings are `OPENING` at the top of `components/dizzjunarju/DictionaryBook.tsx`.
 
 ```
-data/dizzjunarju/words.json          one row per entry: [word, label, meaning, root, tier, number]
+data/dizzjunarju/words.json          one row per entry: [word, label, meaning, root, tier, number, forms to show?]
+data/dizzjunarju/forms.json          for each row, every other form of the word (for the search; loaded after the entries)
+data/source/dizzjunarju-forms.json   forms added by hand: [{ word, pos?, kind, form, note }]
 public/dizzjunarju-search/embeddings.bin    vectors for the "related words" search (6.9 MB, loaded on demand)
 ```
 
@@ -118,6 +120,10 @@ node scripts/build-dizzjunarju-embeddings.mjs
 ```
 
 Only clean sheet rows go in (`data/source/word-sheet.json`: no flags, with a meaning), and each must match a verified Ġabra entry exactly or the build stops. No proper nouns and no English-only words: the few that the sheet doesn't flag are listed, with reasons, in `EXCLUDE` at the top of the build script. The word is spelt as Ġabra spells it (Malti, Ingliż). Nouns get their gender from Ġabra (the entry's own, or the word form spelt like the headword); where Ġabra gives none or both, the label is plain "n.". Words spelt the same are numbered, most common first. Meanings are the sheet's, word for word.
+
+Each entry carries the word's other forms from Ġabra. Ġabra mixes collected forms with ones built by rule (it gives *badtejn* as the dual of *bajd*) and nothing marks which is which, so an entry prints only the safest, one of each: a noun's plural (`pl.`), unless the headword is a collective, and an adjective's feminine (`f.`), plural and comparative (`komp.`). Everything else is searchable but not printed: single items of collectives, collectives, further plurals, a noun's other-gender form, and a verb's plain conjugation (no object or negative endings). So typing kotba, tifla or jikteb finds ktieb, tifel or kiteb, and the suggestion shows the form that matched. Ġabra's duals are not used at all, even for the search.
+
+Forms you add by hand in `data/source/dizzjunarju-forms.json` are always printed, under their kind (`sing` one of a collective, `coll`, `f`, `m`, `pl`, `dual`, `comp`): that is how bebbux shows *sing.* bebbuxu, bebbuxa.
 
 Rebuild the vectors whenever `words.json` changes: they are indexed by row, and the page ignores a file whose counts don't match. A test checks the two agree.
 

@@ -272,6 +272,7 @@ export const en: Dict = {
   ],
   dictLegendNotes: [
     ["Small number (1, 2)", "words spelt the same with different meanings."],
+    ["pl. · f. · komp. · sing.", "other forms of the word: plural, feminine, comparative, one of a collective."],
     ["root", "the letters the word grows from."],
     ["Dots", "from 1 (an everyday word) to 5 (a rare word)."],
   ],
