@@ -9,8 +9,10 @@
 // 5 letters, nouns and adjectives only, tier 1–4, not used on a kept day and not a word of the day.
 // Each is scored from data/source/kelma-difficulty.json (run scripts/kelma-difficulty.mjs first):
 //   solve = solver guesses + 0.25·traps (capped at 10) + 0.6 per unusual letter + 0.8 per repeat
-// - Normali: tier 1–3, the easiest by solve + 0.9 per tier above 1 (familiar words first), with
-//   unusual letters and repeats counted again (2 and 1.6 in all), since players feel them most.
+// - Normali: tier 1–2, every tier-1 word before any tier-2 word (how common a word is matters more
+//   than how easy it is to solve); within a tier, the easiest by solve with unusual letters and
+//   repeats counted again (2 and 1.6 in all), since players feel them most.
+// Words you reject by hand (data/source/kelma-rejected.json) are never answers in either mode.
 // - Diffiċli (tqila): tier 2–4, the hardest by solve, but no word the solver needs over 6 guesses
 //   for, so it stays winnable. Normali picks first.
 // A seeded shuffle then spreads each list over the days.
@@ -54,6 +56,7 @@ const difficulty = new Map(read("source/kelma-difficulty.json").map((d) => [d.wo
 const lexemes = read("source/lexemes.json");
 const guesses = new Set(read("kelma/valid-guesses.json"));
 const wordOfDay = new Set(read("kelma/word-of-day.json").map((e) => e.word));
+const rejected = new Set(read("source/kelma-rejected.json").map((r) => r.word));
 const lists = { normali: read("kelma/normali.json"), tqila: read("kelma/tqila.json") };
 for (const name of Object.keys(lists)) lists[name] = lists[name].slice(0, FROM ?? lists[name].length);
 
@@ -77,6 +80,7 @@ const usable = candidates
       Array.from(c.word).length === 5 &&
       !used.has(c.word) &&
       !wordOfDay.has(c.word) &&
+      !rejected.has(c.word) &&
       (c.approved || [...(posOf.get(c.word) ?? [])].some((p) => p === "NOUN" || p === "ADJ")),
   )
   .map((c) => {
@@ -90,10 +94,10 @@ const usable = candidates
 
 const need = (name) => DAYS - lists[name].length;
 // Normali leans harder against unusual letters and repeats: they read as hard to players.
-const easiness = (c) => c.solve + 0.9 * (c.tier - 1) + 1.4 * c.unusual + 0.8 * c.repeats;
+const easiness = (c) => c.solve + 1.4 * c.unusual + 0.8 * c.repeats;
 const normali = usable
-  .filter((c) => c.tier <= 3)
-  .sort((a, b) => easiness(a) - easiness(b) || a.word.localeCompare(b.word))
+  .filter((c) => c.tier <= 2)
+  .sort((a, b) => a.tier - b.tier || easiness(a) - easiness(b) || a.word.localeCompare(b.word))
   .slice(0, need("normali"));
 const taken = new Set(normali.map((c) => c.word));
 const tqila = usable
