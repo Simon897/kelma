@@ -46,7 +46,7 @@ export function HomeButtons({ lang }: { lang: Lang }) {
 
   const modeButton = (mode: Mode, label: string, area: string) => (
     <Link href={href(mode, lang)} className={`${playButton.kelma} ${area}`}>
-      <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{label}</span>
+      <span className="button-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{label}</span>
       {done[mode] && <DoneBadge label={d.doneToday} />}
     </Link>
   );

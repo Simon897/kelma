@@ -119,7 +119,8 @@ export type PageRow =
   | { kind: "entry"; i: number; lines: string[]; /** the whole meaning, when the lines had to cut it */ full: string; h: number };
 
 export interface Page {
-  kind: "front" | "dict" | "blank";
+  /** "end" is the last page of the book: a picture, no entries */
+  kind: "front" | "dict" | "blank" | "end";
   rows: PageRow[];
   /** guide word in the page's top corner */
   guide: string;
@@ -177,7 +178,7 @@ export function wrapMeaning(gloss: string, width: number, measure: (s: string) =
   return { lines: [...out.slice(0, MAX_LINES - 1), `${trim(last)}…`], full: gloss };
 }
 
-/** Lays the entries out on pages. Page 0 is the front page ("how to read an entry"). */
+/** Lays the entries out on pages. Page 0 is the front page ("how to read an entry"); the last is the end page. */
 export function paginate(ents: Entry[], size: PageSize, measure: (s: string) => number): Layout {
   const pages: Page[] = [{ kind: "front", rows: [], guide: "", num: "" }];
   const wordPage: number[] = [];
@@ -205,7 +206,11 @@ export function paginate(ents: Entry[], size: PageSize, measure: (s: string) => 
     used += h + ROW_GAP;
     wordPage[i] = pages.length - 1;
   });
-  if (size.perView === 2 && pages.length % 2) pages.push({ kind: "blank", rows: [], guide: "", num: "" });
+  // The book always closes on its end page. In an open book that is the last right-hand page, with a
+  // blank one before it if the entries stop on a right-hand page.
+  if (size.perView === 2 && pages.length % 2 === 0) pages.push({ kind: "blank", rows: [], guide: "", num: "" });
+  pages.push({ kind: "end", rows: [], guide: "", num: "" });
+  let letter: string | null = null;
   const pageLetter = pages.map((p, idx) => {
     const es = p.rows.filter((r): r is Extract<PageRow, { kind: "entry" }> => r.kind === "entry");
     if (p.kind === "dict") {
@@ -214,7 +219,9 @@ export function paginate(ents: Entry[], size: PageSize, measure: (s: string) => 
       const lastWord = size.perView === 2 && idx % 2 === 1;
       p.guide = es.length ? ents[(lastWord ? es[es.length - 1] : es[0]).i].w : "";
     }
-    return es.length ? ents[es[0].i].letter : null;
+    // Pages after the last entry stay under the last letter, so its tab stays lit to the end.
+    if (es.length) letter = ents[es[0].i].letter;
+    return letter;
   });
   return { pages, wordPage, letterPage, pageLetter };
 }

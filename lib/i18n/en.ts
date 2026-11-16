@@ -277,5 +277,7 @@ export const en: Dict = {
   ],
   dictLegendSource: "Meanings are in English, from Ġabra.",
   dictCatAlt: "The Kelma cat",
+  dictEnd: "The end",
+  dictEndAlt: "The cat asleep on a pile of books, with inky paw prints across the page.",
   dictCredit: "Words from Ġabra, University of Malta (CC BY 4.0).",
 };

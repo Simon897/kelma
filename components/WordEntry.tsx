@@ -23,7 +23,7 @@ export function WordEntry({
       </p>
       <p className="mt-2 text-base leading-snug">{entry.gloss}</p>
       {entry.root && (
-        <p className="mt-1 text-sm text-ink-soft">
+        <p className="mt-1 text-sm font-medium text-ink-soft">
           {`${d.rootLabel}: `}
           <span lang="mt" className="font-bold tracking-wide text-ink">
             {entry.root}

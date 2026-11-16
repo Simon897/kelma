@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CatLogo } from "@/components/CatLogo";
-import { archivo, plex } from "@/lib/fonts";
+import { bricolage } from "@/lib/fonts";
 import { t } from "@/lib/i18n";
 import { asset } from "@/lib/site";
 
@@ -17,7 +17,7 @@ export default function GlobalNotFound() {
   const mt = t("mt");
   const en = t("en");
   return (
-    <html lang="mt" translate="no" className={`notranslate ${archivo.variable} ${plex.variable}`}>
+    <html lang="mt" translate="no" className={`notranslate ${bricolage.variable}`}>
       <body className="antialiased">
         <main className="flex min-h-svh flex-col items-center justify-center px-4 text-center">
           <CatLogo className="size-24" />

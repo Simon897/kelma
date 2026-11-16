@@ -29,7 +29,7 @@ export function AboutPage() {
       <header className="mx-auto flex h-16 max-w-[40rem] items-center px-4">
         <Link href="/" aria-label="Back to Kelma" className="inline-flex min-h-11 items-center gap-2">
           <CatLogo className="size-10" />
-          <span className="display-caps text-lg">Kelma</span>
+          <span className="display-caps logo-caps text-lg">Kelma</span>
         </Link>
       </header>
       <main className="mx-auto max-w-[40rem] px-4 pb-16 pt-4">

@@ -37,7 +37,7 @@ export function WordOfDay({ lang }: { lang: Lang }) {
         {date && (
           <>
             <span aria-hidden>·</span>
-            <span suppressHydrationWarning>{date}</span>
+            <span suppressHydrationWarning className="font-medium">{date}</span>
           </>
         )}
       </div>

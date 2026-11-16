@@ -232,7 +232,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         {gherqPreview && <p className="mt-1 text-center text-sm font-bold">{d.gherqTodayRoot(gherqPreview)}</p>}
         <div className="mt-auto pt-3">
           <Link href={href("gherq", lang)} className={`${playButton.gherq} w-full`}>
-            <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
+            <span className="button-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
             {doneTick("gherq")}
           </Link>
         </div>
@@ -257,7 +257,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         <p className="mt-1 text-balance text-center text-base font-medium leading-snug">{d.sellumTagline}</p>
         <div className="mt-auto pt-3">
           <Link href={href("sellum", lang)} className={`${playButton.sellum} w-full`}>
-            <span className="display-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
+            <span className="button-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
             {doneTick("sellum")}
           </Link>
         </div>

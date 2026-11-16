@@ -167,9 +167,8 @@ function Zzz({ T }: { T: number }) {
   return (
     <g
       style={{
-        fontFamily: "var(--font-display), sans-serif",
-        fontWeight: 900,
-        fontStretch: "125%",
+        fontFamily: "var(--font-sans)",
+        fontWeight: 700,
       }}
       fill="#6d5f45"
     >

@@ -127,6 +127,11 @@ describe("dizzjunarju book: pages", () => {
   it("opens with the front page, makes whole spreads, and opens each letter once", () => {
     expect(layout.pages[0].kind).toBe("front");
     expect(layout.pages.length % 2).toBe(0);
+    // the end page is the last right-hand page, and there is only one
+    expect(layout.pages.at(-1)!.kind).toBe("end");
+    expect(layout.pages.filter((p) => p.kind === "end")).toHaveLength(1);
+    expect(layout.pageLetter.at(-1)).toBe("z");
+    expect(layout.pageLetter[0]).toBe(null);
     const openers = layout.pages.flatMap((p) => p.rows.filter((r) => r.kind === "opener").map((r) => (r.kind === "opener" ? r.letter : "")));
     expect(openers).toEqual([...new Set(ents.map((e) => e.letter))]);
     for (const l of openers) expect(layout.pages[layout.letterPage[l]].rows.some((r) => r.kind === "opener" && r.letter === l)).toBe(true);
@@ -134,7 +139,8 @@ describe("dizzjunarju book: pages", () => {
 
   it("lays out one page at a time without padding to a spread", () => {
     const one = paginate(ents, { lineWidth: 300, rowsHeight: 460, perView: 1 }, measure);
-    expect(one.pages.at(-1)!.kind).toBe("dict");
+    expect(one.pages.at(-1)!.kind).toBe("end");
+    expect(one.pages.at(-2)!.kind).toBe("dict");
     expect(one.pages.length).toBeGreaterThan(layout.pages.length);
     expect(one.wordPage).toHaveLength(ents.length);
   });

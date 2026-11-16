@@ -24,13 +24,18 @@ const ink = (a: number) => `rgb(46 38 24 / ${a.toFixed(3)})`;
 const PAGE_EDGES = "repeating-linear-gradient(to right, var(--color-limestone-100) 0px, var(--color-limestone-100) 2px, var(--color-limestone-400) 2px, var(--color-limestone-400) 3px)";
 const PAPER_GRAIN = `repeating-linear-gradient(92deg, ${ink(0.02)} 0px, ${ink(0.02)} 1px, transparent 1px, transparent 3px), repeating-linear-gradient(2deg, ${ink(0.015)} 0px, ${ink(0.015)} 1px, transparent 1px, transparent 5px)`;
 const curl = (to: string) => `linear-gradient(to ${to}, var(--color-limestone-50) 0%, var(--color-limestone-100) 46%, ${ink(0.4)} 50%, var(--color-limestone-300) 52%, var(--color-limestone-200) 100%)`;
-const display: CSSProperties = { fontFamily: "var(--font-display)", fontWeight: 900, fontStretch: "125%", fontVariationSettings: '"wdth" 125', textTransform: "uppercase", letterSpacing: "0.01em" };
+/** Capitals for titles inside the book: the same style as .display-caps in app/globals.css. */
+const display: CSSProperties = { fontFamily: "var(--font-sans)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.01em" };
+/** Small labels beside a headword (n.m., pl.): the sans font, medium. Headwords and word forms are serif. */
+const label: CSSProperties = { fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: 13 };
 /** The book's boards: the rim around the pages, and the back of the cover. */
 const BOARD = "var(--color-book-deep)";
 /** The cover's green, also used inside the book: the letter that opens a section, the current letter tab. */
 const BOOK = "var(--color-book)";
 /** The cover art: the cat on a limestone sill, cut paper on green cloth. 2:3, with its own border line. */
 export const COVER_ART = asset("/media/dizzjunarju-cover.webp");
+/** The last page: the cat asleep on a pile of books, inky paw prints across the paper. 2:3, on plain cream. */
+const END_ART = asset("/media/dizzjunarju-end.webp");
 
 /**
  * The opening: the closed book rests, the cover lifts to upright, comes down on the left as the
@@ -694,7 +699,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
           </span>
           {hn > 0 && <span style={{ position: "relative", top: -7, marginLeft: 1, fontWeight: 600, fontSize: 11, lineHeight: "12px", color: SOFT }}>{hn}</span>}
         </span>
-        <span lang="mt" style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 13, color: SOFT }}>
+        <span lang="mt" style={{ ...label, color: SOFT }}>
           {pos}
           {archaic && (pos ? " " : "") + ARCHAIC_LABEL}
         </span>
@@ -740,7 +745,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
             {e.forms.map(([kind, forms], k) => (
               <span key={kind}>
                 {k > 0 && " · "}
-                <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 13 }}>{FORM_LABEL[kind] ?? kind}</span> <span style={{ fontFamily: SERIF, color: INK }}>{forms}</span>
+                <span style={label}>{FORM_LABEL[kind] ?? kind}</span> <span style={{ fontFamily: SERIF, color: INK }}>{forms}</span>
               </span>
             ))}
           </div>
@@ -794,6 +799,30 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
   }
 
   /**
+   * The cover and the end page are 2:3 pictures. A page close to that shape stretches the picture to
+   * fit, keeping all of it; a squatter page (a short phone) crops it from the top, keeping the cat.
+   */
+  private artFits() {
+    return Math.abs(this.geo.W / this.geo.H / (2 / 3) - 1) < 0.12;
+  }
+
+  /** The last page of the book: a small reward for getting there. */
+  private endPage() {
+    const d = this.props.d;
+    const stretch = this.artFits();
+    return (
+      <div role="img" aria-label={d.dictEndAlt} style={{ position: "absolute", inset: 0, backgroundImage: `url(${END_ART})`, backgroundSize: stretch ? "100% 100%" : "cover", backgroundPosition: "center bottom" }}>
+        {/* in the clear patch of paper to the left of the paw prints */}
+        {stretch && (
+          <div lang="mt" style={{ ...display, position: "absolute", left: "11%", top: "37%", fontSize: this.geo.W < 440 ? 18 : 24, lineHeight: 1, color: INK }}>
+            {d.dictEnd}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /**
    * The face of the front cover: the cover art with the title set over its empty top third.
    * `glint` is the band of light crossing it as it lifts, 0..1.
    */
@@ -801,9 +830,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     const d = this.props.d;
     const { W, H } = this.geo;
     const small = W < 440;
-    // The art is 2:3. A page close to that shape stretches it to fit, keeping its border line all
-    // round; a squatter page (a short phone) crops it from the top instead, keeping the cat.
-    const stretch = Math.abs(W / H / (2 / 3) - 1) < 0.12;
+    const stretch = this.artFits();
     return (
       <div role="img" aria-label={`${d.dictTitle}. ${d.dictCatAlt}`} style={{ position: "absolute", inset: 0, overflow: "hidden", backgroundColor: BOOK, backgroundImage: `url(${COVER_ART})`, backgroundSize: stretch ? "100% 100%" : "cover", backgroundPosition: "center bottom" }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: !stretch ? 18 : small ? "8%" : "11%", display: "flex", flexDirection: "column", alignItems: "center", gap: small ? 10 : 16, color: PAPER }}>
@@ -813,7 +840,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
           {H >= 480 && (
             <>
               <div aria-hidden style={{ width: small ? 36 : 56, height: 2, background: PAPER }} />
-              <div style={{ ...display, fontSize: small ? 14 : 18, lineHeight: 1 }}>Kelma</div>
+              <div style={{ ...display, letterSpacing: "0.02em", fontSize: small ? 14 : 18, lineHeight: 1 }}>Kelma</div>
             </>
           )}
         </div>
@@ -908,6 +935,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
       <div key={s.key} style={{ position: "absolute", top: 0, left: s.left, width: W, height: H, overflow: "hidden", transformOrigin: s.origin, transform: s.transform, zIndex: s.z, opacity: s.opacity, backgroundColor: PAPER, backgroundImage: PAPER_GRAIN }}>
         {s.page === "cover" && this.cover()}
         {page?.kind === "front" && this.frontPage()}
+        {page?.kind === "end" && this.endPage()}
         {page?.kind === "dict" && (
           <div style={{ position: "absolute", inset: 0, padding: `18px ${pad}px 0`, filter: s.blur ? "blur(1.6px)" : "none" }}>
             <div style={{ height: 26, display: "flex", justifyContent: s.right && !single ? "flex-end" : "flex-start", alignItems: "flex-start", borderBottom: "1px solid var(--color-limestone-400)" }}>
@@ -964,7 +992,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
           {e.w}
           {e.hn > 0 && <span style={{ position: "relative", top: -6, marginLeft: 1, fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: 11, color: SOFT }}>{e.hn}</span>}
           {/* found through another form of the word: say which, so "kotba" landing on ktieb makes sense */}
-          {this.exact.via[i] && <span style={{ marginLeft: 8, fontWeight: 400, fontStyle: "italic", fontSize: 14, color: SOFT }}>({this.exact.via[i]})</span>}
+          {this.exact.via[i] && <span style={{ ...label, marginLeft: 8, fontSize: 14, color: SOFT }}>({this.exact.via[i]})</span>}
         </span>
         <span style={{ fontSize: 14, lineHeight: "20px", color: SOFT, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{e.gloss}</span>
       </button>

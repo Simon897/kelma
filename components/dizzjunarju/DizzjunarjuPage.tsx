@@ -33,7 +33,7 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
       <header className="mx-auto flex h-14 max-w-[1240px] items-center justify-between px-4 min-[900px]:h-16">
         <Link href={href("home", lang)} aria-label={d.homeAria} className="inline-flex min-h-11 items-center gap-2">
           <CatLogo className="size-10" />
-          <span className="display-caps text-xl">Kelma</span>
+          <span className="display-caps logo-caps text-xl">Kelma</span>
         </Link>
         <LangToggle lang={lang} page="dizzjunarju" />
       </header>

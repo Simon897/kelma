@@ -38,7 +38,7 @@ export function HowPage({ lang }: { lang: Lang }) {
       <header className="mx-auto flex h-16 max-w-[40rem] items-center justify-between px-4">
         <Link href={href("home", lang)} aria-label={d.homeAria} className="inline-flex min-h-11 items-center gap-2">
           <CatLogo className="size-10" />
-          <span className="display-caps text-xl">Kelma</span>
+          <span className="display-caps logo-caps text-xl">Kelma</span>
         </Link>
         <LangToggle lang={lang} page="how" />
       </header>
@@ -129,13 +129,13 @@ export function HowPage({ lang }: { lang: Lang }) {
             href={href("normali", lang)}
             className="btn-block inline-flex min-h-12 items-center rounded-tile border-2 border-ink bg-sea px-5 text-limestone-50 hover:bg-sea-deep"
           >
-            <span className="display-caps text-lg">{d.modeNormali}</span>
+            <span className="button-caps text-lg">{d.modeNormali}</span>
           </Link>
           <Link
             href={href("tqila", lang)}
             className="btn-block inline-flex min-h-12 items-center rounded-tile border-2 border-ink bg-sea px-5 text-limestone-50 hover:bg-sea-deep"
           >
-            <span className="display-caps text-lg">{d.modeTqila}</span>
+            <span className="button-caps text-lg">{d.modeTqila}</span>
           </Link>
         </div>
       </main>

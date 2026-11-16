@@ -34,7 +34,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </div>
         {/* phones: the top padding clears the buttons in the corner, which are as wide as the wordmark */}
         <div className="flex flex-col items-center px-4 pt-16 text-center sm:pt-14">
-          <h1 className="display-caps text-[2.75rem] leading-none sm:text-7xl">Kelma</h1>
+          <h1 className="display-caps logo-caps text-[2.75rem] leading-none sm:text-7xl">Kelma</h1>
           {/* Says what the site is, so the site's name and the Kelma game aren't confused. */}
           <p className="mt-1 text-sm font-semibold text-ink-soft sm:mt-2 sm:text-lg">{d.siteTagline}</p>
         </div>

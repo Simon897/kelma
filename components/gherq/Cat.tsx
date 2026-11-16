@@ -552,7 +552,7 @@ function Zzz({ still }: { still: boolean }) {
     { x: 92, y: -126, size: 24, dur: 3.8, delay: 2.5 },
   ];
   return (
-    <g fontFamily="IBM Plex Sans, sans-serif" fontWeight={700} fill="#6d5f45">
+    <g style={{ fontFamily: "var(--font-sans)" }} fontWeight={700} fill="#6d5f45">
       {(still ? zs.slice(0, 2) : zs).map((z, i) => (
         <text
           key={i}

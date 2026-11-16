@@ -293,5 +293,7 @@ export const mt = {
   ], // REVIEW
   dictLegendSource: "It-tifsiriet huma bl-Ingliż, minn Ġabra.", // REVIEW
   dictCatAlt: "Il-qattus ta' Kelma", // REVIEW
+  dictEnd: "It-Tmiem", // REVIEW
+  dictEndAlt: "Il-qattus rieqed fuq munzell kotba, b'marki ta' saqajh bil-linka mal-paġna.", // REVIEW
   dictCredit: "Kliem minn Ġabra, Università ta' Malta (CC BY 4.0).", // REVIEW
 };

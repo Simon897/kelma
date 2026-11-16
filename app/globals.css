@@ -52,8 +52,8 @@
   --shadow-block-sm: 2px 2px 0 0 rgb(46 38 24 / 0.18);
   --shadow-block-lift: 4px 6px 0 0 rgb(46 38 24 / 0.2);
 
-  --font-display: var(--font-archivo), "Arial Black", sans-serif;
-  --font-sans: var(--font-plex), system-ui, sans-serif;
+  /* One sans font for everything: Bricolage Grotesque (lib/fonts.ts sets --font-bricolage on <html>). */
+  --font-sans: var(--font-bricolage), system-ui, sans-serif;
 
   --ease-flip: cubic-bezier(0.45, 0, 0.2, 1);
 }
@@ -71,6 +71,8 @@ html[data-contrast] {
     background: var(--color-bg);
     color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
+    /* Bricolage draws itself differently for small and large text; let the browser pick by size. */
+    font-optical-sizing: auto;
   }
   body {
     background: var(--color-bg);
@@ -91,13 +93,23 @@ html[data-contrast] {
 }
 
 @layer components {
+  /* Page titles, card titles, section headings. */
   .display-caps {
-    font-family: var(--font-display);
-    font-stretch: 125%;
-    font-variation-settings: "wdth" 125;
-    font-weight: 900;
+    font-family: var(--font-sans);
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.01em;
+  }
+  /* The same capitals on a button, a step lighter. */
+  .button-caps {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  /* The KELMA logo: with .display-caps, set a little wider apart. */
+  .logo-caps {
+    letter-spacing: 0.02em;
   }
 
   /* Dotted grain so flat limestone panels don't read as plain vector fills. */

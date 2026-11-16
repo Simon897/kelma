@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { archivo, plex } from "@/lib/fonts";
+import { bricolage } from "@/lib/fonts";
 import type { Lang } from "@/lib/i18n";
 import { Providers } from "./Providers";
 
@@ -12,7 +12,7 @@ export function RootShell({ lang, children }: { lang: Lang; children: ReactNode 
     <html
       lang={lang}
       translate="no"
-      className={`notranslate ${archivo.variable} ${plex.variable}`}
+      className={`notranslate ${bricolage.variable}`}
       suppressHydrationWarning
     >
       <head>

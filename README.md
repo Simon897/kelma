@@ -104,7 +104,7 @@ The cat in the scene has idles and reactions (`components/gherq/Cat.tsx`, schedu
 
 ## Dizzjunarju (the dictionary)
 
-`/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen. The cover is `public/media/dizzjunarju-cover.webp` (2:3, no lettering: the title is set over it in the page), and the book's green is `--color-book` / `--color-book-deep` in `app/globals.css`, sampled from that art. Each visit starts with the closed book opening (about 2 seconds; searching or jumping to a letter skips it, and with reduced motion it is a short cross-fade). The timings are `OPENING` at the top of `components/dizzjunarju/DictionaryBook.tsx`.
+`/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen. The cover is `public/media/dizzjunarju-cover.webp` (2:3, no lettering: the title is set over it in the page), and the book's green is `--color-book` / `--color-book-deep` in `app/globals.css`, sampled from that art. The book always closes on an end page, `public/media/dizzjunarju-end.webp` (the cat asleep on a pile of books), with "It-Tmiem" set over it. Each visit starts with the closed book opening (about 2 seconds; searching or jumping to a letter skips it, and with reduced motion it is a short cross-fade). The timings are `OPENING` at the top of `components/dizzjunarju/DictionaryBook.tsx`.
 
 ```
 data/dizzjunarju/words.json          one row per entry: [word, label, meaning, root, tier, number, forms to show?]

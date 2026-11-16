@@ -33,7 +33,7 @@ export function GameHeader({
       {/* Below 420px the cat logo carries the brand, so "Kelma ·" is for screen readers only. */}
       <h1 className="min-w-0 flex-1 truncate whitespace-nowrap pl-1 leading-none">
         <span className="sr-only min-[420px]:not-sr-only">
-          <span className="display-caps text-base">Kelma</span>
+          <span className="display-caps logo-caps text-base">Kelma</span>
           <span className="mx-1.5 text-ink-soft">·</span>
         </span>
         <span className="display-caps text-base">{modeName}</span>
