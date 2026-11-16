@@ -213,6 +213,20 @@ html[data-contrast] {
   transform: translate(4px, 4px);
   box-shadow: none !important;
 }
+/* The random-word die: no box, it tips over a little on hover and presses down on click. */
+.dict-dice {
+  transition: transform 0.15s;
+}
+.dict-dice:is(:hover, :focus-visible) {
+  transform: translateY(-2px) rotate(-10deg);
+}
+.dict-dice:active {
+  transform: translateY(1px) scale(0.94);
+}
+.dict-dice:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
 .dict-tab {
   transition: width 0.15s;
 }
@@ -224,6 +238,7 @@ html[data-contrast] {
 }
 @media (prefers-reduced-motion: reduce) {
   .dict-btn,
+  .dict-dice,
   .dict-tab {
     transition: none;
   }

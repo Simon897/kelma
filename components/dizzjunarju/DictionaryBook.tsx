@@ -36,6 +36,8 @@ const BOOK = "var(--color-book)";
 export const COVER_ART = asset("/media/dizzjunarju-cover.webp");
 /** The last page: the cat asleep on a pile of books, inky paw prints across the paper. 2:3, on plain cream. */
 const END_ART = asset("/media/dizzjunarju-end.webp");
+/** The random-word button: a cream die with its own soft shadow, on a transparent background. 144px, shown at 48. */
+const DICE_ART = asset("/media/dizzjunarju-dice.webp");
 
 /**
  * The opening: the closed book rests, the cover lifts to upright, comes down on the left as the
@@ -1057,7 +1059,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
         </div>
         <button
           type="button"
-          className="dict-btn"
+          className="dict-dice"
           aria-label={d.dictRandom}
           title={d.dictRandom}
           onClick={() => {
@@ -1067,20 +1069,10 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
             this.jump(this.viewOf(i), i);
             this.redraw();
           }}
-          style={{ ...square, background: SEA, boxShadow: "var(--shadow-block)" }}
+          style={{ ...square, border: 0, background: "none" }}
         >
-          <svg {...icon} stroke={PAPER}>
-            <path d="M12 2.5 20.5 7.25v9.5L12 21.5l-8.5-4.75v-9.5Z" />
-            <path strokeLinecap="butt" d="M3.5 7.25 12 12l8.5-4.75M12 12v9.5" />
-            <g fill={PAPER} stroke="none">
-              <ellipse cx="12" cy="7.25" rx="1.5" ry="0.95" />
-              <circle cx="6.1" cy="12.3" r="1.05" />
-              <circle cx="9.4" cy="16.9" r="1.05" />
-              <circle cx="14.4" cy="17.3" r="1" />
-              <circle cx="16.25" cy="14.4" r="1" />
-              <circle cx="18.1" cy="11.5" r="1" />
-            </g>
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimiser */}
+          <img src={DICE_ART} alt="" width={48} height={48} draggable={false} style={{ display: "block", width: 48, height: 48 }} />
         </button>
       </div>
     );
@@ -1159,7 +1151,8 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     }
 
     return (
-      <div ref={this.box} className="dict-root" tabIndex={0} onKeyDown={this.onKey} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: single ? 10 : 32, outline: "none", overflow: "hidden", padding: "0 0 8px" }}>
+      <div ref={this.box} className="dict-root" tabIndex={0} onKeyDown={this.onKey} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: single ? 10 : 32, outline: "none", overflow: "hidden", padding: "8px 0", marginTop: -8 }}>
+        {/* The 8px above, pulled back by the margin, leaves room inside the clip for the dice to tip and for focus outlines. */}
         {/* The meanings are measured in this font before the pages are laid out. */}
         <span ref={this.probe} aria-hidden className="font-sans" style={{ position: "absolute", visibility: "hidden", pointerEvents: "none" }} />
         <div style={{ width: "100%", display: "flex", justifyContent: "center", padding: "0 12px" }}>{this.searchBar()}</div>
