@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { preload } from "react-dom";
 import { plexSerif } from "@/lib/fonts-serif";
 import { t, type Lang } from "@/lib/i18n";
 import { href } from "@/lib/routes";
@@ -8,7 +9,7 @@ import { GABRA_URL } from "@/lib/site";
 import { CatLogo } from "../CatLogo";
 import { ArrowIcon } from "../Icons";
 import { LangToggle } from "../LangToggle";
-import { DictionaryBook } from "./DictionaryBook";
+import { COVER_ART, DictionaryBook } from "./DictionaryBook";
 
 /**
  * Dizzjunarju: the whole word list as a book you can leaf through and search.
@@ -22,6 +23,8 @@ import { DictionaryBook } from "./DictionaryBook";
  */
 export function DizzjunarjuPage({ lang }: { lang: Lang }) {
   const d = t(lang);
+  // The closed cover is the first thing on the page: fetch its art straight away.
+  preload(COVER_ART, { as: "image" });
 
   return (
     <div className={`min-h-svh ${plexSerif.variable}`}>

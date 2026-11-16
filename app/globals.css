@@ -28,6 +28,12 @@
   --color-sea-deep: #0a4f68;
   --color-ochre: #c9921e;
 
+  /* Dizzjunarju: the book's cloth cover, the green of an old Maltese door, sampled from the cover
+     art (public/media/dizzjunarju-cover.webp); and its boards, a shade darker, which show as the
+     rim around the pages. */
+  --color-book: #275430;
+  --color-book-deep: #1d4226;
+
   --color-tile-correct: #427a35;
   --color-tile-present: #d9a527;
   --color-tile-absent: #746954;

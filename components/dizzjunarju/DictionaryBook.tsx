@@ -4,6 +4,7 @@ import { Component, createRef, type CSSProperties, type KeyboardEvent, type Poin
 import { ALPHABET, ARCHAIC_LABEL, FORM_LABEL, FORMS_H, loadEntries, loadForms, paginate, ROW_GAP, OPENER_H, searchExact, wantsRelated, type Entry, type ExactResult, type Layout, type PageRow } from "@/lib/dizzjunarju-book";
 import { loadRelated } from "@/lib/dizzjunarju-related";
 import type { Dict } from "@/lib/i18n";
+import { asset } from "@/lib/site";
 import { CatLogo } from "../CatLogo";
 
 /**
@@ -24,7 +25,10 @@ const PAGE_EDGES = "repeating-linear-gradient(to right, var(--color-limestone-10
 const PAPER_GRAIN = `repeating-linear-gradient(92deg, ${ink(0.02)} 0px, ${ink(0.02)} 1px, transparent 1px, transparent 3px), repeating-linear-gradient(2deg, ${ink(0.015)} 0px, ${ink(0.015)} 1px, transparent 1px, transparent 5px)`;
 const curl = (to: string) => `linear-gradient(to ${to}, var(--color-limestone-50) 0%, var(--color-limestone-100) 46%, ${ink(0.4)} 50%, var(--color-limestone-300) 52%, var(--color-limestone-200) 100%)`;
 const display: CSSProperties = { fontFamily: "var(--font-display)", fontWeight: 900, fontStretch: "125%", fontVariationSettings: '"wdth" 125', textTransform: "uppercase", letterSpacing: "0.01em" };
-const SEA_DEEP = "var(--color-sea-deep)";
+/** The book's boards: the rim around the pages, and the back of the cover. */
+const BOARD = "var(--color-book-deep)";
+/** The cover art: the cat on a limestone sill, cut paper on green cloth. 2:3, with its own border line. */
+export const COVER_ART = asset("/media/dizzjunarju-cover.webp");
 
 /**
  * The opening: the closed book rests, the cover lifts to upright, comes down on the left as the
@@ -787,22 +791,30 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     );
   }
 
-  /** The face of the front cover. `glint` is the band of light crossing it as it lifts, 0..1. */
+  /**
+   * The face of the front cover: the cover art with the title set over its empty top third.
+   * `glint` is the band of light crossing it as it lifts, 0..1.
+   */
   private cover(glint = 0) {
     const d = this.props.d;
-    const { W } = this.geo;
+    const { W, H } = this.geo;
     const small = W < 440;
-    const panel = small ? 150 : 216;
+    // The art is 2:3. A page close to that shape stretches it to fit, keeping its border line all
+    // round; a squatter page (a short phone) crops it from the top instead, keeping the cat.
+    const stretch = Math.abs(W / H / (2 / 3) - 1) < 0.12;
     return (
-      <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: SEA, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: small ? 26 : 36 }}>
-        <div aria-hidden style={{ position: "absolute", inset: small ? 14 : 20, border: `2px solid ${PAPER}`, borderRadius: 2 }} />
-        <div lang="mt" style={{ ...display, fontSize: small ? 28 : 46, lineHeight: 1, color: PAPER }}>
-          {d.dictTitle}
+      <div role="img" aria-label={`${d.dictTitle}. ${d.dictCatAlt}`} style={{ position: "absolute", inset: 0, overflow: "hidden", backgroundColor: "var(--color-book)", backgroundImage: `url(${COVER_ART})`, backgroundSize: stretch ? "100% 100%" : "cover", backgroundPosition: "center bottom" }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: !stretch ? 18 : small ? "8%" : "11%", display: "flex", flexDirection: "column", alignItems: "center", gap: small ? 10 : 16, color: PAPER }}>
+          <div lang="mt" style={{ ...display, fontSize: small ? 28 : 46, lineHeight: 1 }}>
+            {d.dictTitle}
+          </div>
+          {H >= 480 && (
+            <>
+              <div aria-hidden style={{ width: small ? 36 : 56, height: 2, background: PAPER }} />
+              <div style={{ ...display, fontSize: small ? 14 : 18, lineHeight: 1 }}>Kelma</div>
+            </>
+          )}
         </div>
-        <div style={{ width: panel, height: panel, display: "flex", alignItems: "center", justifyContent: "center", background: PAPER, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: `6px 6px 0 0 ${ink(0.3)}` }}>
-          <CatLogo className={small ? "size-[122px]" : "size-44"} title={d.dictCatAlt} />
-        </div>
-        <div style={{ ...display, fontSize: small ? 14 : 18, lineHeight: 1, color: PAPER }}>Kelma</div>
         {glint > 0 && glint < 1 && (
           <div aria-hidden style={{ position: "absolute", top: 0, left: -W / 2, width: W / 2, height: "100%", background: "linear-gradient(to right, rgb(248 242 226 / 0), rgb(248 242 226 / 0.3) 50%, rgb(248 242 226 / 0))", transform: `translateX(${(1.5 * W * glint).toFixed(1)}px)`, opacity: glint < 0.25 ? glint * 4 : 1 - 0.4 * (glint - 0.25), pointerEvents: "none" }} />
         )}
@@ -822,7 +834,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     const ph = this.opening(now);
     const hinge = W + 22;
     const peak = (x: number) => 1 - Math.abs(2 * x - 1);
-    const board: CSSProperties = { position: "absolute", top: 0, height: H + 20, background: SEA_DEEP, border: `2px solid ${INK}` };
+    const board: CSSProperties = { position: "absolute", top: 0, height: H + 20, background: BOARD, border: `2px solid ${INK}` };
     const page = (index: number, left: number, right: boolean, fold: number): Sheet => ({ key: `open-${index}`, page: index, left, origin: "center center", transform: "none", z: 1, opacity: 1, shade: "none", blur: false, right, fold });
     const current = (this.layout && (this.layout.pageLetter[0] ?? this.layout.pageLetter[1])) || "a";
     const leftShown = ph.reduced ? ph.fade > 0 : ph.landT > 0;
@@ -848,7 +860,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
         </div>
 
         {coverShown && (
-          <div style={{ position: "absolute", left: hinge, top: 0, width: hinge, height: H + 20, background: SEA_DEEP, border: `2px solid ${INK}`, borderLeft: 0, borderRadius: "0 2px 2px 0", transformOrigin: "0 50%", transform: `rotateY(${(-90 * ph.lift).toFixed(2)}deg)`, opacity: ph.reduced ? 1 - ph.fade : 1 }}>
+          <div style={{ position: "absolute", left: hinge, top: 0, width: hinge, height: H + 20, background: BOARD, border: `2px solid ${INK}`, borderLeft: 0, borderRadius: "0 2px 2px 0", transformOrigin: "0 50%", transform: `rotateY(${(-90 * ph.lift).toFixed(2)}deg)`, opacity: ph.reduced ? 1 - ph.fade : 1 }}>
             <div style={{ position: "absolute", left: 0, top: 8, width: W, height: H }}>{this.cover(ph.liftT)}</div>
             <div aria-hidden style={{ position: "absolute", inset: 0, background: INK, opacity: 0.42 * ph.lift, pointerEvents: "none" }} />
           </div>
@@ -866,7 +878,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     const { W, H } = this.geo;
     const ph = this.opening(now);
     const peak = (x: number) => 1 - Math.abs(2 * x - 1);
-    const board: CSSProperties = { position: "absolute", top: -2, height: H + 16, background: SEA_DEEP, border: `2px solid ${INK}` };
+    const board: CSSProperties = { position: "absolute", top: -2, height: H + 16, background: BOARD, border: `2px solid ${INK}` };
     return (
       <>
         <div aria-hidden style={{ position: "absolute", left: 6, top: 6, width: Math.min(200, W), height: H, background: `linear-gradient(to right, ${ink(0.34)}, ${ink(0)})`, opacity: peak(ph.swing), pointerEvents: "none" }} />
@@ -1070,7 +1082,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
           <nav aria-label={d.dictJump} style={{ display: "flex", gap: 4, maxWidth: "100%", overflowX: "auto", padding: "2px 2px 6px" }}>
             {ALPHABET.map((l) => this.letterTab(l, current, false))}
           </nav>
-          <div style={{ position: "relative", width: W + 20, height: H + 16, background: SEA_DEEP, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: "var(--shadow-block)", ...(o < 1 ? { perspective: 1600, perspectiveOrigin: "6px 50%" } : null) }}>
+          <div style={{ position: "relative", width: W + 20, height: H + 16, background: BOARD, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: "var(--shadow-block)", ...(o < 1 ? { perspective: 1600, perspectiveOrigin: "6px 50%" } : null) }}>
             <div aria-hidden style={{ position: "absolute", top: 10, left: 6 + W, width: rw, height: H - 8, background: PAGE_EDGES }} />
             <div {...stageHandlers} style={{ position: "absolute", left: 6, top: 6, width: W, height: H, perspective: 2200, touchAction: "pan-y" }}>
               {ready ? this.sheets(now).map((s) => this.sheet(s, now)) : loadingPage}
@@ -1094,7 +1106,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
               this.openingBook(now)
             ) : (
               <div style={{ position: "relative", width: 2 * W + 84, height: H + 20, flexShrink: 0 }}>
-                <div aria-hidden style={{ position: "absolute", top: 0, left: 0, width: 2 * W + 44, height: H + 20, background: SEA_DEEP, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: `6px 6px 0 0 ${ink(0.18)}` }} />
+                <div aria-hidden style={{ position: "absolute", top: 0, left: 0, width: 2 * W + 44, height: H + 20, background: BOARD, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: `6px 6px 0 0 ${ink(0.18)}` }} />
                 <div aria-hidden style={{ position: "absolute", top: 14, left: 22 - lw, width: lw, height: H - 8, background: PAGE_EDGES, transition: "width .3s, left .3s" }} />
                 <div aria-hidden style={{ position: "absolute", top: 14, left: 2 * W + 22, width: rw, height: H - 8, background: PAGE_EDGES, transition: "width .3s" }} />
                 <nav aria-label={d.dictJump} style={{ position: "absolute", left: 2 * W + 28, top: 10, height: H, display: "flex", flexDirection: "column", gap: 1 }}>
