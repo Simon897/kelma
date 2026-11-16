@@ -27,6 +27,8 @@ const curl = (to: string) => `linear-gradient(to ${to}, var(--color-limestone-50
 const display: CSSProperties = { fontFamily: "var(--font-display)", fontWeight: 900, fontStretch: "125%", fontVariationSettings: '"wdth" 125', textTransform: "uppercase", letterSpacing: "0.01em" };
 /** The book's boards: the rim around the pages, and the back of the cover. */
 const BOARD = "var(--color-book-deep)";
+/** The cover's green, also used inside the book: the letter that opens a section, the current letter tab. */
+const BOOK = "var(--color-book)";
 /** The cover art: the cat on a limestone sill, cut paper on green cloth. 2:3, with its own border line. */
 export const COVER_ART = asset("/media/dizzjunarju-cover.webp");
 
@@ -711,7 +713,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     if (r.kind === "opener")
       return (
         <div key={`o${k}`} style={{ height: OPENER_H, marginBottom: ROW_GAP, display: "flex", alignItems: "center", gap: 16 }}>
-          <div lang="mt" style={{ ...display, width: 72, height: 72, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: SEA, color: PAPER, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: "var(--shadow-block)", fontSize: 30, lineHeight: 1 }}>
+          <div lang="mt" style={{ ...display, width: 72, height: 72, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: BOOK, color: PAPER, border: `2px solid ${INK}`, borderRadius: 2, boxShadow: "var(--shadow-block)", fontSize: 30, lineHeight: 1 }}>
             {r.letter}
           </div>
           <div style={{ flexGrow: 1, height: 2, background: INK }} />
@@ -803,7 +805,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     // round; a squatter page (a short phone) crops it from the top instead, keeping the cat.
     const stretch = Math.abs(W / H / (2 / 3) - 1) < 0.12;
     return (
-      <div role="img" aria-label={`${d.dictTitle}. ${d.dictCatAlt}`} style={{ position: "absolute", inset: 0, overflow: "hidden", backgroundColor: "var(--color-book)", backgroundImage: `url(${COVER_ART})`, backgroundSize: stretch ? "100% 100%" : "cover", backgroundPosition: "center bottom" }}>
+      <div role="img" aria-label={`${d.dictTitle}. ${d.dictCatAlt}`} style={{ position: "absolute", inset: 0, overflow: "hidden", backgroundColor: BOOK, backgroundImage: `url(${COVER_ART})`, backgroundSize: stretch ? "100% 100%" : "cover", backgroundPosition: "center bottom" }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: !stretch ? 18 : small ? "8%" : "11%", display: "flex", flexDirection: "column", alignItems: "center", gap: small ? 10 : 16, color: PAPER }}>
           <div lang="mt" style={{ ...display, fontSize: small ? 28 : 46, lineHeight: 1 }}>
             {d.dictTitle}
@@ -942,7 +944,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
       const p = this.layout?.letterPage[l];
       if (p != null) this.jump(Math.floor(p / this.per()), null);
     };
-    const common: CSSProperties = { display: "flex", alignItems: "center", background: on ? SEA : PAPER, color: on ? PAPER : INK, border: `1px solid ${INK}`, fontSize: 12, fontWeight: 700, lineHeight: 1, textTransform: "uppercase", cursor: "pointer" };
+    const common: CSSProperties = { display: "flex", alignItems: "center", background: on ? BOOK : PAPER, color: on ? PAPER : INK, border: `1px solid ${INK}`, fontSize: 12, fontWeight: 700, lineHeight: 1, textTransform: "uppercase", cursor: "pointer" };
     return side ? (
       <button key={l} type="button" lang="mt" className="dict-tab" onClick={go} aria-label={d.dictLetter(l.toUpperCase())} aria-current={on || undefined} style={{ ...common, flex: "1 1 0", minHeight: 0, width: on ? 52 : 40, padding: "0 8px 0 0", justifyContent: "flex-end", borderLeft: 0, borderRadius: "0 2px 2px 0" }}>
         {l}
