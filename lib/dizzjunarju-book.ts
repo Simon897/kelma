@@ -10,9 +10,12 @@ export type ShownForms = [kind: string, forms: string];
 
 /**
  * One row of words.json: [word, label, meaning, root, tier, number among same-spelt words (0 = none)],
- * then, for a noun or adjective that has them, its other forms to show.
+ * then, for a noun or adjective that has them, its other forms to show, then 1 for an archaic word.
  */
-export type WordRow = [string, string, string, string, number, number, ShownForms[]?];
+export type WordRow = [string, string, string, string, number, number, ShownForms[]?, number?];
+
+/** Printed after the part of speech of a word no longer in everyday use. */
+export const ARCHAIC_LABEL = "ark.";
 
 /** How each kind of form is labelled in an entry (Maltese abbreviations, like the part-of-speech labels). */
 export const FORM_LABEL: Record<string, string> = { sing: "sing.", coll: "koll.", f: "f.", m: "m.", pl: "pl.", dual: "dual", comp: "komp." };
@@ -38,6 +41,8 @@ export interface Entry {
   ri: number;
   /** other forms printed under the headword: plural, feminine, one of a collective... */
   forms: ShownForms[];
+  /** no longer in everyday use: labelled "ark." */
+  archaic: boolean;
   /** every other form of the word, reduced to a-z like `n`; empty until forms.json has loaded */
   fn: string[];
   /** the same forms as written, in step with `fn` */
@@ -98,6 +103,7 @@ export function buildEntries(rows: WordRow[]): Entry[] {
         .filter(Boolean),
       ri,
       forms: r[6] ?? [],
+      archaic: r[7] === 1,
       fn: [],
       fw: [],
     };

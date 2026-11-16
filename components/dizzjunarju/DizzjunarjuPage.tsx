@@ -25,7 +25,9 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
 
   return (
     <div className={`min-h-svh ${plexSerif.variable}`}>
-      <header className="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-4">
+      {/* Under 900px the book shows one page at a time (DictionaryBook's SINGLE_BELOW): the header is
+          shorter and the title is for screen readers only, so the book fits the screen without scrolling. */}
+      <header className="mx-auto flex h-14 max-w-[1240px] items-center justify-between px-4 min-[900px]:h-16">
         <Link href={href("home", lang)} aria-label={d.homeAria} className="inline-flex min-h-11 items-center gap-2">
           <CatLogo className="size-10" />
           <span className="display-caps text-xl">Kelma</span>
@@ -33,12 +35,12 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
         <LangToggle lang={lang} page="dizzjunarju" />
       </header>
 
-      <main className="mx-auto max-w-[1320px] pb-10 pt-4">
-        <div className="flex flex-col items-center px-4 pb-5 text-center">
-          <h1 lang="mt" className="display-caps text-4xl">
+      <main className="mx-auto max-w-[1320px] pb-10 pt-1 min-[900px]:pt-4">
+        <div className="flex flex-col items-center px-4 text-center min-[900px]:pb-5">
+          <h1 lang="mt" className="display-caps text-4xl max-[899px]:sr-only">
             {d.dictTitle}
           </h1>
-          <p className="mt-2 font-medium text-ink-soft">{d.dictSubtitle}</p>
+          <p className="mt-2 font-medium text-ink-soft max-[899px]:hidden">{d.dictSubtitle}</p>
         </div>
 
         <DictionaryBook d={d} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { Component, createRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
-import { ALPHABET, FORM_LABEL, FORMS_H, loadEntries, loadForms, paginate, ROW_GAP, OPENER_H, searchExact, wantsRelated, type Entry, type ExactResult, type Layout, type PageRow } from "@/lib/dizzjunarju-book";
+import { ALPHABET, ARCHAIC_LABEL, FORM_LABEL, FORMS_H, loadEntries, loadForms, paginate, ROW_GAP, OPENER_H, searchExact, wantsRelated, type Entry, type ExactResult, type Layout, type PageRow } from "@/lib/dizzjunarju-book";
 import { loadRelated } from "@/lib/dizzjunarju-related";
 import type { Dict } from "@/lib/i18n";
 import { CatLogo } from "../CatLogo";
@@ -71,6 +71,12 @@ interface Geo {
 const FULL_WIDTH = 1260;
 /** Below this the open book would be scaled under about 70%, too small to read: show one page instead. */
 const SINGLE_BELOW = 900;
+/**
+ * One page at a time: what the page takes up besides the book's own page, so the whole thing
+ * (header, search, letters, book, arrows) fits a phone screen without scrolling. Header 56, search
+ * 48, letters 52, arrows 48, the cover's edge 16, gaps and padding 50.
+ */
+const SINGLE_CHROME = 270;
 
 interface Flip {
   from: number;
@@ -130,8 +136,6 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
   private swipe: { x: number; y: number } | null = null;
   private raf = 0;
   private reducedMotion = false;
-  private sound = false;
-  private audio: AudioContext | null = null;
   private observer: ResizeObserver | null = null;
 
   private q = "";
@@ -194,7 +198,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     if (w >= SINGLE_BELOW) this.geo = { single: false, W: 520, H: 760, pad: 38, scale: Math.min(1, w / FULL_WIDTH) };
     else {
       const W = Math.min(520, w - 44);
-      this.geo = { single: true, W, H: Math.max(460, Math.min(760, window.innerHeight - 290)), pad: W < 440 ? 22 : 38, scale: 1 };
+      this.geo = { single: true, W, H: Math.max(300, Math.min(760, window.innerHeight - SINGLE_CHROME)), pad: W < 440 ? 22 : 38, scale: 1 };
     }
     if (was.single !== this.geo.single || was.W !== this.geo.W || was.H !== this.geo.H) this.relayout();
     else this.redraw();
@@ -323,35 +327,6 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     this.raf = requestAnimationFrame(step);
   }
 
-  /** A short burst of filtered noise: a page turning. Only when the reader has switched sound on. */
-  private paper() {
-    if (!this.sound) return;
-    try {
-      const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!AC) return;
-      const ac = (this.audio ??= new AC());
-      const len = Math.floor(ac.sampleRate * 0.24);
-      const buf = ac.createBuffer(1, len, ac.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) {
-        const t = i / len;
-        data[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * t) * (1 - t);
-      }
-      const src = ac.createBufferSource();
-      src.buffer = buf;
-      const filter = ac.createBiquadFilter();
-      filter.type = "bandpass";
-      filter.frequency.value = 2600;
-      filter.Q.value = 0.5;
-      const gain = ac.createGain();
-      gain.gain.value = 0.1;
-      src.connect(filter);
-      filter.connect(gain);
-      gain.connect(ac.destination);
-      src.start();
-    } catch {}
-  }
-
   private clearMarks() {
     this.hint = null;
     this.hl = null;
@@ -377,7 +352,6 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     if (this.flips.length && this.flips[0].dir !== dir) this.flips = [];
     this.flips.push(this.flip(this.cur, target, dir, now, 560));
     this.cur = target;
-    this.paper();
     this.kick();
   }
 
@@ -425,7 +399,6 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
       }
     }
     this.cur = target;
-    this.paper();
     this.kick();
   }
 
@@ -510,7 +483,6 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     f.p1 = p > 0.5 ? 1 : 0;
     f.t0 = performance.now();
     f.dur = 160 + 400 * Math.abs(f.p1 - p);
-    if (f.p1 === 1) this.paper();
     this.kick();
   };
   private onLeave = () => {
@@ -705,7 +677,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     );
   }
 
-  private entryHead(word: string, hn: number, pos: string, root: string, tier: number, mark?: { width: string; background: string }) {
+  private entryHead(word: string, hn: number, pos: string, root: string, tier: number, mark?: { width: string; background: string }, archaic = false) {
     const d = this.props.d;
     return (
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, height: 24, whiteSpace: "nowrap" }}>
@@ -718,6 +690,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
         </span>
         <span lang="mt" style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 13, color: SOFT }}>
           {pos}
+          {archaic && (pos ? " " : "") + ARCHAIC_LABEL}
         </span>
         {root && (
           <span style={{ fontSize: 12, fontWeight: 500, color: SOFT }}>
@@ -755,7 +728,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     }
     return (
       <div key={r.i} style={{ height: r.h, marginBottom: ROW_GAP }}>
-        {this.entryHead(e.w, e.hn, e.pos, e.root, e.tier, mark)}
+        {this.entryHead(e.w, e.hn, e.pos, e.root, e.tier, mark, e.archaic)}
         {e.forms.length > 0 && (
           <div lang="mt" style={{ height: FORMS_H, fontSize: 14, lineHeight: `${FORMS_H}px`, color: SOFT, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {e.forms.map(([kind, forms], k) => (
@@ -1067,24 +1040,6 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
             </g>
           </svg>
         </button>
-        <button
-          type="button"
-          className="dict-btn"
-          aria-pressed={this.sound}
-          aria-label={this.sound ? d.dictSoundOn : d.dictSoundOff}
-          title={this.sound ? d.dictSoundOn : d.dictSoundOff}
-          onClick={() => {
-            this.sound = !this.sound;
-            this.redraw();
-            this.paper();
-          }}
-          style={{ ...square, background: PAPER, boxShadow: "var(--shadow-block-sm)" }}
-        >
-          <svg {...icon} stroke={INK}>
-            <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" />
-            {this.sound ? <path d="M15.5 9.2a4.2 4.2 0 0 1 0 5.6M18.2 6.6a7.8 7.8 0 0 1 0 10.8" /> : <path d="M16 9.5l5 5M21 9.5l-5 5" />}
-          </svg>
-        </button>
       </div>
     );
   }
@@ -1111,7 +1066,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
       // One page, with the next pages' edges showing on the right.
       const rw = 3 + 9 * (1 - progress);
       book = (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, width: "100%" }}>
           <nav aria-label={d.dictJump} style={{ display: "flex", gap: 4, maxWidth: "100%", overflowX: "auto", padding: "2px 2px 6px" }}>
             {ALPHABET.map((l) => this.letterTab(l, current, false))}
           </nav>
@@ -1162,7 +1117,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     }
 
     return (
-      <div ref={this.box} className="dict-root" tabIndex={0} onKeyDown={this.onKey} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: single ? 16 : 32, outline: "none", overflow: "hidden", padding: "0 0 8px" }}>
+      <div ref={this.box} className="dict-root" tabIndex={0} onKeyDown={this.onKey} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: single ? 10 : 32, outline: "none", overflow: "hidden", padding: "0 0 8px" }}>
         {/* The meanings are measured in this font before the pages are laid out. */}
         <span ref={this.probe} aria-hidden className="font-sans" style={{ position: "absolute", visibility: "hidden", pointerEvents: "none" }} />
         <div style={{ width: "100%", display: "flex", justifyContent: "center", padding: "0 12px" }}>{this.searchBar()}</div>

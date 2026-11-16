@@ -17,6 +17,8 @@ import { writeXlsx } from "./lib/xlsx-write.mjs";
 import { readSheet } from "./lib/xlsx.mjs";
 
 export const DECISIONS = { add: "✓ Add as it is", fix: "✎ Add with my corrections", no: "✗ Leave out" };
+/** The one value of the "Archaic?" column: the entry will carry the label "ark.". */
+export const ARCHAIC = "Yes";
 export const POS_CHOICES = ["noun (m)", "noun (f)", "noun (pl)", "noun", "verb", "adjective", "adverb", "pronoun", "preposition", "conjunction", "interjection", "numeral"];
 const OUT = new URL("../dizzjunarju-review.xlsx", import.meta.url);
 const read = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url), "utf8"));
@@ -55,8 +57,8 @@ dictionary.forEach((r, i) => {
 });
 
 // Answers already given in an earlier copy of the sheet, by Ref.
-const HEADER = ["Your answer", "Word", "Meaning", "Part of speech", "How common", "Check first", "Corrected word", "Corrected meaning", "Corrected part of speech", "Notes", "Ref"];
-const KEPT = ["Your answer", "Corrected word", "Corrected meaning", "Corrected part of speech", "Notes"];
+const HEADER = ["Your answer", "Word", "Meaning", "Part of speech", "How common", "Check first", "Corrected word", "Corrected meaning", "Corrected part of speech", "Archaic?", "Notes", "Ref"];
+const KEPT = ["Your answer", "Corrected word", "Corrected meaning", "Corrected part of speech", "Archaic?", "Notes"];
 const previous = new Map();
 const previousOrder = [];
 if (existsSync(OUT)) {
@@ -113,6 +115,8 @@ if (previous.size) {
   rows.sort((a, b) => place(a) - place(b));
 }
 const kept = (r, name) => previous.get(String(r.ref))?.[name] ?? "";
+// A sheet from before the "Archaic?" column: a note saying the word is archaic becomes a tick.
+const archaic = (r) => (kept(r, "Archaic?").trim() || (/\b(archaic|arkajk)/i.test(kept(r, "Notes")) ? ARCHAIC : ""));
 const answered = rows.filter((r) => kept(r, "Your answer").trim()).length;
 const lost = [...previous].filter(([ref, v]) => KEPT.some((n) => v[n].trim()) && !rows.some((r) => String(r.ref) === ref));
 if (lost.length) throw new Error(`${lost.length} answered rows are no longer in the review (Ref ${lost.map((x) => x[0]).join(", ")}); not overwriting the sheet.`);
@@ -132,6 +136,7 @@ for (const r of rows) {
     { v: kept(r, "Corrected word"), s: "decide" },
     { v: kept(r, "Corrected meaning"), s: "decide" },
     { v: kept(r, "Corrected part of speech"), s: "decide" },
+    { v: archaic(r), s: "decide" },
     { v: kept(r, "Notes"), s: "wrap" },
     { v: String(r.ref), s: "muted" },
   ]);
@@ -149,8 +154,9 @@ const start = [
   [{ v: `     ${DECISIONS.add}: the word, meaning and part of speech are all right.`, s: "wrap" }],
   [{ v: `     ${DECISIONS.fix}: type what should change in the yellow "Corrected" columns. Leave a "Corrected" cell blank to keep what is there.`, s: "wrap" }],
   [{ v: `     ${DECISIONS.no}: not a Maltese dictionary word (English, a name, a verb form, a wrong meaning you can't fix).`, s: "wrap" }],
-  [{ v: "2. Leave a row blank to skip it. It stays out of the dictionary and is asked again next time.", s: "wrap" }],
-  [{ v: "3. Save the file and tell Claude it's done.", s: "wrap" }],
+  [{ v: `2. If a word you are adding is archaic (no longer in everyday use), pick "${ARCHAIC}" in the "Archaic?" column. Its entry will carry the label "ark.".`, s: "wrap" }],
+  [{ v: "3. Leave a row blank to skip it. It stays out of the dictionary and is asked again next time.", s: "wrap" }],
+  [{ v: "4. Save the file and tell Claude it's done.", s: "wrap" }],
   [""],
   [{ v: "Things to know", s: "bold" }],
   [{ v: `• Words are shown in small letters. If one needs a capital (Malti, Ingliż), type it in "Corrected word".`, s: "wrap" }],
@@ -179,13 +185,14 @@ writeXlsx(OUT, [
   { name: "Start here", cols: [110], rows: start },
   {
     name: "Review",
-    cols: [26, 18, 48, 14, 14, 52, 18, 40, 22, 24, 7],
+    cols: [26, 18, 48, 14, 14, 52, 18, 40, 22, 11, 24, 7],
     rows: review,
     freeze: true,
     filter: true,
     lists: [
       { col: 0, from: 2, to: review.length, values: Object.values(DECISIONS) },
       { col: 8, from: 2, to: review.length, values: POS_CHOICES },
+      { col: 9, from: 2, to: review.length, values: [ARCHAIC] },
     ],
   },
 ]);

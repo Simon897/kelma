@@ -27,9 +27,20 @@ describe("dizzjunarju book: the word list", () => {
     }
   });
 
-  it("only has words from clean sheet rows: no flags, and a meaning", () => {
-    const clean = new Set((sheet as { word: string; gloss: string; flags: string[] }[]).filter((l) => !l.flags.length && l.gloss.trim()).map((l) => l.word));
-    for (const [w] of words) expect(clean.has(w.toLocaleUpperCase("mt")), w).toBe(true);
+  it("only has words from clean sheet rows (no flags, a meaning), plus archaic ones, marked", () => {
+    const rowsOf = sheet as { word: string; gloss: string; flags: string[] }[];
+    const clean = new Set(rowsOf.filter((l) => !l.flags.length && l.gloss.trim()).map((l) => l.word));
+    const old = new Set(rowsOf.filter((l) => l.flags.length === 1 && l.flags[0] === "archaic" && l.gloss.trim()).map((l) => l.word));
+    for (const r of words) {
+      const w = r[0].toLocaleUpperCase("mt");
+      if (r[7] === 1) {
+        expect(old.has(w), r[0]).toBe(true);
+        expect(r[4], `${r[0]}: an archaic word is tier 5`).toBe(5);
+      } else expect(clean.has(w), r[0]).toBe(true);
+    }
+    expect(words.filter((r) => r[7] === 1).length).toBe(old.size);
+    expect(ents.find((e) => e.w === "ġagħal")?.archaic).toBe(true);
+    expect(ents.find((e) => e.w === "ktieb")?.archaic).toBe(false);
   });
 
   it("has no English-only spellings and none of the words left out by hand", () => {

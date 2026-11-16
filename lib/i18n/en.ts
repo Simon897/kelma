@@ -239,8 +239,6 @@ export const en: Dict = {
   dictSubtitle: "Turn the pages or search for a word.",
   dictSearch: "Search in Maltese or English",
   dictRandom: "Random word",
-  dictSoundOn: "Sound: on",
-  dictSoundOff: "Sound: off",
   dictPrev: "Previous page",
   dictNext: "Next page",
   dictJump: "Jump to a letter",
@@ -273,6 +271,7 @@ export const en: Dict = {
   dictLegendNotes: [
     ["Small number (1, 2)", "words spelt the same with different meanings."],
     ["pl. · f. · komp. · sing.", "other forms of the word: plural, feminine, comparative, one of a collective."],
+    ["ark.", "archaic: no longer in everyday use."],
     ["root", "the letters the word grows from."],
     ["Dots", "from 1 (an everyday word) to 5 (a rare word)."],
   ],

@@ -255,8 +255,6 @@ export const mt = {
   dictSubtitle: "Aqleb il-paġni jew fittex kelma.", // REVIEW
   dictSearch: "Fittex kelma", // REVIEW
   dictRandom: "Kelma bl-addoċċ", // REVIEW
-  dictSoundOn: "Ħoss: mixgħul", // REVIEW
-  dictSoundOff: "Ħoss: mitfi", // REVIEW
   dictPrev: "Paġna ta' qabel", // REVIEW
   dictNext: "Paġna li jmiss", // REVIEW
   dictJump: "Aqbeż għal ittra", // REVIEW
@@ -289,6 +287,7 @@ export const mt = {
   dictLegendNotes: [
     ["Numru żgħir (1, 2)", "kliem miktub l-istess b'tifsira differenti."],
     ["pl. · f. · komp. · sing.", "forom oħra tal-kelma: plural, femminil, komparattiv, waħda minn kollettiv."],
+    ["ark.", "kelma arkajka: m'għadhiex tintuża fil-ħajja ta' kuljum."],
     ["għerq", "l-ittri li minnhom tikber il-kelma."],
     ["Tikek", "minn 1 (kelma ta' kuljum) sa 5 (kelma rari)."],
   ], // REVIEW

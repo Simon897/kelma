@@ -4,7 +4,10 @@
 //
 // Writes data/dizzjunarju/words.json: one row per entry, [word, label, meaning, root, tier, number, forms?],
 // and data/dizzjunarju/forms.json: for each row, every other form of the word, for the search.
-// - Only clean sheet rows go in: no flags (pending, archaic, hypothetical, proper noun) and a meaning.
+// - Only clean sheet rows go in: no flags (pending, hypothetical, proper noun) and a meaning.
+// - A row whose only flag is "archaic" goes in too, marked archaic (the entry is labelled "ark.") and
+//   given tier 5: the sheet's tier counts how often the spelling turns up, and an old word often
+//   shares its spelling with a common one (tagħna, "a stabbing", is tier 1 because of "our").
 //   Each must match a verified Ġabra entry exactly (same word, part of speech and meanings), or the
 //   build stops.
 // - The word is spelt as Ġabra spells it, capitals included (Malti, Ingliż).
@@ -56,10 +59,12 @@ const tidy = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
 const sheet = JSON.parse(readFileSync(new URL("../data/source/word-sheet.json", import.meta.url), "utf8"));
 
 /* ---------- clean sheet rows ---------- */
+const isArchaic = (l) => l.flags.length === 1 && l.flags[0] === "archaic";
 const seen = new Set();
 let rows = sheet
   .map((l, i) => ({ ...l, i }))
-  .filter((l) => !l.flags.length && l.gloss.trim())
+  .filter((l) => (!l.flags.length || isArchaic(l)) && l.gloss.trim())
+  .map((l) => (isArchaic(l) ? { ...l, archaic: true, tier: 5 } : l))
   .filter((l) => {
     const k = [l.word, l.pos, l.gloss, l.root].join("|");
     if (seen.has(k)) return false;
@@ -217,7 +222,7 @@ for (const r of rows) {
   searchable += all.size;
 }
 
-const out = rows.map((r) => [r.lemma, r.label, tidy(r.gloss), tidy(r.root), r.tier, r.number ?? 0, ...(r.shown.length ? [r.shown] : [])]);
+const out = rows.map((r) => [r.lemma, r.label, tidy(r.gloss), tidy(r.root), r.tier, r.number ?? 0, ...(r.shown.length || r.archaic ? [r.shown] : []), ...(r.archaic ? [1] : [])]);
 for (const e of out) {
   if (!e[0] || !e[2] || !(e[4] >= 1 && e[4] <= 5)) {
     console.error(`Bad entry: ${JSON.stringify(e)}`);
@@ -233,5 +238,6 @@ writeFileSync(new URL("../data/dizzjunarju/forms.json", import.meta.url), "[\n" 
 const count = (label) => out.filter((e) => e[1] === label).length;
 console.log(`Forms: ${withShown} entries show theirs; ${searchable} forms are searchable (data/dizzjunarju/forms.json).`);
 console.log(`Wrote ${out.length} entries to data/dizzjunarju/words.json (from ${cleanCount} clean sheet rows).`);
+console.log(`Archaic words, labelled "ark.": ${rows.filter((r) => r.archaic).length}.`);
 console.log(`Left out by hand: ${excluded.length}. Merged as duplicates: ${merged.size}.`);
 console.log(`Nouns: ${count("n.m.")} n.m., ${count("n.f.")} n.f., ${count("n.pl.")} n.pl., ${count("n.")} with no gender in Ġabra.`);
