@@ -102,6 +102,10 @@ Għerq has its own epoch, `GHERQ_EPOCH` in `lib/day-index.ts` (provisional), and
 
 The cat in the scene has idles and reactions (`components/gherq/Cat.tsx`, scheduled by `lib/gherq/cat-scheduler.ts`). In `npm run dev`, add `?catdebug` to `/gherq` for a panel that forces each pose and plays each idle and reaction.
 
+## The street on the home page
+
+`components/StreetScene.tsx` animates a felt-and-paper Maltese street: parallax on desktop (sky, far roofs, street and pavement move at different depths with the mouse), one plate on phones, and over it the sun, clouds, bunting, washing, the bell and pigeons, butterflies, the lantern, Daisy (blinks, ears, tail) and the neighbour who waters her geraniums. The art is in `data/source/street-scene/` (made in ChatGPT); `node scripts/build-street-scene.mjs` cuts it into `public/media/scene/` and measures every point the animation uses into `components/street-scene-geometry.json`. Replace a source image and run it again; the street must keep its layout (2000×750, door in the same place), since the window, lantern and bell are measured at fixed spots in the script.
+
 ## Dizzjunarju (the dictionary)
 
 `/dizzjunarju` is the whole word list as a book: pages that turn, letter tabs, a search, a random-word button. Wide screens show the open book, scaled to fit; under 900px it shows one page at a time, sized to the screen. The cover is `public/media/dizzjunarju-cover.webp` (2:3, no lettering: the title is set over it in the page), and the book's green is `--color-book` / `--color-book-deep` in `app/globals.css`, sampled from that art. The book always closes on an end page, `public/media/dizzjunarju-end.webp` (the cat asleep on a pile of books), with "It-Tmiem" set over it. Each visit starts with the closed book opening (about 2 seconds; searching or jumping to a letter skips it, and with reduced motion it is a short cross-fade). The timings are `OPENING` at the top of `components/dizzjunarju/DictionaryBook.tsx`.

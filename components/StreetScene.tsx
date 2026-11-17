@@ -2,18 +2,21 @@
 
 import { Fragment, useEffect, useId, useRef, useState } from "react";
 import { asset } from "@/lib/site";
+import GEO from "./street-scene-geometry.json";
 
 /**
- * The street scene at the top of the home page: the painted plate (4 depth layers on desktop,
- * one image on phones) with code-drawn sky, bunting, laundry,
- * butterflies, the bell and pigeons, the lantern, the cat's blinks, ears and tail, and (every
- * second loop) the neighbour watering her geraniums. A 30s loop where everything is a pure
+ * The street scene at the top of the home page, in felt and cut paper: the street (4 depth layers
+ * on desktop, one image on phones) with the sun, clouds, bunting and washing over it, the bell and
+ * pigeons, butterflies, the lantern, Daisy's blinks, ears and tail, and (every second loop) the
+ * neighbour watering her geraniums. The art and the points it is measured at come from
+ * scripts/build-street-scene.mjs (street-scene-geometry.json). A 30s loop where everything is a pure
  * function of t, written straight to the SVG inside requestAnimationFrame (no React re-renders).
  * Decorative, so aria-hidden. Reduced motion: frame t = 0, still. Off-screen: the clock pauses.
  * Ported from the Claude Design handoffs "Kelma street scene" and "Kelma street parallax layers".
  */
 type Fmt = "desktop" | "mobile";
-type Sprite = { href: string; x: number; y: number; w: number; h: number };
+/** An image placed on the artboard; px, py is the point it turns about (ears, tail). */
+type Sprite = { href: string; x: number; y: number; w: number; h: number; px: number; py: number };
 type Cfg = {
   W: number;
   H: number;
@@ -25,10 +28,10 @@ type Cfg = {
   fh: number;
   strW: number;
   bell: [number, number, number];
-  tower: [number, number] | null;
   pig: [[number, number], [number, number]];
   bf: [[number, number], [number, number]];
   bfS: number;
+  daisy: Sprite;
   earL: Sprite;
   earR: Sprite;
   tail: Sprite;
@@ -39,11 +42,10 @@ type Cfg = {
   eyeL: [number, number];
   eyeR: [number, number];
   eyeRad: number;
-  tailPiv: [number, number];
   glass: string;
   lamp: [number, number, number];
   laundry: [number, number, number];
-  flags: { si: number; u: number; color: string; i: number }[];
+  flags: { si: number; u: number; i: number }[];
 };
 
 const MOBILE_QUERY = "(max-width: 767px)";
@@ -64,27 +66,56 @@ const OVERSCAN = 12;
 /** Exponential ease towards the pointer: about 95% of the way in 300ms. */
 const EASE_TAU = 0.1;
 /** Desktop draws the 4 depth layers; phones (no parallax) draw one plate, half the download. */
-const plate = (fmt: Fmt, layer: string) => asset(fmt === "desktop" ? `/media/scene/layers/desktop-${layer}.webp` : "/media/scene/mobile-plate.webp");
+const plate = (fmt: Fmt, layer: string) => art(fmt === "desktop" ? `street-${layer}` : "street-mobile");
 const REWARD_EVERY = 2;
 const TIMES = { water: 4.0, bell: 14.0, lamp: [21.5, 28.0] as const };
-const FLAG_COLOURS = ["#a8402e", "#f3e7cf", "#2f6f58", "#d8a23a", "#2a5a8c"];
-const CLOUD = "M-70 0 C-82 0 -84 -20 -64 -24 C-66 -44 -40 -50 -28 -36 C-22 -60 14 -62 22 -40 C32 -52 58 -48 58 -28 C76 -28 82 0 64 0 Z";
 const WING = "M0 -1 C-6 -9 -10 -4 -8 0 C-10 3 -5 6 0 1 Z M0 -1 C6 -9 10 -4 8 0 C10 3 5 6 0 1 Z";
-const SUN_RAYS = (() => {
-  let d = "";
-  const p = (r: number, b: number) => `${(r * Math.cos(b)).toFixed(2)},${(r * Math.sin(b)).toFixed(2)}`;
-  for (let k = 0; k < 12; k++) {
-    const a = (k * Math.PI) / 6;
-    d += `M${p(38, a - 0.12)} L${p(56, a)} L${p(38, a + 0.12)} Z `;
-  }
-  return d;
-})();
+/** The felt pieces, by file name in public/media/scene/; their height for each unit of width. */
+const art = (n: string) => asset(`/media/scene/${n}.webp`);
+const RATIO = GEO.pieces;
+const place = (n: string, b: number[]): Sprite => ({ href: art(n), x: b[0], y: b[1], w: b[2], h: b[3], px: b[4] ?? 0, py: b[5] ?? 0 });
+/** Cloud width before each cloud's own scale; the sun is drawn 120 wide. */
+const CLOUD_W = 170;
+const SUN_W = 120;
+/** The washing on its line (135 long): each piece's middle, width, and where its top edge meets the line. */
+const WASH = [
+  { x: 22, w: 32, top: 0.106 },
+  { x: 56, w: 24, top: 0.183 },
+  { x: 89, w: 22, top: 0.215 },
+  { x: 116, w: 21, top: 0.199 },
+] as const;
+/**
+ * The neighbour's forearm and watering can, in the window's own units (76 × 119): drawn at x, y,
+ * w wide; it turns about the cuff (pivot) to pour, and the water falls from the rose (spout).
+ */
+const CAN = { x: 23.5, y: 62, w: 44, pivot: [66, 74] as const, spout: [26.6, 69.1] as const, tilt: -26 };
+/** The neighbour herself, in the window's units. */
+const NANNA = { x: 3, y: 9, w: 70 };
+
+/** Daisy, the neighbour's window and the lantern, where the build measured them. */
+function parts(g: (typeof GEO)["desktop"]) {
+  return {
+    daisy: place("daisy", g.daisy),
+    earL: place("daisy-ear-l", g.earL),
+    earR: place("daisy-ear-r", g.earR),
+    tail: place("daisy-tail", g.tail),
+    leafL: place("street-shutter-l", g.leafL),
+    leafR: place("street-shutter-r", g.leafR),
+    pot: place("street-pot", g.pot),
+    win: g.win as Cfg["win"],
+    eyeL: g.eyeL as [number, number],
+    eyeR: g.eyeR as [number, number],
+    eyeRad: g.eyeRad,
+    glass: g.glass,
+    lamp: g.lamp as Cfg["lamp"],
+  };
+}
 
 const cache: Partial<Record<Fmt, Cfg>> = {};
 function cfg(fmt: Fmt): Cfg {
   const hit = cache[fmt];
   if (hit) return hit;
-  const sp = (n: string, x: number, y: number, w: number, h: number): Sprite => ({ href: asset(`/media/scene/${fmt}-${n}.png`), x, y, w, h });
+  const g = GEO[fmt];
   const c: Omit<Cfg, "flags"> =
     fmt === "desktop"
       ? {
@@ -106,8 +137,7 @@ function cfg(fmt: Fmt): Cfg {
           fw: 28,
           fh: 36,
           strW: 2,
-          bell: [485.5, 108, 1],
-          tower: null,
+          bell: g.bell as Cfg["bell"],
           pig: [
             [500, 92],
             [2000, -40],
@@ -117,20 +147,8 @@ function cfg(fmt: Fmt): Cfg {
             [1160, 545],
           ],
           bfS: 1.1,
-          earL: sp("earL", 996, 498, 22, 22),
-          earR: sp("earR", 1034, 498, 24, 22),
-          tail: sp("tail", 810, 594, 76, 36),
-          leafL: sp("leafL", 1260, 448, 38, 119),
-          leafR: sp("leafR", 1298, 448, 38, 119),
-          pot: sp("pot", 1262, 510, 72, 80),
-          win: [1260, 448, 1, 1],
-          eyeL: [1014.5, 545.5],
-          eyeR: [1038.5, 545.5],
-          eyeRad: 8.2,
-          tailPiv: [886, 612],
-          glass: "1115,234 1138,234 1135,260 1118,260",
-          lamp: [1127, 247, 1],
-          laundry: [52, 402, 1],
+          ...parts(g),
+          laundry: [52, 414, 1],
         }
       : {
           W: 1080,
@@ -146,10 +164,9 @@ function cfg(fmt: Fmt): Cfg {
           fw: 36,
           fh: 46,
           strW: 2.4,
-          bell: [185, 284, 1.4],
-          tower: [185, 381],
+          bell: g.bell as Cfg["bell"],
           pig: [
-            [190, 245],
+            [52, 300],
             [1150, 40],
           ],
           bf: [
@@ -157,26 +174,13 @@ function cfg(fmt: Fmt): Cfg {
             [790, 835],
           ],
           bfS: 1.45,
-          earL: sp("earL", 582, 762, 28, 28),
-          earR: sp("earR", 634, 762, 28, 28),
-          tail: sp("tail", 356, 894, 96, 34),
-          leafL: sp("leafL", 912, 704, 47, 146),
-          leafR: sp("leafR", 959, 704, 46, 146),
-          pot: sp("pot", 918, 780, 82, 96),
-          win: [912, 704, 93 / 76, 146 / 119],
-          eyeL: [607.5, 822.5],
-          eyeR: [636.5, 822.5],
-          eyeRad: 9.6,
-          tailPiv: [452, 911],
-          glass: "731,437 760,437 756,470 735,470",
-          lamp: [745.5, 453, 1.25],
-          laundry: [48, 628, 1.09],
+          ...parts(g),
+          laundry: [48, 700, 1.09],
         };
   const flags: Cfg["flags"] = [];
-  let ci = 0;
   c.swags.forEach((s, si) => {
     const n = Math.floor((s[2] - s[0]) / c.spacing);
-    for (let i = 0; i < n; i++) flags.push({ si, u: (i + 0.5) / n, color: FLAG_COLOURS[ci++ % 5], i: flags.length });
+    for (let i = 0; i < n; i++) flags.push({ si, u: (i + 0.5) / n, i: flags.length });
   });
   return (cache[fmt] = { ...c, flags });
 }
@@ -294,14 +298,15 @@ function apply(c: Cfg, el: Els, t: number, loop: number, asleep = false) {
   };
   const eL = c.earL,
     eR = c.earR;
-  S("earL", "transform", `rotate(${(-11 * twitch([9.4, b0 + 1.6, 4.8])).toFixed(2)} ${eL.x + eL.w / 2} ${eL.y + eL.h})`);
-  S("earR", "transform", `rotate(${(11 * twitch([b0 + 0.4, 4.6, 26.2])).toFixed(2)} ${eR.x + eR.w / 2} ${eR.y + eR.h})`);
+  S("earL", "transform", `rotate(${(-11 * twitch([9.4, b0 + 1.6, 4.8])).toFixed(2)} ${eL.px} ${eL.py})`);
+  S("earR", "transform", `rotate(${(11 * twitch([b0 + 0.4, 4.6, 26.2])).toFixed(2)} ${eR.px} ${eR.py})`);
   let ta = 1.1 + 1.1 * wave(7.5);
   [6.5, 15.8, 25.1].forEach((x) => {
     const k = (t - x) / 0.9;
     if (k > 0 && k < 1) ta += 4.5 * Math.sin(Math.PI * k);
   });
-  S("tail", "transform", `rotate(${ta.toFixed(2)} ${c.tailPiv[0]} ${c.tailPiv[1]})`);
+  // the tip of her tail lifts off the step (it lies to the right of its root, so it turns anticlockwise)
+  S("tail", "transform", `rotate(${(-ta).toFixed(2)} ${c.tail.px} ${c.tail.py})`);
 
   // the neighbour opens the shutters and waters the geraniums
   const ws = TIMES.water,
@@ -325,10 +330,13 @@ function apply(c: Cfg, el: Els, t: number, loop: number, asleep = false) {
     S("canArm", "opacity", arm.toFixed(3));
     S("canArm", "transform", `translate(0,${(12 * (1 - arm)).toFixed(2)})`);
     const tilt = io(seg(ws + 2.1, ws + 2.5)) * (1 - io(seg(ws + 4.3, ws + 4.7)));
-    S("can", "transform", `translate(54,64) rotate(${(-36 * tilt + 1.5 * Math.sin(t * 3) * tilt).toFixed(2)})`);
-    const a = (-36 * tilt * Math.PI) / 180,
-      tx = 54 + (-18 * Math.cos(a) + 12 * Math.sin(a)),
-      ty = 64 + (-18 * Math.sin(a) - 12 * Math.cos(a));
+    const [px, py] = CAN.pivot;
+    S("can", "transform", `rotate(${(CAN.tilt * tilt + 1.5 * Math.sin(t * 3) * tilt).toFixed(2)} ${px} ${py})`);
+    const a = (CAN.tilt * tilt * Math.PI) / 180,
+      sx = CAN.spout[0] - px,
+      sy = CAN.spout[1] - py,
+      tx = px + sx * Math.cos(a) - sy * Math.sin(a),
+      ty = py + sx * Math.sin(a) + sy * Math.cos(a);
     const pour = wt > 2.45 && wt < 4.4;
     S("drops", "opacity", pour ? "1" : "0");
     if (pour)
@@ -558,6 +566,9 @@ export function StreetScene({
                   <feMergeNode in="g3" />
                 </feMerge>
               </filter>
+              <clipPath id={`${uid}-win`}>
+                <rect x="0" y="0" width="76" height="119" />
+              </clipPath>
               <clipPath id={`${uid}-eyeL`}>
                 <circle cx={c.eyeL[0]} cy={c.eyeL[1]} r={er} />
               </clipPath>
@@ -569,36 +580,27 @@ export function StreetScene({
             {/* desktop: the sky layer of the re-cut; phones: the whole plate in one image (nothing moves there) */}
             <image href={layerHref("1-sky")} x="0" y="0" width={c.W} height={c.H} />
 
-            <g transform={`translate(${c.sun[0]},${c.sun[1]}) scale(${c.sun[2]})`} filter={url("paper")}>
+            <g transform={`translate(${c.sun[0]},${c.sun[1]}) scale(${c.sun[2]})`}>
               <g ref={r("sunRays")}>
-                <path d={SUN_RAYS} fill="#f4b44a" />
+                <image href={art("sun")} x={-SUN_W / 2} y={(-SUN_W * RATIO.sun) / 2} width={SUN_W} height={SUN_W * RATIO.sun} />
               </g>
               <g ref={r("sunCore")}>
-                <circle r="39" fill="#f0a03c" />
-                <circle r="30" fill="#f8c55a" />
+                <image href={art("sun-core")} x={(-SUN_W * RATIO.sunCore) / 2} y={(-SUN_W * RATIO.sunCore) / 2} width={SUN_W * RATIO.sunCore} height={SUN_W * RATIO.sunCore} />
               </g>
             </g>
 
-            <g filter={url("paper")}>
-              {c.clouds.map((k, i) => (
+            {c.clouds.map((k, i) => {
+              const n = (i % 3) + 1;
+              const h = CLOUD_W * RATIO[`cloud${n}` as "cloud1"];
+              return (
                 <g key={i} ref={r(`cloud${i}`)} transform={`translate(${k[0]},${k[1]}) scale(${k[2]})`}>
-                  <path d={CLOUD} fill="#fbf2e1" />
+                  <image href={art(`cloud-${n}`)} x={-CLOUD_W / 2} y={-h} width={CLOUD_W} height={h} />
                 </g>
-              ))}
-            </g>
-
+              );
+            })}
           </svg>
           <svg ref={layerRef("far")} {...svgProps}>
             {fmt === "desktop" && <image href={layerHref("2-far")} x="0" y="0" width={c.W} height={c.H} />}
-            {c.tower && (
-              <g transform={`translate(${c.tower[0]},${c.tower[1]})`} filter={url("dist")}>
-                <rect x="-21" y="-116" width="42" height="116" fill="#d6a088" />
-                <rect x="-24" y="-121" width="48" height="6" fill="#c98f76" />
-                <polygon points="-22,-121 0,-150 22,-121" fill="#cf957c" />
-                <circle cx="0" cy="-153" r="3" fill="#cf957c" />
-                <path d="M-9 -64 L-9 -88 A9 9 0 0 1 9 -88 L9 -64 Z" fill="#a8785f" />
-              </g>
-            )}
             <g transform={`translate(${c.bell[0]},${c.bell[1]}) scale(${c.bell[2]})`} filter={url("dist")}>
               <rect x="-6" y="-2" width="12" height="2.5" fill="#7d5a45" />
               <g ref={r("bell")}>
@@ -613,12 +615,17 @@ export function StreetScene({
               {c.swags.map((_, i) => (
                 <path key={`s${i}`} ref={r(`str${i}`)} d="" fill="none" stroke="#3b3024" strokeWidth={c.strW} />
               ))}
-              {c.flags.map((f) => (
-                <g key={`f${f.i}`} ref={r(`flag${f.i}`)} transform="translate(-100,-100)">
-                  <polygon points={`${-c.fw / 2},0 ${c.fw / 2},0 0,${c.fh}`} fill={f.color} />
-                </g>
-              ))}
             </g>
+            {c.flags.map((f) => {
+              const n = (f.i % 5) + 1;
+              const h = c.fw * RATIO[`flag${n - 1}` as "flag0"];
+              // the string runs through the folded hem at the top
+              return (
+                <g key={`f${f.i}`} ref={r(`flag${f.i}`)} transform="translate(-100,-100)">
+                  <image href={art(`flag-${n}`)} x={-c.fw / 2} y={-0.07 * h} width={c.fw} height={h} />
+                </g>
+              );
+            })}
 
           </svg>
           <svg ref={layerRef("pigeons")} {...svgProps}>
@@ -632,69 +639,29 @@ export function StreetScene({
             {fmt === "desktop" && <image href={layerHref("3-street")} x="0" y="0" width={c.W} height={c.H} />}
             <g transform={`translate(${c.laundry[0]},${c.laundry[1]}) scale(${c.laundry[2]})`}>
               <path d="M0 0 Q67.5 10 135 0" fill="none" stroke="#3b3024" strokeWidth={1.2} />
-              <g filter={url("paper")}>
-                <g transform="translate(27,3.2)">
-                  <g ref={r("l1")}>
-                    <path d="M-13 0 L13 0 L19 7 L14 11 L12 9 L12 30 L-12 30 L-12 9 L-14 11 L-19 7 Z" fill="#f1ead9" />
-                    <rect x="-0.6" y="2" width="1.2" height="26" fill="#d6ccb6" />
-                    <rect x="-10" y="-2" width="2.5" height="5" fill="#8a6a44" />
-                    <rect x="7.5" y="-2" width="2.5" height="5" fill="#8a6a44" />
+              {WASH.map((p, i) => {
+                const u = p.x / 135;
+                const h = p.w * RATIO[`wash${i}` as "wash0"];
+                return (
+                  <g key={i} transform={`translate(${p.x},${(20 * u * (1 - u)).toFixed(2)})`}>
+                    <g ref={r(`l${i + 1}`)}>
+                      <image href={art(`wash-${i + 1}`)} x={-p.w / 2} y={-p.top * h} width={p.w} height={h} />
+                    </g>
                   </g>
-                </g>
-                <g transform="translate(64.8,5)">
-                  <g ref={r("l2")}>
-                    <rect x="-12" y="0" width="24" height="34" fill="#d8a23a" />
-                    <rect x="-12" y="24" width="24" height="3" fill="#a8402e" />
-                    <rect x="-12" y="29" width="24" height="2" fill="#a8402e" />
-                    <rect x="-9" y="-2" width="2.5" height="5" fill="#8a6a44" />
-                    <rect x="6.5" y="-2" width="2.5" height="5" fill="#8a6a44" />
-                  </g>
-                </g>
-                <g transform="translate(99.9,3.9)">
-                  <g ref={r("l3")}>
-                    <path d="M-9 0 L9 0 L13 5 L9 8 L8 7 L8 20 L-8 20 L-8 7 L-9 8 L-13 5 Z" fill="#2f6f58" />
-                    <rect x="-7" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
-                    <rect x="4.8" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
-                  </g>
-                </g>
-                <g transform="translate(121.5,1.8)">
-                  <g ref={r("l4")}>
-                    <path d="M-7 0 L-3 0 L-3 11 L0 13 L0 16 L-7 16 Z" fill="#a8402e" />
-                    <path d="M1 0 L5 0 L5 11 L8 13 L8 16 L1 16 Z" fill="#a8402e" />
-                    <rect x="-2" y="-2" width="2.2" height="4.5" fill="#8a6a44" />
-                  </g>
-                </g>
-              </g>
+                );
+              })}
             </g>
 
             <g ref={r("winIn")} transform={`translate(${c.win[0]},${c.win[1]}) scale(${c.win[2]},${c.win[3]})`} style={{ display: "none" }}>
               <rect x="0" y="0" width="76" height="119" fill="#33251a" />
               <rect x="6" y="10" width="64" height="109" fill="#3d2d20" />
-              <path d="M0 0H76V8Q72 13 68 8Q64 13 60 8Q56 13 52 8Q48 13 44 8Q40 13 36 8Q32 13 28 8Q24 13 20 8Q16 13 12 8Q8 13 4 8Q2 11 0 8Z" fill="#efe2c6" />
-              <g ref={r("nanna")} filter={url("paper")}>
-                <path d="M12 119 C12 92 16 70 26 64 Q38 58 50 64 C60 70 64 92 64 119 Z" fill="#2c5f8a" />
-                {[
-                  [22, 82],
-                  [32, 94],
-                  [46, 80],
-                  [55, 98],
-                  [27, 108],
-                  [44, 106],
-                  [37, 76],
-                ].map(([x, y]) => (
-                  <circle key={`${x}-${y}`} cx={x} cy={y} r="1.4" fill="#f3e9d6" />
-                ))}
-                <rect x="34" y="51" width="8" height="11" fill="#d9a07d" />
-                <path d="M30 62 L38 70 L46 62 Q38 58 30 62 Z" fill="#f3e9d6" />
-                <circle cx="38" cy="26" r="6" fill="#cbc4b7" />
-                <circle cx="38" cy="42" r="12" fill="#e7b18d" />
-                <path d="M26 42 C25 30 32 28 38 28 C45 28 51 30 50 42 C48 36 44 33 38 33 C32 33 28 36 26 42 Z" fill="#d6d0c5" />
-                <circle cx="33.5" cy="43" r="1.2" fill="#2e2618" />
-                <circle cx="42.5" cy="43" r="1.2" fill="#2e2618" />
-                <circle cx="30.5" cy="47.5" r="2" fill="#de927c" />
-                <circle cx="45.5" cy="47.5" r="2" fill="#de927c" />
-                <path d="M35.5 49.5 Q38 51.5 40.5 49.5" fill="none" stroke="#2e2618" strokeWidth={1} />
+              {/* she stands back in the room, her face clear of the geraniums; the window frames her */}
+              <g clipPath={url("win")}>
+                <g ref={r("nanna")}>
+                  <image href={art("neighbour")} x={NANNA.x} y={NANNA.y} width={NANNA.w} height={NANNA.w * RATIO.nanna} />
+                </g>
               </g>
+              <path d="M0 0H76V8Q72 13 68 8Q64 13 60 8Q56 13 52 8Q48 13 44 8Q40 13 36 8Q32 13 28 8Q24 13 20 8Q16 13 12 8Q8 13 4 8Q2 11 0 8Z" fill="#efe2c6" />
             </g>
 
             {shutter("leafL", c.leafL)}
@@ -702,14 +669,9 @@ export function StreetScene({
             <image href={c.pot.href} x={c.pot.x} y={c.pot.y} width={c.pot.w} height={c.pot.h} />
 
             <g transform={`translate(${c.win[0]},${c.win[1]}) scale(${c.win[2]},${c.win[3]})`}>
-              <g ref={r("canArm")} opacity="0" filter={url("paper")}>
-                <path d="M60 80 Q64 68 56 62 L50 66 Q56 70 54 80 Z" fill="#2c5f8a" />
+              <g ref={r("canArm")} opacity="0">
                 <g ref={r("can")}>
-                  <path d="M-2 -2 L-18 -11 L-17.5 -13 L-1 -6 Z" fill="#86a29a" />
-                  <circle cx="-18" cy="-12" r="2.4" fill="#6f8b83" />
-                  <rect x="-2" y="-8" width="18" height="12" rx="2" fill="#86a29a" />
-                  <path d="M2 -8 Q8 -17 14 -8" fill="none" stroke="#5f7b73" strokeWidth={2} />
-                  <circle cx="1" cy="-1" r="3" fill="#e7b18d" />
+                  <image href={art("neighbour-can")} x={CAN.x} y={CAN.y} width={CAN.w} height={CAN.w * RATIO.arm} />
                 </g>
               </g>
               <g ref={r("drops")} opacity="0">
@@ -727,6 +689,8 @@ export function StreetScene({
           </svg>
           <svg ref={layerRef("near")} {...svgProps}>
             {fmt === "desktop" && <image href={layerHref("4-near")} x="0" y="0" width={c.W} height={c.H} />}
+            {/* Daisy: her body, then the ears and the tip of her tail that move */}
+            <image href={c.daisy.href} x={c.daisy.x} y={c.daisy.y} width={c.daisy.w} height={c.daisy.h} />
             <g filter={url("paper")}>
               {butterfly("bf1", "#f3d36b")}
               {butterfly("bf2", "#f6efe0")}
@@ -739,8 +703,8 @@ export function StreetScene({
               const l = lid(s === "L" ? c.eyeL : c.eyeR);
               return (
                 <g key={s} clipPath={url(`eye${s}`)}>
-                  <rect ref={r(`lid${s}`)} x={l.x} y={l.y} width={l.s} height={l.s} fill="#665c4f" transform="scale(1,0)" />
-                  <rect ref={r(`lash${s}`)} x={l.x} y={l.y} width={l.s} height="1.6" fill="#2e2618" opacity="0" />
+                  <rect ref={r(`lid${s}`)} x={l.x} y={l.y} width={l.s} height={l.s} fill={GEO.fur} transform="scale(1,0)" />
+                  <rect ref={r(`lash${s}`)} x={l.x} y={l.y} width={l.s} height="2" fill="#3a2a1f" opacity="0" />
                 </g>
               );
             })}
