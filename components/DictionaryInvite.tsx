@@ -7,10 +7,10 @@ import { t, type Lang } from "@/lib/i18n";
 import { href } from "@/lib/routes";
 import { asset } from "@/lib/site";
 
-/** Daisy looking over the top of the book, paws hooked over its edge. 451×480, transparent. */
+/** Daisy looking over the top of the book, smiling, paws hooked over its edge. 459×480, transparent. */
 const DAISY = asset("/media/home-daisy-peek.webp");
 /** Where her body is cut off, as a share of the image's height: below it only her paws hang over the book. */
-const DAISY_EDGE = 0.938;
+const DAISY_EDGE = 0.937;
 const DICE = asset("/media/dizzjunarju-dice.webp");
 
 /**
@@ -40,7 +40,7 @@ export function DictionaryInvite({ lang }: { lang: Lang }) {
       style={{ paddingTop: `calc(var(--daisy) * ${DAISY_EDGE})` } as CSSProperties}
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- static export, no image optimiser */}
-      <img src={DAISY} alt="" width={451} height={480} draggable={false} className="dict-invite-daisy pointer-events-none absolute left-1/2 top-0 z-20 h-[var(--daisy)] w-auto -translate-x-1/2 select-none" />
+      <img src={DAISY} alt="" width={459} height={480} draggable={false} className="dict-invite-daisy pointer-events-none absolute left-1/2 top-0 z-20 h-[var(--daisy)] w-auto -translate-x-1/2 select-none" />
 
       <div className="felt-cover relative z-10 rounded-[10px] px-3 py-3 sm:px-[22px] sm:py-4">
         <div className="relative grid sm:grid-cols-2">

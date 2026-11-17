@@ -8,7 +8,7 @@ import { asset } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "404 · Kelma",
-  icons: { icon: asset("/favicon.svg"), apple: asset("/apple-touch-icon.png") },
+  icons: { icon: [{ url: asset("/favicon-32.png"), sizes: "32x32", type: "image/png" }, { url: asset("/icon-192.png"), sizes: "192x192", type: "image/png" }], apple: asset("/apple-touch-icon.png") },
   other: { google: "notranslate" },
 };
 
