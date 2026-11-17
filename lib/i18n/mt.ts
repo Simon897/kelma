@@ -302,7 +302,7 @@ export const mt = {
   homeDictOpen: "Iftaħ id-Dizzjunarju", // REVIEW
   dictEmptySuggest: "Taħseb li għandha tkun fil-ktieb? Issuġġeriha", // REVIEW
   suggestTitle: "Sibt kelma nieqsa?",
-  suggestBlurb: "Id-dizzjunarju mhux komplut. Għidilna xi kliem sibt neqsin u nirriveduhom. Is-suġġerimenti huma anonimi.",
+  suggestBlurb: "Id-dizzjunarju mhux komplut. Għidilna xi kliem li sibt neqsin u nirriveduhom. Is-suġġerimenti huma anonimi.",
   suggestWord: "Kelma", // REVIEW
   suggestWordHint: "Bil-Malti", // REVIEW
   suggestDescription: "Deskrizzjoni", // REVIEW
