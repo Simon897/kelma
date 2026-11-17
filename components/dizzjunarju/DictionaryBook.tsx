@@ -172,17 +172,24 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
       this.observer = new ResizeObserver(() => this.measureBox());
       this.observer.observe(this.box.current);
     }
+    const arrival = this.readArrival();
+    if (arrival?.q) this.q = arrival.q;
     loadEntries().then((ents) => {
       if (!this.mounted) return;
       this.ents = ents;
       this.relayout();
       this.open();
       // Plurals, feminines and verb forms become searchable once their file arrives.
-      loadForms(ents).then(() => {
+      const forms = loadForms(ents).then(() => {
         if (!this.mounted || !this.q) return;
         this.exact = searchExact(ents, this.q);
         this.redraw();
       });
+      // Sent from the home page: once the cover is open (and the forms are in), go to the word.
+      if (arrival) {
+        const opened = new Promise((r) => setTimeout(r, this.openingLength()));
+        Promise.all([forms.catch(() => {}), opened]).then(() => this.mounted && this.arrive(arrival));
+      }
     });
     // The page was laid out with whatever font was ready; lay it out again once the real one is.
     const again = () => this.mounted && this.fontWidth() !== this.fontProbe && this.relayout();
@@ -413,6 +420,40 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     }
     this.cur = target;
     this.kick();
+  }
+
+  /**
+   * A link can open the book on a word: ?q=bebbux searches for it, ?random=1 opens a random word
+   * (the home page's search and dice). The address is then put back to the plain page, so a reload
+   * or a shared link from here doesn't repeat it.
+   */
+  private readArrival(): { q?: string; random?: true } | null {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const q = (p.get("q") ?? "").trim().slice(0, 60);
+      const random = p.has("random");
+      if (!q && !random) return null;
+      window.history.replaceState(window.history.state, "", window.location.pathname + window.location.hash);
+      return q ? { q } : { random: true };
+    } catch {
+      return null;
+    }
+  }
+  /** A Maltese word or one of its forms goes straight to its entry; anything else (English) shows the choices. */
+  private arrive(a: { q?: string; random?: true }) {
+    if (!this.ents || !this.layout) return;
+    if (a.random) {
+      const i = Math.floor(Math.random() * this.ents.length);
+      this.setQuery("", false);
+      this.jump(this.viewOf(i), i);
+      this.redraw();
+      return;
+    }
+    if (this.q !== a.q) return; // the reader has already typed something else
+    const found = searchExact(this.ents, a.q!);
+    if (found.isMaltese && found.malteseTop && found.hits.length) return this.pickWord(found.hits[0]);
+    this.setQuery(a.q!, true);
+    this.redraw();
   }
 
   private pickWord(i: number) {

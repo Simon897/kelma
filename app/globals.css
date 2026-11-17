@@ -213,6 +213,84 @@ html[data-contrast] {
   transform: translate(4px, 4px);
   box-shadow: none !important;
 }
+/*
+ * The home page's Dizzjunarju book (components/DictionaryInvite.tsx), in the dictionary art's
+ * felt-and-paper style: flat colour, a fine grain multiplied over it, soft shadows between layers.
+ */
+.felt-cover,
+.felt-page,
+.felt-ribbon {
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='4' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.34' intercept='0.8'/%3E%3CfeFuncG type='linear' slope='0.34' intercept='0.8'/%3E%3CfeFuncB type='linear' slope='0.34' intercept='0.8'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: var(--grain);
+  background-blend-mode: multiply;
+}
+.felt-cover {
+  background-color: var(--color-book);
+  box-shadow: 0 8px 16px rgb(46 38 24 / 0.3);
+}
+.felt-page {
+  background-color: var(--color-limestone-50);
+  background-blend-mode: soft-light;
+  box-shadow: 0 3px 7px rgb(46 38 24 / 0.22);
+}
+/* The pages underneath, showing as thin edges on the outer side of each page. */
+.felt-page-left {
+  box-shadow: 0 3px 7px rgb(46 38 24 / 0.22), -3px 1px 0 #f4eee0, -6px 2px 0 #f1eada, -9px 3px 0 #ebe3cf;
+}
+.felt-page-right {
+  box-shadow: 0 3px 7px rgb(46 38 24 / 0.22), 3px 1px 0 #f4eee0, 6px 2px 0 #f1eada, 9px 3px 0 #ebe3cf;
+}
+@media (width >= 40rem) {
+  .felt-page-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .felt-page-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+.felt-fold {
+  background:
+    linear-gradient(to right, transparent 42%, rgb(46 38 24 / 0.14) 50%, transparent 58%),
+    linear-gradient(to right, transparent, rgb(46 38 24 / 0.13) 50%, transparent);
+}
+/* The bookmark: ochre felt with a swallowtail end. Pulling it draws it a little further out. */
+.felt-ribbon {
+  background-color: var(--color-ochre);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+  filter: drop-shadow(0 3px 3px rgb(46 38 24 / 0.25));
+  transition: transform 0.15s;
+}
+.dict-ribbon:is(:hover, :focus-visible) {
+  transform: translateY(0.5rem);
+}
+.dict-ribbon:active {
+  transform: translateY(0.25rem);
+}
+.dict-ribbon:focus-visible {
+  outline: none;
+}
+.dict-ribbon:focus-visible span {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+}
+.dict-invite-die {
+  transition: transform 0.15s;
+}
+.group:is(:hover, :focus-visible) .dict-invite-die {
+  transform: translateY(-3px) rotate(-10deg);
+}
+.group:active .dict-invite-die {
+  transform: scale(0.94);
+}
+@media (prefers-reduced-motion: reduce) {
+  .felt-ribbon,
+  .dict-invite-die {
+    transition: none;
+  }
+}
+
 /* The random-word die: no box, it tips over a little on hover and presses down on click. */
 .dict-dice {
   transition: transform 0.15s;

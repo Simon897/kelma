@@ -296,4 +296,8 @@ export const mt = {
   dictEnd: "It-Tmiem", // REVIEW
   dictEndAlt: "Il-qattus rieqed fuq munzell kotba, b'marki ta' saqajh bil-linka mal-paġna.", // REVIEW
   dictCredit: "Kliem minn Ġabra, Università ta' Malta (CC BY 4.0).", // REVIEW
+  // The Dizzjunarju's section on the home page
+  homeDictBlurb: "Aktar minn 10,000 kelma Maltija, bit-tifsira bl-Ingliż.", // REVIEW
+  homeDictGo: "Fittex", // REVIEW
+  homeDictOpen: "Iftaħ id-Dizzjunarju", // REVIEW
 };

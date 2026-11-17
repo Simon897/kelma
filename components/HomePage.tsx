@@ -3,6 +3,7 @@ import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
 import { href } from "@/lib/routes";
 import { GameCarousel } from "./GameCarousel";
+import { DictionaryInvite } from "./DictionaryInvite";
 import { DoneForToday } from "./DoneForToday";
 import { HomeLangRedirect } from "./HomeClient";
 import { HomeStreet } from "./HomeStreet";
@@ -23,13 +24,6 @@ export function HomePage({ lang }: { lang: Lang }) {
       {/* spare height (tall or ultrawide screens) goes above and below, so the page sits in the middle */}
       <main className="relative flex flex-1 flex-col justify-center">
         <div className="absolute right-4 top-4 z-20 flex items-center gap-2">
-          <Link
-            href={href("dizzjunarju", lang)}
-            lang="mt"
-            className="inline-flex h-11 items-center justify-center rounded-tile border-2 border-ink bg-limestone-50 px-3 text-sm font-bold tracking-wide text-ink hover:bg-ink hover:text-limestone-50"
-          >
-            {d.dictTitle}
-          </Link>
           <LangToggle lang={lang} page="home" className="bg-limestone-50" />
         </div>
         {/* phones: the top padding clears the buttons in the corner, which are as wide as the wordmark */}
@@ -52,6 +46,8 @@ export function HomePage({ lang }: { lang: Lang }) {
           <div className="mt-3 w-full max-w-[26rem] border-t-2 border-ink/15 pt-3 sm:mt-4">
             <WordOfDay lang={lang} />
           </div>
+          {/* the way into the Dizzjunarju: Daisy over an open book that searches it */}
+          <DictionaryInvite lang={lang} />
         </div>
       </main>
       <footer className="bg-ink px-4 py-5 text-center text-sm text-limestone-50">

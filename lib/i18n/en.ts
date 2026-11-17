@@ -280,4 +280,7 @@ export const en: Dict = {
   dictEnd: "The end",
   dictEndAlt: "The cat asleep on a pile of books, with inky paw prints across the page.",
   dictCredit: "Words from Ġabra, University of Malta (CC BY 4.0).",
+  homeDictBlurb: "Over 10,000 Maltese words, with their meanings in English.",
+  homeDictGo: "Search",
+  homeDictOpen: "Open the dictionary",
 };
