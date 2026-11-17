@@ -137,6 +137,8 @@ Unverified ("pending") sheet words are not in the dictionary. `node scripts/make
 
 The page used to show Maltese words for everyday things, one carousel per category. That is kept but not shown: `data/words/`, the drawings in `public/{hwawar,frott-u-haxix,id-dar,annimali,hut}/`, `lib/dizzjunarju.ts` and `components/dizzjunarju/WordCarousel.tsx`.
 
+The suggestion box under the book (`components/dizzjunarju/SuggestBox.tsx`) lets anyone suggest a missing word, with an optional description. When a search has no exact match, the results end with a link that fills the box in. Suggestions are anonymous and go to a Google Sheet through a Google Apps Script web app: `scripts/suggestion-box.gs` holds the script and its setup steps, and its URL goes in `SUGGEST_URL` in `lib/site.ts`. Each word gets one row, with a count of how many times it was suggested.
+
 ## Permanent things (don't change after launch)
 
 - `EPOCH` in `lib/day-index.ts` (day 0). Changing it shifts every saved game and streak.
@@ -148,6 +150,7 @@ The page used to show Maltese words for everyday things, one carousel per catego
 - **Maltese copy:** every string in `lib/i18n/mt.ts` is marked `// REVIEW` for a native speaker, as are the day and month names in `lib/day-index.ts`.
 - **Real content:** the placeholder answers (7 days per mode) get replaced by the monthly pipeline, which writes the same files. The `SBULA` note is a placeholder.
 - **Analytics:** `lib/analytics.ts` `track()` is a no-op stub. Pick a cookieless provider.
+- **Suggestion box:** deploy `scripts/suggestion-box.gs` and set `SUGGEST_URL`; until then the form shows an error.
 - **Site URL:** set `NEXT_PUBLIC_SITE_URL` so canonical/hreflang URLs point at the real domain.
 
 ## Checking contrast

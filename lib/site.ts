@@ -16,3 +16,9 @@ export function asset(path: string): string {
 // at least 29 Sep 2026. Point the credit at MLRS's GitHub, which hosts Ġabra's code, until it returns.
 export const GABRA_URL = "https://github.com/MLRS";
 export const LICENCE_URL = "https://creativecommons.org/licenses/by/4.0/";
+
+/**
+ * The suggestion box's Google Apps Script web app (scripts/suggestion-box.gs explains the setup).
+ * If it's empty the form shows an error instead of sending.
+ */
+export const SUGGEST_URL = "https://script.google.com/macros/s/AKfycbzxSlwO4DHT5U4Qiy2jZPl9gPsg9fGwWdBzxRxtv5IAJE0Irv8bwFjaafSZXApKC3o/exec";

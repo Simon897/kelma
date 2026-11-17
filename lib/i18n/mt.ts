@@ -300,4 +300,17 @@ export const mt = {
   homeDictBlurb: "Aktar minn 10,000 kelma Maltija, bit-tifsira bl-Ingliż.", // REVIEW
   homeDictGo: "Fittex", // REVIEW
   homeDictOpen: "Iftaħ id-Dizzjunarju", // REVIEW
+  dictEmptySuggest: "Taħseb li għandha tkun fil-ktieb? Issuġġeriha", // REVIEW
+  suggestTitle: "Sibt kelma nieqsa?",
+  suggestBlurb: "Id-dizzjunarju mhux komplut. Għidilna xi kliem sibt neqsin u nirriveduhom. Is-suġġerimenti huma anonimi.",
+  suggestWord: "Kelma", // REVIEW
+  suggestWordHint: "Bil-Malti", // REVIEW
+  suggestDescription: "Deskrizzjoni", // REVIEW
+  suggestDescriptionHint: "Mhux obbligatorju: xi tfisser, jew fejn smajtha", // REVIEW
+  suggestSend: "Ibgħat", // REVIEW
+  suggestSending: "Qed tintbagħat…", // REVIEW
+  suggestThanks: (word: string) => `Grazzi! Ħadna nota ta' “${word}”.`, // REVIEW
+  suggestAnother: "Issuġġerixxi kelma oħra", // REVIEW
+  suggestError: "Ma ntbagħtitx. Iċċekkja l-konnessjoni u erġa' pprova.", // REVIEW
+  suggestBusy: "Hemm ħafna suġġerimenti bħalissa. Erġa' pprova fi ftit minuti.", // REVIEW
 };

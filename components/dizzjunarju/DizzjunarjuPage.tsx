@@ -10,6 +10,7 @@ import { CatLogo } from "../CatLogo";
 import { ArrowIcon } from "../Icons";
 import { LangToggle } from "../LangToggle";
 import { COVER_ART, DictionaryBook } from "./DictionaryBook";
+import { SuggestBox } from "./SuggestBox";
 
 /**
  * Dizzjunarju: the whole word list as a book you can leaf through and search.
@@ -47,6 +48,8 @@ export function DizzjunarjuPage({ lang }: { lang: Lang }) {
         </div>
 
         <DictionaryBook d={d} />
+
+        <SuggestBox d={d} lang={lang} />
 
         <footer className="mt-6 flex flex-col items-center px-4 text-center text-sm leading-relaxed text-ink-soft">
           <p className="max-w-[60ch]">{d.dictCredit}</p>

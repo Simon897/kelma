@@ -6,6 +6,7 @@ import { loadRelated } from "@/lib/dizzjunarju-related";
 import type { Dict } from "@/lib/i18n";
 import { asset } from "@/lib/site";
 import { CatLogo } from "../CatLogo";
+import { openSuggestBox } from "./SuggestBox";
 
 /**
  * The Dizzjunarju as a book: pages that turn, letter tabs, a search that riffles to the word.
@@ -1042,6 +1043,22 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
     );
   }
 
+  /** No exact match: offer the suggestion box under the book, with the search filled in. */
+  private suggestLink() {
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          this.closeSuggestions();
+          openSuggestBox(this.q);
+        }}
+        style={{ alignSelf: "flex-start", minHeight: 44, padding: 0, background: "none", border: 0, cursor: "pointer", textAlign: "left", fontSize: 15, lineHeight: "20px", fontWeight: 700, color: "var(--color-sea-deep)", textDecoration: "underline", textUnderlineOffset: 2 }}
+      >
+        {this.props.d.dictEmptySuggest}
+      </button>
+    );
+  }
+
   private searchBar() {
     const d = this.props.d;
     const res = this.results();
@@ -1086,6 +1103,9 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
                 <div style={{ ...display, marginTop: res.exact.length ? 4 : 0, padding: "10px 12px 6px", borderTop: res.exact.length ? "1px solid var(--color-limestone-400)" : 0, fontSize: 12, lineHeight: "16px", color: SOFT }}>{res.head}</div>
               )}
               {res.related.map((i, k) => this.suggestion(i, res.exact.length + k))}
+              {res.exact.length === 0 && (
+                <div style={{ marginTop: 4, padding: "2px 12px", borderTop: "1px solid var(--color-limestone-400)" }}>{this.suggestLink()}</div>
+              )}
             </div>
           )}
           {showEmpty && (
@@ -1094,6 +1114,7 @@ export class DictionaryBook extends Component<{ d: Dict }, { tick: number }> {
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <div style={{ ...display, fontSize: 20, lineHeight: "28px" }}>{d.dictEmptyTitle}</div>
                 <div style={{ fontSize: 16, lineHeight: "24px", color: SOFT }}>{d.dictEmptyBody}</div>
+                {this.suggestLink()}
               </div>
             </div>
           )}
