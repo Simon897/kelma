@@ -12,11 +12,12 @@ import { KEYS, readJSON } from "@/lib/storage";
 import { TickIcon } from "./Icons";
 
 const playBase = "btn-block relative inline-flex min-h-12 items-center justify-center gap-1.5 rounded-tile border-2 border-ink px-2 sm:px-4";
-/** Each game's play buttons take its card's rail colour: Għerq soil, Kelma green, Sellum sea. */
+/** Each game's play buttons take its card's rail colour: Għerq soil, Kelma green, Sellum sea, Fil luzzu red. */
 export const playButton = {
   gherq: `${playBase} bg-soil text-limestone-50 hover:brightness-90`,
   kelma: `${playBase} bg-tile-correct text-tile-correct-fg hover:brightness-90`,
   sellum: `${playBase} bg-sea text-limestone-50 hover:bg-sea-deep`,
+  fil: `${playBase} bg-luzzu text-limestone-50 hover:brightness-90`,
 };
 
 /**

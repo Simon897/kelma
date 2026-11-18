@@ -18,6 +18,9 @@ export const KEYS = {
   gherqTracked: "kelma:gherq:tracked",
   /** Set on the first visit to Għerq: the home slide then previews today's root. */
   gherqVisited: "kelma:gherq:visited",
+  /** One Fil puzzle's progress, by week number (1 = Ġimgħa 1). */
+  filState: (week: number) => `kelma:fil:week:${week}`,
+  filSeenHelp: "kelma:fil:seen-help",
 } as const;
 
 export function readJSON<T>(key: string): T | null {

@@ -13,17 +13,18 @@ import { NEW_DAY_EVENT, gamesToday, type Progress } from "@/lib/today";
 import { DoneBadge, HomeButtons, playButton } from "./HomeClient";
 import { TickIcon } from "./Icons";
 
-const NAMES: Record<GameKey, string> = { gherq: "Għerq", kelma: "Kelma", sellum: "Sellum" };
+const NAMES: Record<GameKey, string> = { gherq: "Għerq", kelma: "Kelma", sellum: "Sellum", fil: "Fil" };
 /**
  * Each game's painted rail, like the top rail of a gallarija, in a colour the game already uses:
- * Għerq's soil (its root tiles), Kelma's green (a right letter), Sellum's Grotto blue.
+ * Għerq's soil (its root tiles), Kelma's green (a right letter), Sellum's Grotto blue, Fil's luzzu red.
  */
-const RAIL: Record<GameKey, string> = { gherq: "border-t-soil", kelma: "border-t-tile-correct", sellum: "border-t-sea" };
+const RAIL: Record<GameKey, string> = { gherq: "border-t-soil", kelma: "border-t-tile-correct", sellum: "border-t-sea", fil: "border-t-luzzu" };
 /** Each game's dot in its rail colour: an outline, filled while its card is showing. */
 const DOT: Record<GameKey, { on: string; off: string }> = {
   gherq: { on: "border-soil bg-soil", off: "border-soil bg-transparent" },
   kelma: { on: "border-tile-correct bg-tile-correct", off: "border-tile-correct bg-transparent" },
   sellum: { on: "border-sea bg-sea", off: "border-sea bg-transparent" },
+  fil: { on: "border-luzzu bg-luzzu", off: "border-luzzu bg-transparent" },
 };
 
 /** Sellum's slide mark: three tiny rows of tiles, one letter changing each row, the last one green. */
@@ -73,6 +74,34 @@ function MiniFamily() {
               {l}
             </span>
           ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Fil's slide mark: a corner of a board, four family words found in green. */
+function MiniThread() {
+  const rows = ["NANNUZ", "OMMAJI", "TIFELK"];
+  // found tiles: NANNU, ZIJA (Z, then down and back: I, J, A), OMM and TIFEL; the K is still to find
+  const found = new Set([0, 1, 2, 3, 4, 5, 11, 10, 9, 6, 7, 8, 12, 13, 14, 15, 16]);
+  return (
+    <div aria-hidden className="mx-auto grid gap-[3px]">
+      {rows.map((w, r) => (
+        <div key={w} className="flex justify-center gap-[3px]">
+          {Array.from(w).map((l, k) => {
+            const i = r * 6 + k;
+            const fill = found.has(i) ? "border-tile-correct bg-tile-correct text-tile-correct-fg" : "border-ink-soft/60 bg-limestone-50 text-ink";
+            return (
+              <span
+                key={k}
+                style={{ "--d": `${r * 200 + k * 50}ms` } as CSSProperties}
+                className={`${found.has(i) ? "mini-flip " : ""}flex size-[15px] items-center justify-center rounded-full border text-[9px] font-bold leading-none ${fill}`}
+              >
+                {l}
+              </span>
+            );
+          })}
         </div>
       ))}
     </div>
@@ -133,11 +162,11 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
   const rail = useRef<HTMLDivElement>(null);
   const slides = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(1);
-  const [progress, setProgress] = useState<Record<GameKey, Progress>>({ gherq: "none", kelma: "none", sellum: "none" });
+  const [progress, setProgress] = useState<Record<GameKey, Progress>>({ gherq: "none", kelma: "none", sellum: "none", fil: "none" });
   const [gherqPreview, setGherqPreview] = useState<string | null>(null);
   const reduced = useRef(true);
   // Each card's tile picture plays its game once per visit (see .mini-flip in globals.css).
-  const [played, setPlayed] = useState<Record<GameKey, boolean>>({ gherq: false, kelma: false, sellum: false });
+  const [played, setPlayed] = useState<Record<GameKey, boolean>>({ gherq: false, kelma: false, sellum: false, fil: false });
   const [ready, setReady] = useState(false);
   const allShowing = useRef(false);
   const play = useCallback((g: GameKey) => setPlayed((p) => (p[g] ? p : { ...p, [g]: true })), []);
@@ -164,7 +193,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
     go(start, true);
     requestAnimationFrame(() => go(start, true));
 
-    // On wide screens all three games show at once: no nudge needed.
+    // On wide screens all four games show at once: no nudge needed.
     allShowing.current = window.matchMedia("(min-width: 1024px)").matches;
     setReady(true);
     if (!readJSON<boolean>(KEYS.seenCarousel) && !allShowing.current) {
@@ -187,7 +216,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
     return () => window.removeEventListener(NEW_DAY_EVENT, refresh);
   }, []);
 
-  // Phones and tablets: the card in view plays. Wide screens show all three, so cards play on
+  // Phones and tablets: the card in view plays. Wide screens show all four, so cards play on
   // hover or focus instead (below) and nothing moves by itself on load.
   useEffect(() => {
     if (ready && !allShowing.current) play(GAMES[active]);
@@ -220,7 +249,10 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
     go(next);
   };
 
-  const doneTick = (g: GameKey) => progress[g] === "done" && <DoneBadge label={d.doneToday} />;
+  // Fil is weekly, so its tick means done this week.
+  const doneLabel = (g: GameKey) => (g === "fil" ? d.filDoneThisWeek : d.doneToday);
+  const startedLabel = (g: GameKey) => (g === "fil" ? d.filStartedThisWeek : d.startedToday);
+  const doneTick = (g: GameKey) => progress[g] === "done" && <DoneBadge label={doneLabel(g)} />;
 
   const content: Record<GameKey, ReactNode> = {
     gherq: (
@@ -263,6 +295,20 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         </div>
       </>
     ),
+    fil: (
+      <>
+        <Mark play={played.fil}>
+          <MiniThread />
+        </Mark>
+        <p className="mt-1 text-balance text-center text-base font-medium leading-snug">{d.filTagline}</p>
+        <div className="mt-auto pt-3">
+          <Link href={href("fil", lang)} className={`${playButton.fil} w-full`}>
+            <span className="button-caps text-[clamp(0.95rem,4.8vw,1.125rem)] leading-none">{d.sellumPlay}</span>
+            {doneTick("fil")}
+          </Link>
+        </div>
+      </>
+    ),
   };
 
   return (
@@ -271,7 +317,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
       aria-label={d.carouselLabel}
       tabIndex={0}
       onKeyDown={onKeyDown}
-      className="relative w-full max-w-[64rem] outline-offset-4"
+      className="relative w-full max-w-[64rem] outline-offset-4 lg:max-w-[76rem]"
     >
       <div className="relative">
         {/* Arrows: tablet widths only (phones swipe; wide screens show every game), hidden at each end. */}
@@ -301,8 +347,8 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
           className="snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:[mask-image:linear-gradient(to_right,transparent,black_18%,black_82%,transparent)] lg:overflow-visible lg:[mask-image:none] [&::-webkit-scrollbar]:hidden"
         >
           {/* Centred slides, so both neighbours peek in at the sides (fading out under the arrows on
-              tablets); on wide screens, one row of three. */}
-          <div ref={rail} className="flex w-max gap-3 px-[calc(50vw-min(38vw,10.5rem))] py-2 md:px-[calc(50vw-13rem)] lg:grid lg:w-full lg:grid-cols-3 lg:gap-4 lg:px-4">
+              tablets); on wide screens, one row of four. */}
+          <div ref={rail} className="flex w-max gap-3 px-[calc(50vw-min(38vw,10.5rem))] py-2 md:px-[calc(50vw-13rem)] lg:grid lg:w-full lg:grid-cols-4 lg:gap-4 lg:px-4">
             {GAMES.map((g, i) => (
               <div
                 key={g}
@@ -324,7 +370,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
         </div>
       </div>
 
-      {/* Labelled dots (names on every screen, so all three games are named), done and started marks.
+      {/* Labelled dots (names on every screen, so all four games are named), done and started marks.
           The slides themselves still announce "game 2 of 3" to screen readers. */}
       <div className="mt-1 flex items-center justify-center gap-1 lg:hidden">
         {GAMES.map((g, i) => (
@@ -332,7 +378,7 @@ export function GameCarousel({ lang, solid = false }: { lang: Lang; solid?: bool
             key={g}
             type="button"
             onClick={() => go(i)}
-            aria-label={`${NAMES[g]}${progress[g] === "done" ? `, ${d.doneToday}` : progress[g] === "partial" ? `, ${d.startedToday}` : ""}`}
+            aria-label={`${NAMES[g]}${progress[g] === "done" ? `, ${doneLabel(g)}` : progress[g] === "partial" ? `, ${startedLabel(g)}` : ""}`}
             aria-current={i === active ? "true" : undefined}
             className="inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-tile px-2 text-sm font-semibold text-ink-soft hover:text-ink"
           >

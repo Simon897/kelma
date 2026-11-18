@@ -44,6 +44,9 @@
 
   /* Għerq: the soil from the carob-tree design (root tiles sit on it). */
   --color-soil: #7b5a3b;
+  /* Fil: luzzu red, the eye-painted boats' red, for its home card and play button (5.4:1 with limestone text). */
+  --color-luzzu: #b3372b;
+
   /* Earned stars: a deep festa gold that holds 3:1 against the page as a graphic. */
   --color-star: #8c6210;
 
@@ -320,4 +323,16 @@ html[data-contrast] {
   .dict-tab {
     transition: none;
   }
+}
+
+/*
+ * Fil: a wrong trace shakes its tiles.
+ * Reduced motion (above) leaves the colours only.
+ */
+@keyframes fil-shake {
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+.fil-shake {
+  animation: fil-shake 320ms ease-in-out;
 }

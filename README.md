@@ -139,14 +139,37 @@ The page used to show Maltese words for everyday things, one carousel per catego
 
 The suggestion box under the book (`components/dizzjunarju/SuggestBox.tsx`) lets anyone suggest a missing word, with an optional description. When a search has no exact match, the results end with a link that fills the box in. Suggestions are anonymous and go to a Google Sheet through a Google Apps Script web app: `scripts/suggestion-box.gs` holds the script and its setup steps, and its URL goes in `SUGGEST_URL` in `lib/site.ts`. Each word gets one row, with a count of how many times it was suggested.
 
+## Fil (weekly theme word search)
+
+A new puzzle every Sunday at midnight (Malta time): a 6×8 grid where every tile belongs to a word on the theme, which the banner shows ("Il-familja"). Earlier weeks stay playable from the week tabs, which tick once solved. Tiles are single characters, as in Kelma: GĦ and IE take two.
+
+Players drag across tiles or tap them one by one (tap the last one again, or press Ikkonferma, to confirm); dragging back onto the tile before steps back. A wrong trace shakes; a word already found says "Diġà sibtha". Every 3 other words of 4+ letters fill the Ħjiel button, and a hint outlines the tiles of one unfound word, picked at random; the next hint waits until that word is found. The other words found are listed under the buttons. Found words turn green, and when the puzzle is solved every word is listed with its English meaning.
+
+```
+data/source/fil-themes.json   one theme per week: id, theme (mt/en), candidate words
+data/fil/puzzles.json         built puzzles: grid, words with paths and meanings, bonus words
+```
+
+```bash
+node scripts/build-fil.mjs      # lays out new or failing puzzles; keeps every layout that passes
+node scripts/validate-fil.mjs   # also runs in npm run build (scripts/validate-data.mjs)
+```
+
+The check (`scripts/lib/fil-grid.mjs`, `checkPuzzle`) requires: all 48 tiles used exactly once, no two steps crossing diagonally (a word crossing itself counts too), every word spelt along neighbouring tiles, and each word traceable on only one set of tiles (the game checks tiles, not order). A puzzle that passes keeps its layout on rebuild, so a published week never changes; one that fails is laid out again with exactly the same words. A new week takes 6–9 of its theme's words adding up to 48 letters. Theme words must be Dizzjunarju headwords (their meanings come from `data/dizzjunarju/words.json`). Bonus words are the clean word-sheet words of 4+ letters that can be traced in that grid.
+
+The five puzzles in `data/fil/puzzles.json` last until Sunday 13 December 2026 (week 5); add themes to `data/source/fil-themes.json` and run the build before then. Until a new week is added, the game keeps showing the last one.
+
+Progress is saved per week (`kelma:fil:week:N`): found words, bonus words, hint credit, the outlined word and hints used.
+
 ## Permanent things (don't change after launch)
 
 - `EPOCH` in `lib/day-index.ts` (day 0). Changing it shifts every saved game and streak.
-- Storage keys in `lib/storage.ts`: `kelma:{normali,tqila}:{state,stats}`, `kelma:{lang,settings,seen-help}`.
+- Storage keys in `lib/storage.ts`: `kelma:{normali,tqila}:{state,stats}`, `kelma:{lang,settings,seen-help}`, Fil's `kelma:fil:week:N`, `kelma:fil:seen-help`.
+- `FIL_EPOCH` in `lib/day-index.ts` (week 0, Sunday `2026-11-15`, when Fil went live). Changing it renumbers every week.
 
 ## Open items before launch
 
-- **Epochs:** `EPOCH` (Kelma, provisional `2026-09-29`), `SELLUM_EPOCH` (provisional `2026-09-29`) and `GHERQ_EPOCH` (provisional `2026-09-30`); set the real launch dates.
+- **Epochs:** `EPOCH` (Kelma, provisional `2026-09-29`), `SELLUM_EPOCH` (provisional `2026-09-29`), `GHERQ_EPOCH` (provisional `2026-09-30`); set the real launch dates. (`FIL_EPOCH` is set: Sunday `2026-11-15`.)
 - **Maltese copy:** every string in `lib/i18n/mt.ts` is marked `// REVIEW` for a native speaker, as are the day and month names in `lib/day-index.ts`.
 - **Real content:** the placeholder answers (7 days per mode) get replaced by the monthly pipeline, which writes the same files. The `SBULA` note is a placeholder.
 - **Analytics:** `lib/analytics.ts` `track()` is a no-op stub. Pick a cookieless provider.

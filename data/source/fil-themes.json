@@ -1,0 +1,7 @@
+[
+  {"id": "kuluri", "theme": {"mt": "Il-kuluri", "en": "Colours"}, "words": ["AĦMAR", "AĦDAR", "ISFAR", "ISWED", "ABJAD", "IKĦAL", "KANNELLA", "ROŻA", "GRIŻ", "ORANĠJO", "VJOLA", "BLU"]},
+  {"id": "gisem", "theme": {"mt": "Il-ġisem", "en": "The body"}, "words": ["RAS", "SIEQ", "GĦAJN", "WIDNA", "ĦALQ", "SINNA", "QALB", "DAHAR", "SPALLA", "GĦONQ", "DRIEGĦ", "WIĊĊ", "XAGĦAR", "LSIEN", "KOXXA", "RKOPPA"]},
+  {"id": "temp", "theme": {"mt": "It-temp", "en": "The weather"}, "words": ["XITA", "RIĦ", "XEMX", "BORRA", "SILĠ", "ĊPAR", "SAJJETTA", "RAGĦAD", "SĦANA", "BARD", "NIDA", "SĦABA", "TEMPESTA", "QAWSALLA", "ŻIFFA"]},
+  {"id": "familja", "theme": {"mt": "Il-familja", "en": "The family"}, "words": ["OMM", "MISSIER", "OĦT", "NANNU", "ZIJU", "ZIJA", "KUĠIN", "TIFEL", "RAĠEL", "BINT", "IBEN", "ĠENITURI", "TARBIJA", "NEPUTI", "KUNJAT"]},
+  {"id": "kcina", "theme": {"mt": "Fil-kċina", "en": "In the kitchen"}, "words": ["FURKETTA", "SIKKINA", "MGĦARFA", "PLATT", "KIKKRA", "BORMA", "TAĠEN", "FORN", "TAZZA", "FLIXKUN", "FRIĠĠ"]}
+]

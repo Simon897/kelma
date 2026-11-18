@@ -76,6 +76,12 @@ export const SELLUM_EPOCH = "2026-09-30";
  */
 export const GHERQ_EPOCH = "2026-09-29";
 
+/**
+ * Fil's week 0 (Ġimgħa 1), a Sunday: a new puzzle every Sunday at midnight, Malta time.
+ * Same freezing rule as EPOCH: changing it renumbers every week and moves every saved game.
+ */
+export const FIL_EPOCH = "2026-11-15";
+
 const EPOCH_DAY = dayNumber(parseIsoDate(EPOCH));
 
 /** Days since an ISO date, in Malta time. Negative before it. */
@@ -96,6 +102,11 @@ export function sellumDayIndex(instant: Date = new Date()): number {
 /** Għerq's day index (Għerq #N = index + 1). */
 export function gherqDayIndex(instant: Date = new Date()): number {
   return daysSince(GHERQ_EPOCH, instant);
+}
+
+/** Fil's week index (Ġimgħa N = index + 1): whole weeks since FIL_EPOCH. Negative before it. */
+export function filWeekIndex(instant: Date = new Date()): number {
+  return Math.floor(daysSince(FIL_EPOCH, instant) / 7);
 }
 
 /** Offset of Malta from UTC at an instant, in minutes (60 or 120). */

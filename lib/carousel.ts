@@ -1,8 +1,8 @@
 /** Home-page carousel rules, kept pure so they can be tested. */
 
-export type GameKey = "gherq" | "kelma" | "sellum";
-/** Għerq · Kelma · Sellum, so Kelma sits in the middle. */
-export const GAMES: GameKey[] = ["gherq", "kelma", "sellum"];
+export type GameKey = "gherq" | "kelma" | "sellum" | "fil";
+/** Għerq · Kelma · Sellum · Fil: the daily games first, Kelma second, the weekly Fil last. */
+export const GAMES: GameKey[] = ["gherq", "kelma", "sellum", "fil"];
 export const HOME_SLIDE = GAMES.indexOf("kelma");
 
 /**

@@ -193,8 +193,8 @@ describe("stats and storage", () => {
 });
 
 describe("home carousel", () => {
-  it("has three games with Kelma in the middle", () => {
-    expect(GAMES).toEqual(["gherq", "kelma", "sellum"]);
+  it("has four games, Kelma second and the weekly Fil last", () => {
+    expect(GAMES).toEqual(["gherq", "kelma", "sellum", "fil"]);
   });
   it("opens on Kelma unless it's finished, then the first unfinished game", () => {
     expect(defaultSlide([false, false, false])).toBe(1);

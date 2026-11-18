@@ -313,4 +313,36 @@ export const mt = {
   suggestAnother: "Issuġġerixxi kelma oħra", // REVIEW
   suggestError: "Ma ntbagħtitx. Iċċekkja l-konnessjoni u erġa' pprova.", // REVIEW
   suggestBusy: "Hemm ħafna suġġerimenti bħalissa. Erġa' pprova fi ftit minuti.", // REVIEW
+  // --- Fil (weekly theme word search) ---
+  filTagline: "Sib il-kliem moħbi tat-tema", // REVIEW
+  filTitle: (week: number) => `Fil · Ġimgħa ${week}`, // REVIEW
+  filWeek: (week: number) => `Ġimgħa ${week}`, // REVIEW
+  filWeeksLabel: "Il-ġimgħat", // REVIEW
+  filDoneThisWeek: "lesta din il-ġimgħa", // REVIEW
+  filSolved: "lesta", // REVIEW
+  filStartedThisWeek: "bdejt din il-ġimgħa", // REVIEW
+  filThemeLabel: "It-tema", // REVIEW
+  filFound: (n: number, total: number) => `${n}/${total}`, // REVIEW
+  filFoundAria: (n: number, total: number) => `Sibt ${n} minn ${total} kelmiet`, // REVIEW
+  filClear: "Ħassar", // REVIEW
+  filConfirm: "Ikkonferma", // REVIEW
+  filHint: "Ħjiel", // REVIEW
+  filHintAria: (have: number, need: number) => `Ħjiel: ${Math.min(have, need)} minn ${need} kelmiet`, // REVIEW
+  filHintShown: (n: number) => `Ħjiel: kelma ta' ${n} ittri`, // REVIEW
+  filTooShort: "Qasira wisq", // REVIEW
+  filNotWord: "Mhix fil-lista", // REVIEW
+  filAlready: "Diġà sibtha", // REVIEW
+  filBonusList: (list: string) => `Kliem ieħor: ${list}`, // REVIEW
+  filBonus: (w: string) => `${w}: mhux fit-tema, imma tgħodd għall-ħjiel`, // REVIEW
+  filFoundWord: (w: string) => `${w} ✓`, // REVIEW
+  filSelected: (w: string) => `Magħżula: ${w}`, // REVIEW
+  filTileAria: (letter: string, row: number, col: number) => `${letter}, ringiela ${row}, kolonna ${col}`, // REVIEW
+  filDone: "Prosit! Sibt il-kliem kollu.", // REVIEW
+  filWordsTitle: "Il-kliem", // REVIEW
+  filNoPuzzleTitle: "Għad m'hemmx puzzle", // REVIEW
+  filNoPuzzleBody: "L-ewwel Fil joħroġ dalwaqt.", // REVIEW
+  filHelpIntro: "Puzzle ġdid kull nhar ta' Ħadd: 48 ittra, u kull waħda tagħmel parti minn kelma tat-tema. Sib il-kliem kollu.", // REVIEW
+  filHelpTrace: "Kebbeb minn ittra għal oħra ħdejha (anki dijagonali), jew agħfas l-ittri waħda waħda u mbagħad Ikkonferma. Biex tmur lura, kebbeb fuq l-ittra ta' qabel.", // REVIEW
+  filHelpHints: "Kull 3 kelmiet oħra ta' 4 ittri jew aktar li ma jagħmlux parti mit-tema jimlew il-buttuna Ħjiel. Il-ħjiel jimmarka l-ittri ta' kelma.", // REVIEW
+  filHelpLetters: "GĦ u IE jieħdu żewġ kaxxi, bħal f'Kelma.", // REVIEW
 };
